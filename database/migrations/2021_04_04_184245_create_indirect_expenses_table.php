@@ -18,8 +18,8 @@ class CreateIndirectExpensesTable extends Migration
             $table->id();
             $table->bigInteger('indirect_cost_id')->unsigned();
                 $table->foreign('indirect_cost_id')->references('id')->on('indirect_costs');
-            $table->timestamp('date_from');
-            $table->timestamp('date_to');
+            $table->timestamp('date_from')->nullable();
+            $table->timestamp('date_to')->nullable();
             $table->integer('amount');
             $table->timestamps();
         });
