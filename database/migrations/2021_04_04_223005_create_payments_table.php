@@ -1,0 +1,40 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreatePaymentsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        Schema::create('payments', function (Blueprint $table) {
+            $table->id();
+            $table->bigInteger('employee_id')->unsigned();
+                $table->foreign('employee_id')->references('id')->on('employees');
+            $table->bigInteger('order_id')->unsigned();
+                $table->foreign('order_id')->references('id')->on('orders');
+            $table->integer('total_price');
+            $table->timestamps();
+        });
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        Schema::dropIfExists('payments');
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+    }
+}
