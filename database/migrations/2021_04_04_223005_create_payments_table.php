@@ -22,6 +22,7 @@ class CreatePaymentsTable extends Migration
                 $table->foreign('order_id')->references('id')->on('orders');
             $table->integer('total_price');
             $table->timestamps();
+            $table->softDeletes();
         });
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }

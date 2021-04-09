@@ -3,8 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class materialMeasuring extends Model
+class MaterialMeasuring extends Model
 {
-    //
+    use SoftDeletes;
 }

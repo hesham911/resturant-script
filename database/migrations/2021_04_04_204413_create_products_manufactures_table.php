@@ -23,6 +23,7 @@ class CreateProductsManufacturesTable extends Migration
             $table->decimal('required_quantity');
             $table->decimal('waste_percentage');
             $table->timestamps();
+            $table->softDeletes();
         });
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }

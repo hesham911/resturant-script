@@ -18,6 +18,7 @@ class CreateFloorsTable extends Migration
             $table->tinyInteger('number');
             $table->tinyInteger('status');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

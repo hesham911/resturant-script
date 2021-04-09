@@ -21,6 +21,7 @@ class CreateKitchenRequestsTable extends Migration
             $table->decimal('quantity');
             $table->tinyInteger('status')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }

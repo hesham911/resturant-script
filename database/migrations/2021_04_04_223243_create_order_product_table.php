@@ -21,6 +21,7 @@ class CreateOrderProductTable extends Migration
             $table->bigInteger('order_id')->unsigned();
                 $table->foreign('order_id')->references('id')->on('orders');
             $table->timestamps();
+            $table->softDeletes();
         });
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }

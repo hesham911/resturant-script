@@ -19,6 +19,7 @@ class CreateSettingsTable extends Migration
             $table->tinyInteger('min_charge_status');
             $table->integer('delivery_num');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

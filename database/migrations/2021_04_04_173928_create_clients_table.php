@@ -20,6 +20,7 @@ class CreateClientsTable extends Migration
                     $table->foreign('user_id')->references('id')->on('user');
                 $table->string('name');
                 $table->timestamps();
+                $table->softDeletes();
             });
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }

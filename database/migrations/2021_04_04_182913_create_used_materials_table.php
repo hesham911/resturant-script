@@ -22,6 +22,7 @@ class CreateUsedMaterialsTable extends Migration
                 $table->foreign('supply_id')->references('id')->on('supplies');
             $table->decimal('total_cost');
             $table->timestamps();
+            $table->softDeletes();
         });
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }

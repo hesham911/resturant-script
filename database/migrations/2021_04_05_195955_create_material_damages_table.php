@@ -20,6 +20,7 @@ class CreateMaterialDamagesTable extends Migration
                 $table->foreign('supply_id')->references('id')->on('supplies');
             $table->string('quantity');
             $table->timestamps();
+            $table->softDeletes();
         });
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
