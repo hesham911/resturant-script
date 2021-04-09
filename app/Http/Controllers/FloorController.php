@@ -12,74 +12,85 @@ class FloorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
-    }
+    // public function index()
+    // {
+    //     $floors = Floor::get();
+    //     return view('floor.index',['floors'=>$floors]);
+    // }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+    // /**
+    //  * Show the form for creating a new resource.
+    //  *
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function create()
+    // {
+    //     return view('floor.create');
+    // }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+    // /**
+    //  * Store a newly created resource in storage.
+    //  *
+    //  * @param  \Illuminate\Http\Request  $request
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function store(FloorRequest  $request)
+    // {
+    //     $validated = $request->validated();
+    //     Floor::create($validated);
+    //     $request->session()->flash('message',__('floors.notifications.created_succesfully'));
+    //     return redirect(route('category.index'));
+    // }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Floor  $floor
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Floor $floor)
-    {
-        //
-    }
+    // /**
+    //  * Display the specified resource.
+    //  *
+    //  * @param  \App\Category  $category
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function show(Category $category)
+    // {
+    //     return view('floor.show',['category',$category]);
+    // }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Floor  $floor
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Floor $floor)
-    {
-        //
-    }
+    // /**
+    //  * Show the form for editing the specified resource.
+    //  *
+    //  * @param  \App\Category  $category
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function edit(Category $category)
+    // {
+    //     return view('floor.edit',['category',$category]);
+    // }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Floor  $floor
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Floor $floor)
-    {
-        //
-    }
+    // /**
+    //  * Update the specified resource in storage.
+    //  *
+    //  * @param  \Illuminate\Http\Request  $request
+    //  * @param  \App\Category  $category
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function update(FloorRequest $request, Category $category)
+    // {
+    //     $validated = $request->validated();
+    //     $category->name = $validated->name;
+    //     $category->type = $validated->type;
+    //     $category->save();
+    //     $request->session()->flash('message',__('floors.notifications.created_succesfully'));
+    //     return redirect(route('category.index'));
+    // }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Floor  $floor
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Floor $floor)
-    {
-        //
-    }
+    // /**
+    //  * Remove the specified resource from storage.
+    //  *
+    //  * @param  \App\Category  $category
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function destroy(Category $category)
+    // {
+    //     $category->delete();
+    //     $request->session()->flash('message',__('floors.notifications.deleted_succesfully'));
+    //     return redirect(route('category.index'));
+    // }
 }
