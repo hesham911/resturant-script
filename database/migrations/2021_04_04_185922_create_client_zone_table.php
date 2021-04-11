@@ -22,6 +22,7 @@ class CreateClientZoneTable extends Migration
                 $table->foreign('zone_id')->references('id')->on('zones');
             $table->string('address');
             $table->timestamps();
+            $table->softDeletes();
         });
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }

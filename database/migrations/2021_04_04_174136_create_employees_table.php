@@ -21,6 +21,7 @@ class CreateEmployeesTable extends Migration
             $table->tinyInteger('type')->default('0');
             $table->tinyInteger('status')->default('1');
             $table->timestamps();
+            $table->softDeletes();
         });
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }

@@ -22,6 +22,7 @@ class CreateProductsTable extends Migration
             $table->tinyInteger('type');
             $table->integer('price');
             $table->timestamps();
+            $table->softDeletes();
         });
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }

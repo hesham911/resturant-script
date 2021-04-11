@@ -5,7 +5,11 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class IndirectCost extends Model
-{
+class Table extends Model
+{  
     use SoftDeletes;
+
+    public function floor(){
+        return $this->belongsTo(Floor::class);
+    }
 }

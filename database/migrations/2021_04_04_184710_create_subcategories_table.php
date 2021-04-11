@@ -20,6 +20,7 @@ class CreateSubcategoriesTable extends Migration
                 $table->foreign('category_id')->references('id')->on('categories');
             $table->string('name');
             $table->timestamps();
+            $table->softDeletes();
         });
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }

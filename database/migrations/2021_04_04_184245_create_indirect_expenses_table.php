@@ -22,6 +22,7 @@ class CreateIndirectExpensesTable extends Migration
             $table->timestamp('date_to')->nullable();
             $table->integer('amount');
             $table->timestamps();
+            $table->softDeletes();
         });
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }

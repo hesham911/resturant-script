@@ -24,6 +24,7 @@ class CreateOrdersTable extends Migration
                 $table->foreign('table_id')->references('id')->on('tables');
             $table->tinyInteger('type');
             $table->timestamps();
+            $table->softDeletes();
         });
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }

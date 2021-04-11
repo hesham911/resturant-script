@@ -22,6 +22,7 @@ class CreateSuppliesTable extends Migration
             $table->integer('price');
             $table->string('Supplier_name');
             $table->timestamps();
+            $table->softDeletes();
         });
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }

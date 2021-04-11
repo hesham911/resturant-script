@@ -20,6 +20,7 @@ class CreateMaterialMeasuringsTable extends Migration
                 $table->foreign('material_id')->references('id')->on('materials');
             $table->string('measuring_unit');
             $table->timestamps();
+            $table->softDeletes();
         });
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
