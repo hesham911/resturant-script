@@ -18,7 +18,6 @@ class CreateClientsTable extends Migration
                 $table->id();
                 $table->bigInteger('user_id')->unsigned();
                     $table->foreign('user_id')->references('id')->on('user');
-                $table->string('name');
                 $table->timestamps();
                 $table->softDeletes();
             });
