@@ -13,9 +13,50 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+
+Route::get('/', function () {return view('admin.dashboard');})->name('dashboard');
+// zones middleware('auth')->
+Route::prefix('zones')->group(function()
+{
+    Route::get('/','ZoneController@index')->name('zones');
+    Route::get('/create','ZoneController@create')->name('zones.create');
 });
+
+
+
+
+
+
+
+
+
+
+Route::get('orders', function () {
+    return view('admin.orders');
+})->name('orders');
+
+Route::get('mail', function () {
+    return view('mail');
+})->name('mail');
+
+
+// User
+
+Route::get('users', function () {
+    return view('admin.users');
+})->name('users');
+
+Route::get('profile', function () {
+    return view('admin.profile');
+})->name('profile');
+Route::get('blank-page', function () {
+    return view('admin.blank-page');
+})->name('blank-page');
+/*****/
+// not found page
+//Route::any('{catchall}',function(){return view('admin.partials.404');})->where('catchall', '.*');
+/****/
 
 Auth::routes();
 
