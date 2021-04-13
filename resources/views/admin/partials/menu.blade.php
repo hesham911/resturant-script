@@ -62,4 +62,22 @@
             </li>
         </ul>
     </li>
+    <li>
+        <a href="#">
+            <span class="nav-link-icon">
+                <i class="fa fa-clipboard" ></i>
+            </span>
+            <span> الأقسام</span>
+        </a>
+        <ul>
+            <li>
+                <a @if(request()->segment(1) == 'categories') class="active"
+                   @endif href="{{route('categories.index')}}">عرض الكل</a>
+            </li>
+            <li>
+                <a @if(request()->segment(1) == 'create') class="active"
+                   @endif href="{{ route('categories.create') }}">إضافة جديد</a>
+            </li>
+        </ul>
+    </li>
 </ul>

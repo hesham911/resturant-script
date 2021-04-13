@@ -23,12 +23,12 @@ class CategoryRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        return [[
             'name'=>'required',
             'type'=>'required',
         ],[
             'name'=>__('categories.name'),
             'type'=>__('categories.type'),
-        ];
+        ]];
     }
 }
