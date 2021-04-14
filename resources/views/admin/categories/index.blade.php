@@ -91,7 +91,6 @@
                                 </th>
                                 <th>#</th>
                                 <th> {{__('categories.name')}}</th>
-                                <th> {{__('categories.type')}}</th>
                                 <th class="text-right"> خيارات</th>
                             </tr>
                             </thead>
@@ -102,7 +101,6 @@
                                         <td></td>
                                         <td>{{ $category->id }}</td>
                                         <td>{{ $category->name }}</td>
-                                        <td>{{ $category->type }}</td>
                                         <td class="text-right">
                                             <div class="dropdown">
                                                 <a href="#" data-toggle="dropdown"

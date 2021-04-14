@@ -25,14 +25,12 @@ class CategoryRequest extends FormRequest
     {
         return [
             'name'=>'required',
-            'type'=>'required',
         ];
     }
     public function attributes()
     {
         return [
             'name'=>__('categories.name'),
-            'type'=>__('categories.type'),
         ];
     }
 }

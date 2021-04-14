@@ -49,21 +49,6 @@
                             <form class="needs-validation" novalidate="" method="POST"  action="{{route('categories.update',$category->id ) }}" >
                                 @csrf
                                 <input type="hidden" name="_method" value="PUT" >
-                                <div class="form-group row"> 
-                                    <label for="inputPassword" class="col-sm-2 col-form-label">{{__('categories.name')}}</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inputPassword" value="{{old('name',$category->name)}}" name="name">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="inputPassword" class="col-sm-2 col-form-label">{{__('categories.type')}}</label>
-                                    <div class="col-sm-10">
-                                        <select class="select2 " name="type">
-                                        <option  value="1" @if( old('type',$category->type)  == 1 ) selected = '' @endif> اضافات </option>
-                                        <option value="0" @if( old('type',$category->type ) == 0 ) selected = '' @endif>قسم </option>
-                                        </select>
-                                    </div>
-                                </div>
                               <div class="d-flex flex-row-reverse" >
                                 <button class="btn btn-primary " type="submit">{{__('app.FormSubmit')}}</button>
                               </div>

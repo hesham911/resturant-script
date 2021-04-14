@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 use App\Floor;
+use Carbon\Carbon;
+
 
 class FloorSeeder extends Seeder
 {
@@ -14,9 +16,13 @@ class FloorSeeder extends Seeder
     {
         Floor::insert([
             [
-                'name'=>'المطعم'
+                'name'=>'المطعم',
+                'created_at'=> Carbon::now()->toDateTimeString(),
+                'updated_at'=> Carbon::now()->toDateTimeString(),
             ],[
-                'name'=>'البار'
+                'name'=>'البار',
+                'created_at'=> Carbon::now()->toDateTimeString(),
+                'updated_at'=> Carbon::now()->toDateTimeString(),
             ]
         ]);
     }
