@@ -46,7 +46,8 @@
                                 </div>
                             @endif
                             <h6 class="card-title">{{__('categories.titles.create')}}</h6>
-                            <form class="needs-validation" novalidate="" methode="POST"  action="{{route('categories.store') }}" >
+                            <form  method="POST"  action="{{route('categories.store') }}" >
+                              @CSRF
                               <div class="form-group row">
                                   <label for="inputPassword" class="col-sm-2 col-form-label">{{__('categories.name')}}</label>
                                   <div class="col-sm-10">

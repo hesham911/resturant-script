@@ -53,12 +53,10 @@
         </a>
         <ul>
             <li>
-                <a @if(request()->segment(1) == 'zones') class="active"
-                   @endif href="{{ route('zones') }}">عرض الكل</a>
+                <a class="{{(request()->is('zones'))? 'active' : '' }}" href="{{ route('zones') }}">عرض الكل</a>
             </li>
             <li>
-                <a @if(request()->segment(1) == 'create') class="active"
-                   @endif href="{{ route('zones.create') }}">إضافة جديد</a>
+                <a class="{{(request()->is('zones/create'))? 'active' : '' }}" href="{{ route('zones.create') }}">إضافة جديد</a>
             </li>
         </ul>
     </li>
@@ -71,12 +69,10 @@
         </a>
         <ul>
             <li>
-                <a @if(request()->segment(1) == 'categories') class="active"
-                   @endif href="{{route('categories.index')}}">عرض الكل</a>
+                <a class="{{(request()->is('categories'))? 'active' : '' }}" href="{{route('categories.index')}}">عرض الكل</a>
             </li>
             <li>
-                <a @if(request()->segment(1) == 'create') class="active"
-                   @endif href="{{ route('categories.create') }}">إضافة جديد</a>
+                <a class="{{(request()->is('categories/create'))? 'active' : '' }}" href="{{ route('categories.create') }}">إضافة جديد</a>
             </li>
         </ul>
     </li>

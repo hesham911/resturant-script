@@ -97,25 +97,33 @@
                             </thead>
                             <tbody>
                                 @if($categories->count() > 0)
-                                @foreach($categories as $category )
-                                <tr>
-                                    <td>{{ $category->name }}</td>
-                                    <td>{{ $category->type }}</td>
-                                    <td class="text-right">
-                                        <div class="dropdown">
-                                            <a href="#" data-toggle="dropdown"
-                                            class="btn btn-floating"
-                                            aria-haspopup="true" aria-expanded="false">
-                                                <i class="ti-more-alt"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a href="{{route('categories.edit',$category->id)}}" class="dropdown-item">{{__('app.edit')}}</a>
-                                                <a href="{{route('categories.destroy',$category->id)}}" class="dropdown-item text-danger">{{__('app.delete')}}</a>
+                                    @foreach($categories as $category )
+                                    <tr>
+                                        <td></td>
+                                        <td>{{ $category->id }}</td>
+                                        <td>{{ $category->name }}</td>
+                                        <td>{{ $category->type }}</td>
+                                        <td class="text-right">
+                                            <div class="dropdown">
+                                                <a href="#" data-toggle="dropdown"
+                                                class="btn btn-floating"
+                                                aria-haspopup="true" aria-expanded="false">
+                                                    <i class="ti-more-alt"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a href="{{route('categories.edit',$category->id)}}" class="dropdown-item">{{__('app.edit')}}</a>
+                                                    <form method="POST" action="{{route('categories.destroy',$category->id)}}" class="dropdown-item text-danger" >
+                                                        @csrf
+                                                        <input type="hidden" name="_method" value="DELETE" >
+                                                        <button class="btn btn-link" >
+                                                            {{__('app.delete')}}
+                                                        </button>
+                                                    </form>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endforeach
+                                        </td>
+                                    </tr>
+                                    @endforeach
                                 @endif
                             </tbody>
                         </table>
