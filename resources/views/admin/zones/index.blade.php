@@ -12,17 +12,12 @@
     <div class="page-header d-md-flex justify-content-between">
         <div>
             <h3>كل المناطق</h3>
-            <nav aria-label="breadcrumb" class="d-flex align-items-start">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                        <a href="{{ url('/') }}">Home</a>
-                    </li>
-                    <li class="breadcrumb-item">
-                        <a href="#">Pages</a>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">Users</li>
-                </ol>
-            </nav>
+            @include('admin.partials.breadcrumb',[
+                //'name' => $contents->title,
+                'parent' => [
+                    'name' => 'المناطق',
+                ]
+            ])
         </div>
         <div class="mt-2 mt-md-0">
             <div class="dropdown">
