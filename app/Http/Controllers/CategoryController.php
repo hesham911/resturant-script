@@ -76,7 +76,7 @@ class CategoryController extends Controller
     {
         $validated = $request->validated();
         $category->update ($validated);
-        $request->session()->flash('message',__('categories.notifications.created_succesfully'));
+        $request->session()->flash('message',__('categories.notifications.updated_succesfully'));
         return redirect(route('categories.index'));
     }
 

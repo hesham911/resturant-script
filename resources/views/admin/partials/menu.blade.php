@@ -76,4 +76,20 @@
             </li>
         </ul>
     </li>
+    <li>
+        <a href="#">
+            <span class="nav-link-icon">
+                <i class="fa fa-clipboard" ></i>
+            </span>
+            <span> {{__('subcategories.titles.index')}}</span>
+        </a>
+        <ul>
+            <li>
+                <a class="{{(request()->is('subcategories'))? 'active' : '' }}" href="{{route('subcategories.index')}}">عرض الكل</a>
+            </li>
+            <li>
+                <a class="{{(request()->is('subcategories/create'))? 'active' : '' }}" href="{{ route('subcategories.create') }}">إضافة جديد</a>
+            </li>
+        </ul>
+    </li>
 </ul>

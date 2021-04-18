@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-{{__('categories.titles.index')}}
+{{__('subcategories.titles.index')}}
 @endsection
 @section('head')
     <!-- Datatable -->
@@ -11,7 +11,7 @@
 
     <div class="page-header d-md-flex justify-content-between">
         <div>
-            <h3> {{__('categories.titles.index')}} </h3>
+            <h3> {{__('subcategories.titles.index')}} </h3>
             {{-- @include('admin.partials.breadcrumbs',[
                         'name' => 'الأقسام',
                         'parent' => [
@@ -97,13 +97,13 @@
                                     </div>
                                 </th>
                                 <th>#</th>
-                                <th> {{__('categories.name')}}</th>
+                                <th> {{__('subcategories.name')}}</th>
                                 <th class="text-right"> خيارات</th>
                             </tr>
                             </thead>
                             <tbody>
-                                @if($categories->count() > 0)
-                                    @foreach($categories as $category )
+                                @if($subcategories->count() > 0)
+                                    @foreach($subcategories as $category )
                                     <tr>
                                         <td></td>
                                         <td>{{ $category->id }}</td>
@@ -116,8 +116,8 @@
                                                     <i class="ti-more-alt"></i>
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                    <a href="{{route('categories.edit',$category->id)}}" class="dropdown-item">{{__('app.edit')}}</a>
-                                                    <form method="POST" action="{{route('categories.destroy',$category->id)}}" class="dropdown-item text-danger" >
+                                                    <a href="{{route('subcategories.edit',$category->id)}}" class="dropdown-item">{{__('app.edit')}}</a>
+                                                    <form method="POST" action="{{route('subcategories.destroy',$category->id)}}" class="dropdown-item text-danger" >
                                                         @csrf
                                                         <input type="hidden" name="_method" value="DELETE" >
                                                         <button class="btn btn-link" >
