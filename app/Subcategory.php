@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Subcategory extends Model
 {
+    protected $fillable  = ['name','category_id'];
     use SoftDeletes;
 
     public function category (){

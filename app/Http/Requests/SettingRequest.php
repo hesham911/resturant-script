@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoryRequest extends FormRequest
+class SettingRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,12 +25,17 @@ class CategoryRequest extends FormRequest
     {
         return [
             'name'=>'required',
+            'value'=>'required',
+            'active'=>'required',
         ];
     }
+
     public function attributes()
     {
         return [
-            'name'=>__('categories.name'),
+            'name'=>__('settings.name'),
+            'value'=>__('settings.value'),
+            'active'=>__('settings.active'),
         ];
     }
 }

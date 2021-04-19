@@ -53,12 +53,58 @@
         </a>
         <ul>
             <li>
-                <a @if(request()->segment(1) == 'zones') class="active"
-                   @endif href="{{ route('zones') }}">عرض الكل</a>
+                <a class="{{(request()->is('zones'))? 'active' : '' }}" href="{{ route('zones') }}">عرض الكل</a>
             </li>
             <li>
-                <a @if(request()->segment(1) == 'create') class="active"
-                   @endif href="{{ route('zones.create') }}">إضافة جديد</a>
+                <a class="{{(request()->is('zones/create'))? 'active' : '' }}" href="{{ route('zones.create') }}">إضافة جديد</a>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a href="#">
+            <span class="nav-link-icon">
+                <i class="fa fa-clipboard" ></i>
+            </span>
+            <span> الأقسام</span>
+        </a>
+        <ul>
+            <li>
+                <a class="{{(request()->is('categories'))? 'active' : '' }}" href="{{route('categories.index')}}">عرض الكل</a>
+            </li>
+            <li>
+                <a class="{{(request()->is('categories/create'))? 'active' : '' }}" href="{{ route('categories.create') }}">إضافة جديد</a>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a href="#">
+            <span class="nav-link-icon">
+                <i class="fa fa-clipboard" ></i>
+            </span>
+            <span> {{__('subcategories.titles.index')}}</span>
+        </a>
+        <ul>
+            <li>
+                <a class="{{(request()->is('subcategories'))? 'active' : '' }}" href="{{route('subcategories.index')}}">عرض الكل</a>
+            </li>
+            <li>
+                <a class="{{(request()->is('subcategories/create'))? 'active' : '' }}" href="{{ route('subcategories.create') }}">إضافة جديد</a>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a href="#">
+            <span class="nav-link-icon">
+                <i class="fa fa-clipboard" ></i>
+            </span>
+            <span> {{__('settings.titles.index')}}</span>
+        </a>
+        <ul>
+            <li>
+                <a class="{{(request()->is('settings'))? 'active' : '' }}" href="{{route('settings.index')}}">عرض الكل</a>
+            </li>
+            <li>
+                <a class="{{(request()->is('settings/create'))? 'active' : '' }}" href="{{ route('settings.create') }}">إضافة جديد</a>
             </li>
         </ul>
     </li>

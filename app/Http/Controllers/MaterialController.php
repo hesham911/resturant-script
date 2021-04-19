@@ -14,7 +14,8 @@ class MaterialController extends Controller
      */
     public function index()
     {
-        //
+        $materials = Material::get();
+        return view('admin.materials.index',['materials'=>$materials]);
     }
 
     /**
@@ -24,7 +25,7 @@ class MaterialController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.materials.create');
     }
 
     /**
@@ -33,9 +34,12 @@ class MaterialController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MaterialRequest  $request)
     {
-        //
+        $validated = $request->validated();
+        Material::create($validated);
+        $request->session()->flash('message',__('materials.notifications.created_succesfully'));
+        return redirect(route('materials.index'));
     }
 
     /**
@@ -46,7 +50,7 @@ class MaterialController extends Controller
      */
     public function show(Material $material)
     {
-        //
+        return view('admin.materials.show',['material',$material]);
     }
 
     /**
@@ -57,7 +61,7 @@ class MaterialController extends Controller
      */
     public function edit(Material $material)
     {
-        //
+        return view('admin.materials.edit',['material'=>$material,]);
     }
 
     /**
@@ -67,9 +71,12 @@ class MaterialController extends Controller
      * @param  \App\Material  $material
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Material $material)
+    public function update(MaterialRequest $request, Material $material)
     {
-        //
+        $validated = $request->validated();
+        $material->update ($validated);
+        $request->session()->flash('message',__('materials.notifications.updated_succesfully'));
+        return redirect(route('materials.index'));
     }
 
     /**
@@ -78,8 +85,10 @@ class MaterialController extends Controller
      * @param  \App\Material  $material
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Material $material)
+    public function destroy( Request $request,Material $material)
     {
-        //
+        $material->delete();
+        $request->session()->flash('message',__('materials.notifications.deleted_succesfully'));
+        return redirect(route('materials.index'));
     }
 }

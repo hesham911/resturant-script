@@ -15,9 +15,9 @@ class CreateSettingsTable extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
-            $table->integer('min_charge');
-            $table->tinyInteger('min_charge_status');
-            $table->integer('delivery_num');
+            $table->string('name');
+            $table->integer('value');
+            $table->tinyInteger('active');
             $table->timestamps();
             $table->softDeletes();
         });

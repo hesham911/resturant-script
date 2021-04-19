@@ -16,7 +16,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::get();
-        return view('category.index',['categories'=>$categories]);
+        return view('admin.categories.index',['categories'=>$categories]);
     }
 
     /**
@@ -26,7 +26,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('category.create');
+        return view('admin.categories.create');
     }
 
     /**
@@ -40,7 +40,7 @@ class CategoryController extends Controller
         $validated = $request->validated();
         Category::create($validated);
         $request->session()->flash('message',__('categories.notifications.created_succesfully'));
-        return redirect(route('category.index'));
+        return redirect(route('categories.index'));
     }
 
     /**
@@ -51,7 +51,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        return view('category.show',['category',$category]);
+        return view('admin.categories.show',['category',$category]);
     }
 
     /**
@@ -62,7 +62,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return view('category.edit',['category',$category]);
+        return view('admin.categories.edit',['category'=>$category,]);
     }
 
     /**
@@ -75,11 +75,9 @@ class CategoryController extends Controller
     public function update(CategoryRequest $request, Category $category)
     {
         $validated = $request->validated();
-        $category->name = $validated->name;
-        $category->type = $validated->type;
-        $category->save();
-        $request->session()->flash('message',__('categories.notifications.created_succesfully'));
-        return redirect(route('category.index'));
+        $category->update ($validated);
+        $request->session()->flash('message',__('categories.notifications.updated_succesfully'));
+        return redirect(route('categories.index'));
     }
 
     /**
@@ -88,10 +86,10 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy( Request $request,Category $category)
     {
         $category->delete();
         $request->session()->flash('message',__('categories.notifications.deleted_succesfully'));
-        return redirect(route('category.index'));
+        return redirect(route('categories.index'));
     }
 }

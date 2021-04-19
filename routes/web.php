@@ -23,13 +23,9 @@ Route::prefix('zones')->group(function()
     Route::get('/create','ZoneController@create')->name('zones.create');
 });
 
-
-
-
-
-
-
-
+Route::resource('/categories','CategoryController');
+Route::resource('/subcategories','SubcategoryController');
+Route::resource('/settings','SettingController');
 
 
 Route::get('orders', function () {
@@ -40,9 +36,7 @@ Route::get('mail', function () {
     return view('mail');
 })->name('mail');
 
-
 // User
-
 Route::get('users', function () {
     return view('admin.users');
 })->name('users');
@@ -57,7 +51,5 @@ Route::get('blank-page', function () {
 // not found page
 //Route::any('{catchall}',function(){return view('admin.partials.404');})->where('catchall', '.*');
 /****/
-
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
