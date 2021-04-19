@@ -23,7 +23,13 @@ Route::prefix('zones')->group(function()
     Route::get('/create','ZoneController@create')->name('zones.create');
 });
 
-
+//  orders
+Route::prefix('orders')->group(function()
+{
+    Route::get('/','OrderController@index')->name('orders');
+    Route::get('/create','OrderController@create')->name('orders.create');
+    Route::post('/store','OrderController@store')->name('orders.store');
+});
 
 
 

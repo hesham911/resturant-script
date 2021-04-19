@@ -22,9 +22,21 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         //
+        $credentials=$request->all();
+        $v=Order::validate($credentials);
+		if($v->passes())
+        {
+            Order::create($credentials);
+            return redirect('/orders')->with('successful',true);
+
+		}
+		else
+        {
+            return redirect()->back()->withErrors($v)->withInput();
+		}
     }
 
     /**
