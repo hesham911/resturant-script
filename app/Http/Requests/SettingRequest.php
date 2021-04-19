@@ -25,6 +25,8 @@ class SettingRequest extends FormRequest
     {
         return [
             'name'=>'required',
+            'value'=>'required',
+            'active'=>'required',
         ];
     }
 
@@ -32,6 +34,8 @@ class SettingRequest extends FormRequest
     {
         return [
             'name'=>__('subcategories.name'),
+            'value'=>__('subcategories.value'),
+            'active'=>__('subcategories.active'),
         ];
     }
 }

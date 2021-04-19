@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-{{__('subcategories.titles.index')}}
+{{__('settings.titles.index')}}
 @endsection
 @section('head')
     <!-- Datatable -->
@@ -11,7 +11,7 @@
 
     <div class="page-header d-md-flex justify-content-between">
         <div>
-            <h3> {{__('subcategories.titles.index')}} </h3>
+            <h3> {{__('settings.titles.index')}} </h3>
             {{-- @include('admin.partials.breadcrumbs',[
                         'name' => 'الأقسام',
                         'parent' => [
@@ -97,17 +97,29 @@
                                     </div>
                                 </th>
                                 <th>#</th>
-                                <th> {{__('subcategories.name')}}</th>
+                                <th> {{__('settings.name')}}</th>
+                                <th> {{__('settings.value')}}</th>
+                                <th> {{__('settings.active')}}</th>
                                 <th class="text-right"> خيارات</th>
                             </tr>
                             </thead>
                             <tbody>
-                                @if($subcategories->count() > 0)
-                                    @foreach($subcategories as $category )
+                                @if($settings->count() > 0)
+                                    @foreach($settings as $setting )
                                     <tr>
                                         <td></td>
-                                        <td>{{ $category->id }}</td>
-                                        <td>{{ $category->name }}</td>
+                                        <td>{{ $setting->id }}</td>
+                                        <td>{{ $setting->name }}</td>
+                                        <td>{{ $setting->value }}</td>
+                                        <td>
+                                            <label for="">
+                                                @if ($setting->active == 1)
+                                                  فعال  
+                                                @else
+                                                 غير فعال 
+                                                @endif
+                                            </label>
+                                        </td>
                                         <td class="text-right">
                                             <div class="dropdown">
                                                 <a href="#" data-toggle="dropdown"
@@ -116,8 +128,8 @@
                                                     <i class="ti-more-alt"></i>
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                    <a href="{{route('subcategories.edit',$category->id)}}" class="dropdown-item">{{__('app.edit')}}</a>
-                                                    <form method="POST" action="{{route('subcategories.destroy',$category->id)}}" class="dropdown-item text-danger" >
+                                                    <a href="{{route('settings.edit',$setting->id)}}" class="dropdown-item">{{__('app.edit')}}</a>
+                                                    <form method="POST" action="{{route('settings.destroy',$setting->id)}}" class="dropdown-item text-danger" >
                                                         @csrf
                                                         <input type="hidden" name="_method" value="DELETE" >
                                                         <button class="btn btn-link" >

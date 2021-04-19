@@ -62,7 +62,6 @@ class SettingController extends Controller
      */
     public function edit(Setting $setting)
     {
-        $categories = Setting::get();
         return view('admin.settings.edit',[
             'setting'=>$setting,
         ]);
@@ -75,7 +74,7 @@ class SettingController extends Controller
      * @param  \App\Subsetting  $setting
      * @return \Illuminate\Http\Response
      */
-    public function update(SettingRequest $request, Subsetting $setting)
+    public function update(SettingRequest $request,Setting $setting)
     {
         $validated = $request->validated();
         $setting->update ($validated);

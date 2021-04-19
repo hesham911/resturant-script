@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-{{__('subcategories.titles.edit')}}
+{{__('settings.titles.edit')}}
 @endsection
 @section('head')
     <!-- Prism -->
@@ -13,7 +13,7 @@
 
     <div class="page-header">
         <div>
-            <h3> {{__('subcategories.titles.edit')}} </h3>
+            <h3> {{__('settings.titles.edit')}} </h3>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
@@ -45,31 +45,38 @@
                                     </ul>
                                 </div>
                             @endif
-                            <h6 class="card-title">{{__('subcategories.titles.edit')}}</h6>
-                            <form class="needs-validation" novalidate="" method="POST"  action="{{route('subcategories.update',$subcategory->id ) }}" >
+                            <h6 class="card-title">{{__('settings.titles.edit')}}</h6>
+                            <form class="needs-validation" novalidate="" method="POST"  action="{{route('settings.update',$setting->id ) }}" >
                                 @csrf
                                 <input type="hidden" name="_method" value="PUT" >
                                 <div class="form-group row">
-                                    <label for="inputPassword" class="col-sm-2 col-form-label">{{__('subcategories.name')}}</label>
+                                    <label for="inputPassword" class="col-sm-2 col-form-label">{{__('settings.name')}}</label>
                                     <div class="col-sm-10">
-                                      <input type="text" class="form-control" id="inputPassword" value="{{old('name',$subcategory->name)}}" name="name">
+                                      <input type="text" class="form-control" id="inputPassword" value="{{old('name',$setting->name)}}" name="name">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="inputPassword" class="col-sm-2 col-form-label">{{__('subcategories.category_id')}}</label>
+                                    <label for="inputPassword" class="col-sm-2 col-form-label">
+                                        {{__('settings.value')}}
+                                    </label>
                                     <div class="col-sm-10">
-                                      <select class="select2 " name="category_id">
-                                          <option disabled ></option>
-                                          @if ($categories->count() > 0)
-                                              @foreach ($categories as $category)
-                                                  <option  value="{{$category->id}}" @if ($category->id == old('category_id',$subcategory->category_id)) selected  @endif> {{$category->name}} </option>
-                                              @endforeach
-                                          @endif
-                                      </select>
+                                      <input type="text" class="form-control" id="inputPassword" value="{{old('value',$setting->value)}}" name="value">
+                                    </div>
+                                </div>
+                                <div class="col-sm-10 d-flex justify-content-around">
+                                    <div>
+                                        <label for=""> فعال </label>
+                                        <input type="radio" class="form-control" id="inputPassword" value="1" name="active" @if ($setting->active == 1) checked @endif >
+                                    </div>
+                                    <div>
+                                        <label for=""> غير فعال </label>
+                                        <input type="radio" class="form-control" id="inputPassword" value="0" name="active"  @if ($setting->active == 0) checked @endif  >
                                     </div>
                                 </div>
                                 <div class="d-flex flex-row-reverse" >
-                                    <button class="btn btn-primary " type="submit">{{__('app.FormSubmit')}}</button>
+                                    <button class="btn btn-primary " type="submit">
+                                        {{__('app.FormSubmit')}}
+                                    </button>
                                 </div>
                             </form>
                         </div>
