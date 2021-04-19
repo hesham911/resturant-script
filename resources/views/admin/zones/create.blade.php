@@ -12,17 +12,15 @@
     <div class="page-header">
         <div>
             <h3>إضافة منطقة</h3>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                        <a href="#">Home</a>
-                    </li>
-                    <li class="breadcrumb-item">
-                        <a href="#">Forms</a>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">Form Validation</li>
-                </ol>
-            </nav>
+            @include('admin.partials.breadcrumb',[
+                'upParent' => [
+                    'name' => 'المناطق',
+                    'url' => 'zones',
+                ],
+                'parent' => [
+                    'name' => 'المناطق',
+                ]
+            ])
         </div>
     </div>
 
