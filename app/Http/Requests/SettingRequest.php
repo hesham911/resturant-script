@@ -33,9 +33,9 @@ class SettingRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name'=>__('subcategories.name'),
-            'value'=>__('subcategories.value'),
-            'active'=>__('subcategories.active'),
+            'name'=>__('settings.name'),
+            'value'=>__('settings.value'),
+            'active'=>__('settings.active'),
         ];
     }
 }
