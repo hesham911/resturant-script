@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Material;
 use Illuminate\Http\Request;
+use App\Http\Requests\MaterialRequest;
 
 class MaterialController extends Controller
 {

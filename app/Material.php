@@ -9,4 +9,5 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Material extends Model
 {
     use SoftDeletes;
+    protected $fillable = ['name','expiry_date'];
 }
