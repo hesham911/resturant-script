@@ -26,6 +26,7 @@ Route::prefix('zones')->group(function()
 Route::resource('/categories','CategoryController');
 Route::resource('/subcategories','SubcategoryController');
 Route::resource('/settings','SettingController');
+Route::resource('/materials','MaterialController');
 
 
 Route::get('orders', function () {

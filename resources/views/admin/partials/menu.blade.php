@@ -108,4 +108,20 @@
             </li>
         </ul>
     </li>
+    <li>
+        <a href="#">
+            <span class="nav-link-icon">
+                <i class="fa fa-clipboard" ></i>
+            </span>
+            <span> {{__('materials.titles.index')}}</span>
+        </a>
+        <ul>
+            <li>
+                <a class="{{(request()->is('materials'))? 'active' : '' }}" href="{{route('materials.index')}}">عرض الكل</a>
+            </li>
+            <li>
+                <a class="{{(request()->is('materials/create'))? 'active' : '' }}" href="{{ route('materials.create') }}">إضافة جديد</a>
+            </li>
+        </ul>
+    </li>
 </ul>
