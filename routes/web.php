@@ -27,6 +27,7 @@ Route::resource('/categories','CategoryController');
 Route::resource('/subcategories','SubcategoryController');
 Route::resource('/settings','SettingController');
 Route::resource('/materials','MaterialController');
+Route::resource('/supplies','SupplyController');
 
 
 Route::get('orders', function () {

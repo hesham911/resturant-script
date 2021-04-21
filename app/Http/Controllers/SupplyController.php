@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Supply;
+use App\Material;
 use Illuminate\Http\Request;
 
 class SupplyController extends Controller
@@ -14,7 +15,8 @@ class SupplyController extends Controller
      */
     public function index()
     {
-        //
+        $supplies = Supply::get();
+        return view('admin.supplies.index',['supplies'=>$supplies]);
     }
 
     /**
@@ -24,7 +26,8 @@ class SupplyController extends Controller
      */
     public function create()
     {
-        //
+        $materials = Material::get();
+        return view('admin.supplies.create',['materials' => $materials]);
     }
 
     /**
@@ -33,53 +36,63 @@ class SupplyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SupplyRequest  $request)
     {
-        //
+        $validated = $request->validated();
+        Supply::create($validated);
+        $request->session()->flash('message',__('supplies.notifications.created_succesfully'));
+        return redirect(route('supplies.index'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Supply  $supply
+     * @param  \App\SubSupply  $supply
      * @return \Illuminate\Http\Response
      */
     public function show(Supply $supply)
     {
-        //
+        return view('admin.supplies.show',['supply' => $supply]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Supply  $supply
+     * @param  \App\SubSupply  $supply
      * @return \Illuminate\Http\Response
      */
     public function edit(Supply $supply)
     {
-        //
+        return view('admin.supplies.edit',[
+            'supply'=>$supply,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Supply  $supply
+     * @param  \App\SubSupply  $supply
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Supply $supply)
+    public function update(SupplyRequest $request,Supply $supply)
     {
-        //
+        $validated = $request->validated();
+        $supply->update ($validated);
+        $request->session()->flash('message',__('supplies.notifications.updated_succesfully'));
+        return redirect(route('supplies.index'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Supply  $supply
+     * @param  \App\SubSupply  $supply
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Supply $supply)
+    public function destroy(Request $request,Supply $supply)
     {
-        //
+        $supply->delete();
+        $request->session()->flash('message',__('supplies.notifications.deleted_succesfully'));
+        return redirect(route('supplies.index'));
     }
 }

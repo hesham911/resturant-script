@@ -124,4 +124,20 @@
             </li>
         </ul>
     </li>
+    <li>
+        <a href="#">
+            <span class="nav-link-icon">
+                <i class="fa fa-clipboard" ></i>
+            </span>
+            <span> {{__('supplies.titles.index')}}</span>
+        </a>
+        <ul>
+            <li>
+                <a class="{{(request()->is('supplies'))? 'active' : '' }}" href="{{route('supplies.index')}}">عرض الكل</a>
+            </li>
+            <li>
+                <a class="{{(request()->is('supplies/create'))? 'active' : '' }}" href="{{ route('supplies.create') }}">إضافة جديد</a>
+            </li>
+        </ul>
+    </li>
 </ul>
