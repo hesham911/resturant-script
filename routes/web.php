@@ -23,11 +23,12 @@ Route::resource('/categories','CategoryController');
 Route::resource('/subcategories','SubcategoryController');
 Route::resource('/settings','SettingController');
 Route::resource('/materials','MaterialController');
+Route::resource('/orders','OrderController');
 
 
-Route::get('orders', function () {
+/* Route::get('orders', function () {
     return view('admin.orders');
-})->name('orders');
+})->name('orders'); */
 
 Route::get('mail', function () {
     return view('mail');

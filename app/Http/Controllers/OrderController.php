@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OrderRequest;
+use App\User;
 use App\Order;
+use App\Table;
+use App\Subcategory;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -14,7 +18,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $orders = Order::get();
+        return view('admin.orders.index',['orders'=>$orders]);
     }
 
     /**
@@ -24,7 +29,12 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        $clients = User::all();
+        $subcategories = Subcategory::all();
+        $tables = Table::all();
+        $types = Order::type();
+        return view('admin.orders.create',['clients'=>$clients,'subcategories'=>$subcategories,
+            'tables'=>$tables,'types'=>$types]);
     }
 
     /**
@@ -33,9 +43,12 @@ class OrderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(OrderRequest $request)
     {
-        //
+        $validated = $request->validated();
+        Order::create($validated);
+        $request->session()->flash('message',__('geo.zones.massages.created_successfully'));
+        return redirect(route('orders.index'));
     }
 
     /**
