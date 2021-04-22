@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    المناطق
+    {{__('geo.zones.titles.index')}}
 @endsection
 @section('head')
     <!-- Datatable -->
