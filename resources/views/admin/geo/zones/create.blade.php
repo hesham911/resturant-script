@@ -46,13 +46,13 @@
                                 <div class="form-group row">
                                     <label for="name" class="col-sm-2 col-form-label">{{__('geo.zones.name')}}</label>
                                     <div class="col-sm-10">
-                                        <input type="text" name="name" class="form-control" id="name" placeholder="{{__('geo.zones.placeholder.name')}}">
+                                        <input type="text" name="name" value="{{old('name')}}" class="form-control" id="name" placeholder="{{__('geo.zones.placeholder.name')}}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="price" class="col-sm-2 col-form-label">{{__('geo.zones.price')}}</label>
                                     <div class="col-sm-10">
-                                        <input type="text" name="price" class="form-control" id="price" placeholder="{{__('geo.zones.placeholder.price')}}">
+                                        <input type="text" name="price" value="{{old('price')}}" class="form-control" id="price" placeholder="{{__('geo.zones.placeholder.price')}}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
