@@ -14,7 +14,7 @@
             <h3>{{__('geo.zones.titles.create')}}</h3>
             @include('admin.partials.breadcrumb',[
                 'parent' => [
-                    'name' => __("geo.zones.titles.create"),
+                    'name' => __("geo.zones.titles.edit"),
                 ]
             ])
         </div>
@@ -41,23 +41,24 @@
                                 </div>
                             @endif
                             <h6 class="card-title">{{__('geo.zones.titles.subcreate')}}</h6>
-                            <form method="post" action="{{route('zones.store')}}" multiple>
+                            <form method="post" action="{{route('zones.update',['zone'=>$zone->id])}}" multiple>
                                 @CSRF
+                                <input type="hidden" name="_method" value="PUT" >
                                 <div class="form-group row">
                                     <label for="name" class="col-sm-2 col-form-label">{{__('geo.zones.name')}}</label>
                                     <div class="col-sm-10">
-                                        <input type="text" name="name" value="{{old('name')}}" class="form-control" id="name" placeholder="{{__('geo.zones.placeholder.name')}}">
+                                        <input type="text" name="name" value="{{old('name',$zone->name)}}" class="form-control" id="name" placeholder="{{__('geo.zones.placeholder.name')}}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="price" class="col-sm-2 col-form-label">{{__('geo.zones.price')}}</label>
                                     <div class="col-sm-10">
-                                        <input type="text" name="price" value="{{old('price')}}" class="form-control" id="price" placeholder="{{__('geo.zones.placeholder.price')}}">
+                                        <input type="text" name="price" value="{{old('price',$zone->price)}}" class="form-control" id="price" placeholder="{{__('geo.zones.placeholder.price')}}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-10">
-                                        <button type="submit" class="btn btn-primary">{{__('app.forms.btn.add')}}</button>
+                                        <button type="submit" class="btn btn-primary">{{__('app.forms.btn.edit')}}</button>
                                     </div>
                                 </div>
                             </form>

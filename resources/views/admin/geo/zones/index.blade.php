@@ -19,17 +19,26 @@
             ])
         </div>
         <div class="mt-2 mt-md-0">
-
-                <a href="#" class="btn btn-primary">{{__('geo.zones.titles.subcreate')}}</a>
-
+            <a href="#" class="btn btn-primary">{{__('geo.zones.titles.subcreate')}}</a>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-12">
-
             <div class="card">
                 <div class="card-body">
+                    @if (Session::has('message'))
+                        <div class="alert alert-info">{{ Session::get('message') }}</div>
+                    @endif
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <div class="table-responsive">
                         <table id="user-list" class="table table-lg">
                             <thead>
@@ -54,8 +63,14 @@
                                             <i class="ti-more-alt"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <a href="{{route('zones.edit',['zone'=>$zone->id])}}" class="dropdown-item">{{__('app.edit')}}</a>
-                                            <a href="{{route('zones.destroy',['zone'=>$zone->id])}}" class="dropdown-item text-danger">{{__('app.delete')}}</a>
+                                            <a href="{{route('zones.edit',['zone'=>$zone->id])}}" class="dropdown-item">{{__('app.tables.btn.edit')}}</a>
+                                            <form method="POST" action="{{route('zones.destroy',['zone'=>$zone->id])}}"  >
+                                                @CSRF
+                                                <input type="hidden" name="_method" value="DELETE" >
+                                                <button class="dropdown-item text-danger" >
+                                                    {{__('app.tables.btn.delete')}}
+                                                </button>
+                                            </form>
                                         </div>
                                     </div>
                                 </td>
