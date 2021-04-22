@@ -1,80 +1,95 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-</head>
-<body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-        <main class="py-4">
-            @yield('content')
-        </main>
+<html lang="ar">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>لوحة التحكم | @yield('title')</title>
+        <!-- Favicon -->
+        <link rel="shortcut icon" href="{{ url('assets/media/image/favicon.png') }}"/>
+        <!-- Main css -->
+        <link rel="stylesheet" href="{{ url('vendors/bundle.css') }}" type="text/css">
+        <!-- Google font -->
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+        @yield('head')
+        <!-- App css -->
+        <link rel="stylesheet" href="{{ url('assets/css/app.min.css') }}" type="text/css">
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body class="small-navigation2 rtl">
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="preloader-icon"></div>
+        <span>Loading...</span>
     </div>
-</body>
+    <!-- ./ Preloader -->
+    <!-- Sidebar group -->
+    <div class="sidebar-group">
+        <!-- BEGIN: Settings -->
+        @include('admin.partials.sidebar')
+        <!-- END: Settings -->
+    </div>
+    <!-- ./ Sidebar group -->
+        <!-- Layout wrapper -->
+        <div class="layout-wrapper">
+            <!-- Header -->
+            <div class="header d-print-none">
+                @include('admin.partials.header')
+            </div>
+            <!-- ./ Header -->
+            <!-- Content wrapper -->
+            <div class="content-wrapper">
+                <!-- begin::navigation -->
+                <div class="navigation">
+                    <div class="navigation-header">
+                        <span>Navigation</span>
+                        <a href="#">
+                            <i class="ti-close"></i>
+                        </a>
+                    </div>
+                    <div class="navigation-menu-body">
+                        @include('admin.partials.menu')
+                    </div>
+                </div>
+                <!-- end::navigation -->
+
+                <!-- Content body -->
+                <div class="content-body">
+                    <!-- Content -->
+                    <div class="content @yield('parentClassName')">
+                        @yield('content')
+                    </div>
+                    <!-- ./ Content -->
+
+                    <!-- Footer -->
+                    <footer class="content-footer">
+                        <div>© {{ date('Y') }} Gogi - <a href="http://laborasyon.com" target="_blank">Laborasyon</a></div>
+                        <div>
+                            <nav class="nav">
+                                <a href="https://themeforest.net/licenses/standard" class="nav-link">Licenses</a>
+                                <a href="#" class="nav-link">Change Log</a>
+                                <a href="#" class="nav-link">Get Help</a>
+                            </nav>
+                        </div>
+                    </footer>
+                    <!-- ./ Footer -->
+                </div>
+                <!-- ./ Content body -->
+            </div>
+            <!-- ./ Content wrapper -->
+        </div>
+        <!-- ./ Layout wrapper -->
+
+        <!-- Main scripts -->
+        <script src="{{ url('vendors/bundle.js') }}"></script>
+
+        @yield('script')
+
+        <!-- App scripts -->
+        <script src="{{ url('assets/js/app.min.js') }}"></script>
+    </body>
 </html>

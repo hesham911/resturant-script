@@ -14,7 +14,7 @@ class ZoneController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.zones.index');
     }
 
     /**
@@ -24,7 +24,7 @@ class ZoneController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.zones.create');
     }
 
     /**

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Subcategory;
+use App\Category;
 use Illuminate\Http\Request;
+use App\Http\Requests\SubcategoryRequest;
 
 class SubcategoryController extends Controller
 {
@@ -14,8 +16,8 @@ class SubcategoryController extends Controller
      */
     public function index()
     {
-        $categories = Subcategory::get();
-        return view('subcategory.index',['categories'=>$categories]);
+        $subcategories = Subcategory::get();
+        return view('admin.subcategories.index',['subcategories'=>$subcategories]);
     }
 
     /**
@@ -25,7 +27,8 @@ class SubcategoryController extends Controller
      */
     public function create()
     {
-        return view('subcategory.create');
+        $categories = Category::get();
+        return view('admin.subcategories.create',['categories'=>$categories]);
     }
 
     /**
@@ -38,8 +41,8 @@ class SubcategoryController extends Controller
     {
         $validated = $request->validated();
         Subcategory::create($validated);
-        $request->session()->flash('message',__('categories.notifications.created_succesfully'));
-        return redirect(route('subcategory.index'));
+        $request->session()->flash('message',__('subcategories.notifications.created_succesfully'));
+        return redirect(route('subcategories.index'));
     }
 
     /**
@@ -50,7 +53,7 @@ class SubcategoryController extends Controller
      */
     public function show(Subcategory $subcategory)
     {
-        return view('subcategory.show',['category',$subcategory]);
+        return view('admin.subcategories.show',['category',$subcategory]);
     }
 
     /**
@@ -61,7 +64,11 @@ class SubcategoryController extends Controller
      */
     public function edit(Subcategory $subcategory)
     {
-        return view('subcategory.edit',['category',$subcategory]);
+        $categories = Category::get();
+        return view('admin.subcategories.edit',[
+            'subcategory'=>$subcategory,
+            'categories'=>$categories,
+        ]);
     }
 
     /**
@@ -74,11 +81,9 @@ class SubcategoryController extends Controller
     public function update(SubcategoryRequest $request, Subcategory $subcategory)
     {
         $validated = $request->validated();
-        $subcategory->name = $validated->name;
-        $subcategory->category_id = $validated->category_id;
-        $subcategory->save();
-        $request->session()->flash('message',__('categories.notifications.created_succesfully'));
-        return redirect(route('subcategory.index'));
+        $subcategory->update ($validated);
+        $request->session()->flash('message',__('subcategories.notifications.updated_succesfully'));
+        return redirect(route('subcategories.index'));
     }
 
     /**
@@ -87,10 +92,10 @@ class SubcategoryController extends Controller
      * @param  \App\Subcategory  $subcategory
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Subcategory $subcategory)
+    public function destroy(Request $request,Subcategory $subcategory)
     {
         $subcategory->delete();
-        $request->session()->flash('message',__('categories.notifications.deleted_succesfully'));
-        return redirect(route('subcategory.index'));
+        $request->session()->flash('message',__('subcategories.notifications.deleted_succesfully'));
+        return redirect(route('subcategories.index'));
     }
 }
