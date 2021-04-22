@@ -96,9 +96,9 @@
                                         <label class="custom-control-label" for="user-list-select-all"></label>
                                     </div>
                                 </th>
-                                <th>#</th>
+                                <th>{{__('app.tables.num')}}</th>
                                 <th> {{__('categories.name')}}</th>
-                                <th class="text-right"> خيارات</th>
+                                <th class="text-right"> {{__('app.tables.control')}}</th>
                             </tr>
                             </thead>
                             <tbody>

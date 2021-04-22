@@ -64,7 +64,7 @@
                                   </div>
                               </div>
                               <div class="d-flex flex-row-reverse" >
-                                <button class="btn btn-primary " type="submit">{{__('app.FormSubmit')}}</button>
+                                <button class="btn btn-primary " type="submit">{{__('app.forms.btn.add')}}</button>
                               </div>
                             </form>
                         </div>
@@ -81,7 +81,7 @@
     <!-- Prism -->
     <script src="{{ url('vendors/prism/prism.js') }}"></script>
     <!-- selectto -->
-    <script src="../../vendors/select2/js/select2.min.js"></script>
+    <script src="{{asset('vendors/select2/js/select2.min.js')}}"></script>
   <script>
     $('.select2').select2({
         placeholder: 'اختر'

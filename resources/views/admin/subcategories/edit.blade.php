@@ -6,7 +6,7 @@
     <!-- Prism -->
     <link rel="stylesheet" href="{{ url('vendors/prism/prism.css') }}" type="text/css">
     <!-- selectto -->
-    <link rel="stylesheet" href="../../vendors/select2/css/select2.min.css" type="text/css">
+    <link rel="stylesheet" href="{{asset('vendors/select2/css/select2.min.css')}}" type="text/css">
 @endsection
 
 @section('content')
@@ -69,7 +69,7 @@
                                     </div>
                                 </div>
                                 <div class="d-flex flex-row-reverse" >
-                                    <button class="btn btn-primary " type="submit">{{__('app.FormSubmit')}}</button>
+                                    <button class="btn btn-primary " type="submit">{{__('app.forms.bnt.edit')}}</button>
                                 </div>
                             </form>
                         </div>
@@ -86,7 +86,7 @@
     <!-- Prism -->
     <script src="{{ url('vendors/prism/prism.js') }}"></script>
     <!-- selectto -->
-    <script src="../../vendors/select2/js/select2.min.js"></script>
+    <script src="{{asset('vendors/select2/js/select2.min.js')}}"></script>
   <script>
     $('.select2').select2({
         placeholder: 'اختر'

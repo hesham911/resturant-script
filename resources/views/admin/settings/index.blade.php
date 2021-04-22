@@ -96,11 +96,11 @@
                                         <label class="custom-control-label" for="user-list-select-all"></label>
                                     </div>
                                 </th>
-                                <th>#</th>
+                                <th>{{__('app.tables.num')}}</th>
                                 <th> {{__('settings.name')}}</th>
                                 <th> {{__('settings.value')}}</th>
                                 <th> {{__('settings.active')}}</th>
-                                <th class="text-right"> خيارات</th>
+                                <th class="text-right"> {{__('app.tables.control')}}</th>
                             </tr>
                             </thead>
                             <tbody>
