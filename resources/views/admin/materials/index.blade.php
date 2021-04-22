@@ -96,10 +96,10 @@
                                         <label class="custom-control-label" for="user-list-select-all"></label>
                                     </div>
                                 </th>
-                                <th>#</th>
+                                <th>{{__('app.tables.num')}}</th>
                                 <th> {{__('materials.name')}}</th>
                                 <th> {{__('materials.expiry_date')}}</th>
-                                <th class="text-right"> خيارات</th>
+                                <th class="text-right"> {{__('app.tables.control')}}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -118,12 +118,12 @@
                                                     <i class="ti-more-alt"></i>
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                    <a href="{{route('materials.edit',$material->id)}}" class="dropdown-item">{{__('app.edit')}}</a>
-                                                    <form method="POST" action="{{route('materials.destroy',$material->id)}}" class="dropdown-item text-danger" >
+                                                    <a href="{{route('materials.edit',$material->id)}}" class="dropdown-item">{{__('app.tables.btn.edit')}}</a>
+                                                    <form method="POST" action="{{route('materials.destroy',$material->id)}}"  >
                                                         @csrf
                                                         <input type="hidden" name="_method" value="DELETE" >
-                                                        <button class="btn btn-link" >
-                                                            {{__('app.delete')}}
+                                                        <button class="dropdown-item text-danger" >
+                                                            {{__('app.tables.btn.delete')}}
                                                         </button>
                                                     </form>
                                                 </div>

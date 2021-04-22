@@ -75,7 +75,7 @@
                                 </div>
                                 <div class="d-flex flex-row-reverse" >
                                     <button class="btn btn-primary " type="submit">
-                                        {{__('app.FormSubmit')}}
+                                        {{__('app.forms.btn.edit')}}
                                     </button>
                                 </div>
                             </form>
