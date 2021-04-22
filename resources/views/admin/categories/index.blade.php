@@ -116,12 +116,12 @@
                                                     <i class="ti-more-alt"></i>
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                    <a href="{{route('categories.edit',$category->id)}}" class="dropdown-item">{{__('app.edit')}}</a>
-                                                    <form method="POST" action="{{route('categories.destroy',$category->id)}}" class="dropdown-item text-danger" >
+                                                    <a href="{{route('categories.edit',$category->id)}}" class="dropdown-item">{{__('app.tables.btn.edit')}}</a>
+                                                    <form method="POST" action="{{route('categories.destroy',$category->id)}}"  >
                                                         @csrf
                                                         <input type="hidden" name="_method" value="DELETE" >
-                                                        <button class="btn btn-link" >
-                                                            {{__('app.delete')}}
+                                                        <button class="dropdown-item text-danger" >
+                                                            {{__('app.tables.btn.delete')}}
                                                         </button>
                                                     </form>
                                                 </div>
