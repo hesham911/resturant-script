@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ZoneRequest;
 use App\Zone;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,8 @@ class ZoneController extends Controller
      */
     public function index()
     {
-        return view('admin.zones.index');
+        $zones = Zone::get();
+        return view('admin.geo.zones.index',['zones'=>$zones]);
     }
 
     /**
@@ -24,7 +26,7 @@ class ZoneController extends Controller
      */
     public function create()
     {
-        return view('admin.zones.create');
+        return view('admin.geo.zones.create');
     }
 
     /**
@@ -33,9 +35,12 @@ class ZoneController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ZoneRequest $request)
     {
-        //
+        $validated = $request->validated();
+        Zone::create($validated);
+        $request->session()->flash('message',__('geo.zones.massages.created_successfully'));
+        return redirect(route('zones.index'));
     }
 
     /**
