@@ -41,4 +41,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Employee::class,'user_id');
     }
+
+    public function phone()
+    {
+        return $this->hasMany(Phone::class,'user_id');
+    }
 }
