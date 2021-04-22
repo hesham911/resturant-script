@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Zone extends Model
 {
-    use SoftDeletes
+    use SoftDeletes;
+
+    protected $fillable= ['name','price'];
 }

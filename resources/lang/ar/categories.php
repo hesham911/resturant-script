@@ -1,11 +1,11 @@
 <?php
 
 return [
-        'titles' => [
-            'index' => ' الأقسام ',
-            'create' => ' إضافة قسم ',
-            'edit' => 'تعديل  القسم  ',
-            'show' => ' عرض  القسم  ',
+        'titles'        => [
+            'index'     => ' الأقسام ',
+            'create'    => ' إضافة قسم ',
+            'edit'      => 'تعديل  القسم  ',
+            'show'      => ' عرض  القسم  ',
         ],
         'notifications' => [
             'created_succesfully' => 'تم  تسجيل  قسم   بنجاح',

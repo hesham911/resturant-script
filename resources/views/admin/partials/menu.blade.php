@@ -7,16 +7,26 @@
             <span>Dashboard</span>
         </a>
     </li>
+
     <li>
-        <a @if(request()->segment(1) == 'orders') class="active"
-           @endif href="{{ route('orders') }}">
+        <a href="#">
             <span class="nav-link-icon">
                 <i data-feather="shopping-cart"></i>
             </span>
-            <span>Orders</span>
-            <span class="badge badge-danger">2</span>
+            <span>{{__('orders.titles.index')}}</span>
         </a>
+        <ul>
+            <li>
+                <a class="{{(request()->is('orders'))? 'active' : '' }}"
+                    href="{{ route('orders.index') }}">{{__('app.menu.show_all')}}</a>
+            </li>
+            <li>
+                <a class="{{(request()->is('orders/create'))? 'active' : '' }}"
+                    href="{{ route('orders.create') }}">{{__('app.menu.add_new')}}</a>
+            </li>
+        </ul>
     </li>
+
     <li>
         <a @if(request()->segment(1) == 'users') class="active"
            @endif href="{{ route('users') }}">
@@ -49,16 +59,83 @@
             <span class="nav-link-icon">
                 <i class="fa fa-map-marker fa-2x"></i>
             </span>
-            <span>المناطق</span>
+            <span>التحكم في المناطق</span>
         </a>
         <ul>
             <li>
-                <a @if(request()->segment(1) == 'zones') class="active"
-                   @endif href="{{ route('zones') }}">عرض الكل</a>
+                <a href="#">المناطق</a>
+                <ul>
+                    <li>
+                        <a href="{{route('zones.index')}}">كل المناطق</a>
+                    </li>
+                    <li>
+                        <a href="{{route('zones.create')}}">إضافة منطقة جديدة</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a href="#">
+            <span class="nav-link-icon">
+                <i class="fa fa-clipboard" ></i>
+            </span>
+            <span> الأقسام</span>
+        </a>
+        <ul>
+            <li>
+                <a class="{{(request()->is('categories'))? 'active' : '' }}" href="{{route('categories.index')}}">عرض الكل</a>
             </li>
             <li>
-                <a @if(request()->segment(1) == 'create') class="active"
-                   @endif href="{{ route('zones.create') }}">إضافة جديد</a>
+                <a class="{{(request()->is('categories/create'))? 'active' : '' }}" href="{{ route('categories.create') }}">إضافة جديد</a>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a href="#">
+            <span class="nav-link-icon">
+                <i class="fa fa-clipboard" ></i>
+            </span>
+            <span> {{__('subcategories.titles.index')}}</span>
+        </a>
+        <ul>
+            <li>
+                <a class="{{(request()->is('subcategories'))? 'active' : '' }}" href="{{route('subcategories.index')}}">عرض الكل</a>
+            </li>
+            <li>
+                <a class="{{(request()->is('subcategories/create'))? 'active' : '' }}" href="{{ route('subcategories.create') }}">إضافة جديد</a>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a href="#">
+            <span class="nav-link-icon">
+                <i class="fa fa-clipboard" ></i>
+            </span>
+            <span> {{__('settings.titles.index')}}</span>
+        </a>
+        <ul>
+            <li>
+                <a class="{{(request()->is('settings'))? 'active' : '' }}" href="{{route('settings.index')}}">عرض الكل</a>
+            </li>
+            <li>
+                <a class="{{(request()->is('settings/create'))? 'active' : '' }}" href="{{ route('settings.create') }}">إضافة جديد</a>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a href="#">
+            <span class="nav-link-icon">
+                <i class="fa fa-clipboard" ></i>
+            </span>
+            <span> {{__('materials.titles.index')}}</span>
+        </a>
+        <ul>
+            <li>
+                <a class="{{(request()->is('materials'))? 'active' : '' }}" href="{{route('materials.index')}}">عرض الكل</a>
+            </li>
+            <li>
+                <a class="{{(request()->is('materials/create'))? 'active' : '' }}" href="{{ route('materials.create') }}">إضافة جديد</a>
             </li>
         </ul>
     </li>

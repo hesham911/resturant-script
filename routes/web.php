@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-
 Route::get('/', function () {return view('admin.dashboard');})->name('dashboard');
 // zones middleware('auth')->
 Route::prefix('zones')->group(function()
@@ -23,32 +22,27 @@ Route::prefix('zones')->group(function()
     Route::get('/create','ZoneController@create')->name('zones.create');
 });
 
-//  orders
-Route::prefix('orders')->group(function()
-{
-    Route::get('/','OrderController@index')->name('orders');
-    Route::get('/create','OrderController@create')->name('orders.create');
-    Route::post('/store','OrderController@store')->name('orders.store');
-});
+
+Route::resource('/zones','ZoneController');
+Route::resource('/categories','CategoryController');
+Route::resource('/subcategories','SubcategoryController');
+Route::resource('/settings','SettingController');
+Route::resource('/materials','MaterialController');
+// orders
+Route::resource('/orders','OrderController');
+Route::post('/orders/cancel/{order}','OrderController@cancel')->name('orders.cancel');
+Route::get('/orders/status/{order}/{state}','OrderController@status')->name('orders.status');
 
 
-
-
-
-
-
-
-Route::get('orders', function () {
+/* Route::get('orders', function () {
     return view('admin.orders');
-})->name('orders');
+})->name('orders'); */
 
 Route::get('mail', function () {
     return view('mail');
 })->name('mail');
 
-
 // User
-
 Route::get('users', function () {
     return view('admin.users');
 })->name('users');
@@ -63,7 +57,5 @@ Route::get('blank-page', function () {
 // not found page
 //Route::any('{catchall}',function(){return view('admin.partials.404');})->where('catchall', '.*');
 /****/
-
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');

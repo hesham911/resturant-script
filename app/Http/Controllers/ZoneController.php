@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ZoneRequest;
 use App\Zone;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,8 @@ class ZoneController extends Controller
      */
     public function index()
     {
-        return view('admin.zones.index');
+        $zones = Zone::get();
+        return view('admin.geo.zones.index',['zones'=>$zones]);
     }
 
     /**
@@ -24,7 +26,7 @@ class ZoneController extends Controller
      */
     public function create()
     {
-        return view('admin.zones.create');
+        return view('admin.geo.zones.create');
     }
 
     /**
@@ -33,20 +35,12 @@ class ZoneController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ZoneRequest $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Zone  $zone
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Zone $zone)
-    {
-        //
+        $validated = $request->validated();
+        Zone::create($validated);
+        $request->session()->flash('message',__('geo.zones.massages.created_successfully'));
+        return redirect(route('zones.index'));
     }
 
     /**
@@ -57,7 +51,7 @@ class ZoneController extends Controller
      */
     public function edit(Zone $zone)
     {
-        //
+        return view('admin.geo.zones.edit',['zone'=>$zone,]);
     }
 
     /**
@@ -67,9 +61,12 @@ class ZoneController extends Controller
      * @param  \App\Zone  $zone
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Zone $zone)
+    public function update(ZoneRequest $request, Zone $zone)
     {
-        //
+        $validated = $request->validated();
+        $zone->update($validated);
+        $request->session()->flash('message',__('geo.zones.massages.updated_successfully'));
+        return redirect(route('zones.index'));
     }
 
     /**
@@ -78,8 +75,10 @@ class ZoneController extends Controller
      * @param  \App\Zone  $zone
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Zone $zone)
+    public function destroy(Request $request,Zone $zone)
     {
-        //
+        $zone->delete();
+        $request->session()->flash('message',__('geo.zones.massages.deleted_successfully'));
+        return redirect(route('zones.index'));
     }
 }
