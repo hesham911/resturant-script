@@ -93,6 +93,16 @@
                                     <input type="date" class="form-control" id="inputPassword" placeholder="{{__('supplies.expiry_date')}}" name="expiry_date" value="{{old('expiry_date')}}">
                                     </div>
                               </div>
+                              <div class="form-group row">
+                                    <label for="inputPassword" class="col-sm-2 col-form-label">{{__('supplies.unit')}}</label>
+                                    <div class="col-sm-10">
+                                    <select class="select2 " name="unit">
+                                        <option disabled > اختر الوحدة</option>
+                                        <option value=true  >{{__('supplies.bykilo')}}</option>
+                                        <option value=false >{{__('supplies.byunit')}}</option>
+                                    </select>
+                                    </div>
+                              </div>
                               <div class="d-flex flex-row-reverse">
                                 <button class="btn btn-primary " type="submit">{{__('app.FormSubmit')}}</button>
                               </div>

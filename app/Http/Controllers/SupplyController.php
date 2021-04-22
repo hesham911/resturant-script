@@ -40,7 +40,7 @@ class SupplyController extends Controller
     {
         $validated = $request->validated();
         Supply::create($validated);
-        $request->session()->flash('message',__('supplies.notifications.created_succesfully'));
+        $request->session()->flash('message',__('supplies.massages.created_succesfully'));
         return redirect(route('supplies.index'));
     }
 
@@ -79,7 +79,7 @@ class SupplyController extends Controller
     {
         $validated = $request->validated();
         $supply->update ($validated);
-        $request->session()->flash('message',__('supplies.notifications.updated_succesfully'));
+        $request->session()->flash('message',__('supplies.massages.updated_succesfully'));
         return redirect(route('supplies.index'));
     }
 
@@ -92,7 +92,7 @@ class SupplyController extends Controller
     public function destroy(Request $request,Supply $supply)
     {
         $supply->delete();
-        $request->session()->flash('message',__('supplies.notifications.deleted_succesfully'));
+        $request->session()->flash('message',__('supplies.massages.deleted_succesfully'));
         return redirect(route('supplies.index'));
     }
 }

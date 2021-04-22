@@ -39,7 +39,7 @@ class CategoryController extends Controller
     {
         $validated = $request->validated();
         Category::create($validated);
-        $request->session()->flash('message',__('categories.notifications.created_succesfully'));
+        $request->session()->flash('message',__('categories.massages.created_succesfully'));
         return redirect(route('categories.index'));
     }
 
@@ -76,7 +76,7 @@ class CategoryController extends Controller
     {
         $validated = $request->validated();
         $category->update ($validated);
-        $request->session()->flash('message',__('categories.notifications.updated_succesfully'));
+        $request->session()->flash('message',__('categories.massages.updated_succesfully'));
         return redirect(route('categories.index'));
     }
 
@@ -89,7 +89,7 @@ class CategoryController extends Controller
     public function destroy( Request $request,Category $category)
     {
         $category->delete();
-        $request->session()->flash('message',__('categories.notifications.deleted_succesfully'));
+        $request->session()->flash('message',__('categories.massages.deleted_succesfully'));
         return redirect(route('categories.index'));
     }
 }

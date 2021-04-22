@@ -7,7 +7,7 @@ return [
             'edit'      => 'تعديل  الخامة  ',
             'show'      => ' عرض  الخامة  ',
         ],
-        'notifications' => [
+        'massages' => [
             'created_succesfully' => 'تم  تسجيل  خامة   بنجاح',
             'updated_succesfully' => 'تم تعديل  الخامة بنجاح',
             'deleted_succesfully' => 'تم حذف  الخامة بنجاح',
@@ -17,5 +17,9 @@ return [
         'quantity'                => ' الكمية  ',
         'price'                   => '  السعر   ',
         'Supplier_name'           => '  المورد   ',
-        'expiry_date'           => '  تاريخ الصلاحية   ',
+        'expiry_date'             => '  تاريخ الصلاحية   ',
+        'user_id'                 => '  الموظف  ',
+        'unit'                    => '  الوحدة  ',
+        'bykilo'                  => '  بالكيلو  ',
+        'byunit'                  => '  بالوحدة  ',
 ];

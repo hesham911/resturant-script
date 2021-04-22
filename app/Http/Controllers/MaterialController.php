@@ -39,7 +39,7 @@ class MaterialController extends Controller
     {
         $validated = $request->validated();
         Material::create($validated);
-        $request->session()->flash('message',__('materials.notifications.created_succesfully'));
+        $request->session()->flash('message',__('materials.massages.created_succesfully'));
         return redirect(route('materials.index'));
     }
 
@@ -76,7 +76,7 @@ class MaterialController extends Controller
     {
         $validated = $request->validated();
         $material->update ($validated);
-        $request->session()->flash('message',__('materials.notifications.updated_succesfully'));
+        $request->session()->flash('message',__('materials.massages.updated_succesfully'));
         return redirect(route('materials.index'));
     }
 
@@ -89,7 +89,7 @@ class MaterialController extends Controller
     public function destroy( Request $request,Material $material)
     {
         $material->delete();
-        $request->session()->flash('message',__('materials.notifications.deleted_succesfully'));
+        $request->session()->flash('message',__('materials.massages.deleted_succesfully'));
         return redirect(route('materials.index'));
     }
 }

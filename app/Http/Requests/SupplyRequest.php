@@ -29,6 +29,8 @@ class SupplyRequest extends FormRequest
             'price'=>'required',
             'Supplier_name'=>'required',
             'expiry_date'=>'required',
+            'user_id'=>'required',
+            'unit'=>'required',
         ];
     }
 
@@ -40,6 +42,8 @@ class SupplyRequest extends FormRequest
             'price'=>__('supplies.price'),
             'Supplier_name'=>__('supplies.Supplier_name'),
             'expiry_date'=>__('supplies.expiry_date'),
+            'user_id'=>__('supplies.user_id'),
+            'unit'=>__('supplies.unit'),
         ];
     }
 }
