@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    إضافة منطقة
+    {{__('geo.zones.titles.create')}}
 @endsection
 @section('head')
     <!-- Prism -->
