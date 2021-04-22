@@ -26,7 +26,7 @@ class Order extends Model
         return $array;
     }
     // get type
-    public function getTypeAttribute()
+    public function getTypeeAttribute()
     {
         return self::type()[$this->type];
     }
@@ -40,16 +40,17 @@ class Order extends Model
                 2 => __('orders.status.closed'), //  تم إغلاق الطلب
                 3 => __('orders.status.payment'), //  تمت عملية الدفع */
                 0        => 'تم الطلب',
-                1     => 'تم التجهيز',
-                2         => 'تم إغلاق الطلب',
-                3         => 'تمت عملية الدفع',
+                1        => 'تم التجهيز',
+                2        => 'تم إغلاق الطلب',
+                3        => 'تم الدفع',
+                4        => 'تم الإلغاء',
             ];
         return $array;
     }
     // get status
-    public function getStatusAttribute()
+    public function getStatussAttribute()
     {
-        return self::type()[$this->status];
+        return self::status()[$this->status];
     }
     // subcategory
     public function subcategory()

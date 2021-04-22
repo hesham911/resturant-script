@@ -23,7 +23,10 @@ Route::resource('/categories','CategoryController');
 Route::resource('/subcategories','SubcategoryController');
 Route::resource('/settings','SettingController');
 Route::resource('/materials','MaterialController');
+// orders
 Route::resource('/orders','OrderController');
+Route::post('/orders/cancel/{order}','OrderController@cancel')->name('orders.cancel');
+Route::get('/orders/status/{order}/{state}','OrderController@status')->name('orders.status');
 
 
 /* Route::get('orders', function () {

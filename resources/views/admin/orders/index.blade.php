@@ -79,15 +79,21 @@
                     <div class="table-responsive">
                         <table id="user-list" class="table table-lg">
                             <thead>
-                            <tr>
-                                <th>{{__('app.tables.num')}}</th>
-                                <th>{{__('orders.client_id')}}</th>
-                                <th>{{__('orders.subcategory_id')}}</th>
-                                <th>{{__('orders.table_id')}}</th>
-                                <th>{{__('orders.type')}}</th>
-                                <th>{{__('orders.status')}}</th>
-                                <th class="text-right">{{__('app.tables.control')}}</th>
-                            </tr>
+                                <tr>
+                                    <th>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="user-list-select-all">
+                                            <label class="custom-control-label" for="user-list-select-all"></label>
+                                        </div>
+                                    </th>
+                                    <th>{{__('app.tables.num')}}</th>
+                                    <th>{{__('orders.client_id')}}</th>
+                                    <th>{{__('orders.subcategory_id')}}</th>
+                                    <th>{{__('orders.table_id')}}</th>
+                                    <th>{{__('orders.type')}}</th>
+                                    <th>{{__('orders.status')}}</th>
+                                    <th class="text-right">{{__('app.tables.control')}}</th>
+                                </tr>
                             </thead>
                             <tbody>
                                 @if($orders->count() > 0)
@@ -98,24 +104,39 @@
                                             <td>{{ $order->client_id }}</td>
                                             <td>{{ $order->subcategory->name }}</td>
                                             <td>{{ $order->table_id }}</td>
-                                            <td>{{ $order->type }}</td>
-                                            <td>{{ $order->status }}</td>
+                                            <td>
+                                                <span class="badge bg-primary-bright text-primary">
+                                                    {{ $order->typee }}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="badge bg-info-bright text-primary">
+                                                    {{ $order->statuss }}
+                                                </span>
+                                            </td>
                                             <td class="text-right">
                                                 <div class="dropdown">
-                                                    <a href="#" data-toggle="dropdown"
-                                                    class="btn btn-floating"
-                                                    aria-haspopup="true" aria-expanded="false">
+                                                    <a href="#" data-toggle="dropdown" class="btn btn-floating"
+                                                        aria-haspopup="true" aria-expanded="false">
                                                         <i class="ti-more-alt"></i>
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-right">
-                                                        <a href="{{route('orders.edit',$order->id)}}" class="dropdown-item">{{__('app.tables.btn.edit')}}</a>
-                                                        <form method="POST" action="{{route('orders.destroy',$order->id)}}"  >
+                                                        <a href="{{route('orders.status',['order'=>$order->id,'state'=>1])}}" class="dropdown-item">{{__('orders.actions.prepared')}}</a>
+                                                        <a href="{{route('orders.status',['order'=>$order->id,'state'=>2])}}" class="dropdown-item">{{__('orders.actions.close')}}</a>
+                                                        <a href="{{route('orders.status',['order'=>$order->id,'state'=>3])}}" class="dropdown-item">{{__('orders.actions.payed')}}</a>
+                                                        <a class="dropdown-item sendCancelOrder"
+                                                                data-toggle="modal" data-id="{{$order->id}}"
+                                                                data-target=".examplePostModal{{$order->id}}"
+                                                                data-commentNotice="{{route('orders.cancel',$order->id)}}">
+                                                            {{__('orders.actions.cancel')}}
+                                                        </a>
+                                                        {{-- <form method="POST" action="{{route('orders.destroy',$order->id)}}"  >
                                                             @csrf
                                                             <input type="hidden" name="_method" value="DELETE" >
                                                             <button class="dropdown-item text-danger" >
                                                                 {{__('app.tables.btn.delete')}}
                                                             </button>
-                                                        </form>
+                                                        </form> --}}
                                                     </div>
                                                 </div>
                                             </td>
@@ -129,7 +150,34 @@
             </div>
         </div>
     </div>
-
+    <!-- Modal -->
+    <div class="modal fade" id="examplePostModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">إلغاء طلب</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="ti-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form  method="POST" id="formModalPost" action="#">
+                        {{ csrf_field() }}
+                        {{ method_field('POST') }}
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">سبب الإلغاء:</label>
+                            <input type="text" name="cancel_reason" class="form-control" id="recipient-name" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق
+                            </button>
+                            <button type="submit" class="btn btn-primary">إرسال السبب</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('script')
@@ -137,4 +185,15 @@
     <script src="{{ url('vendors/dataTable/datatables.min.js') }}"></script>
 
     <script src="{{ url('assets/js/examples/pages/user-list.js') }}"></script>
+    <script>
+        // cancel order
+        $('.sendCancelOrder').on('click',function ()
+        {
+            var comment_id=$(this).attr("data-id");
+            var url=$(this).attr('data-commentNotice');
+            $('#formModalPost').attr('action',url);
+            $('#examplePostModal').addClass('examplePostModal'+comment_id);
+            //$('#examplePostModal h3').text('Send Notice ( Comment )');
+        });
+    </script>
 @endsection

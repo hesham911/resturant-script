@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Client;
 use App\Http\Requests\OrderRequest;
 use App\User;
 use App\Order;
@@ -29,7 +30,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        $clients = User::all();
+        $clients = Client::all();
         $subcategories = Subcategory::all();
         $tables = Table::all();
         $types = Order::type();
@@ -60,6 +61,34 @@ class OrderController extends Controller
     public function show(Order $order)
     {
         //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Order  $order
+     * @return \Illuminate\Http\Response
+     */
+    public function status(Order $order,$state,Request $request)
+    {
+        $order->update(['status'=>$state]);
+        $request->session()->flash('message',__('orders.notifications.change_status'));
+        return redirect(route('orders.index'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Order  $order
+     * @return \Illuminate\Http\Response
+     */
+    public function cancel(Order $order,Request $request)
+    {
+        $order->status=4;
+        $order->cancel_reason=$request->cancel_reason;
+        $order->save();
+        $request->session()->flash('message',__('orders.notifications.cancel_succesfully'));
+        return redirect(route('orders.index'));
     }
 
     /**
