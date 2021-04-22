@@ -25,7 +25,6 @@ class MaterialRequest extends FormRequest
     {
         return [
             'name'=>'required',
-            'expiry_date'=>'required',
         ];
     }
 
@@ -33,7 +32,6 @@ class MaterialRequest extends FormRequest
     {
         return [
             'name'=>__('settings.name'),
-            'expiry_date'=>__('settings.expiry_date'),
         ];
     }
 }

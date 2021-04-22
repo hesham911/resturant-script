@@ -98,7 +98,6 @@
                                 </th>
                                 <th>#</th>
                                 <th> {{__('materials.name')}}</th>
-                                <th> {{__('materials.expiry_date')}}</th>
                                 <th class="text-right"> خيارات</th>
                             </tr>
                             </thead>
@@ -109,7 +108,6 @@
                                         <td></td>
                                         <td>{{ $material->id }}</td>
                                         <td>{{ $material->name }}</td>
-                                        <td>{{ $material->expiry_date }}</td>
                                         <td class="text-right">
                                             <div class="dropdown">
                                                 <a href="#" data-toggle="dropdown"

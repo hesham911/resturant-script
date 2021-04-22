@@ -73,6 +73,13 @@
                                         <input type="radio" class="form-control" id="inputPassword" value="0" name="active"  @if ($setting->active == 0) checked @endif  >
                                     </div>
                                 </div>
+                                
+                                <div class="form-group row">
+                                    <label for="inputPassword" class="col-sm-2 col-form-label">{{__('supplies.expiry_date')}}</label>
+                                    <div class="col-sm-10">
+                                      <input type="date" class="form-control" id="inputPassword" placeholder="{{__('supplies.expiry_date')}}" name="expiry_date"  value="{{old('expiry_date',$supply->expiry_date)}}">
+                                    </div>
+                                </div>
                                 <div class="d-flex flex-row-reverse" >
                                     <button class="btn btn-primary " type="submit">
                                         {{__('app.FormSubmit')}}

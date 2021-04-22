@@ -55,12 +55,6 @@
                                       <input type="text" class="form-control" id="inputPassword" placeholder="{{__('materials.name')}}" name="name"  value="{{old('name',$material->name)}}">
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <label for="inputPassword" class="col-sm-2 col-form-label">{{__('materials.expiry_date')}}</label>
-                                    <div class="col-sm-10">
-                                      <input type="date" class="form-control" id="inputPassword" placeholder="{{__('materials.expiry_date')}}" name="expiry_date"  value="{{old('expiry_date',$material->expiry_date)}}">
-                                    </div>
-                                </div>
                                 <div class="d-flex flex-row-reverse" >
                                     <button class="btn btn-primary " type="submit">{{__('app.FormSubmit')}}</button>
                               </div>

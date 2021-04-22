@@ -101,6 +101,7 @@
                                 <th> {{__('supplies.quantity')}}</th>
                                 <th> {{__('supplies.price')}}</th>
                                 <th> {{__('supplies.Supplier_name')}}</th>
+                                <th> {{__('supplies.expiry_date')}}</th>
                                 <th class="text-right"> خيارات</th>
                             </tr>
                             </thead>
@@ -114,6 +115,7 @@
                                         <td>{{ $supply->quantity }}</td>
                                         <td>{{ $supply->price }}</td>
                                         <td>{{ $supply->Supplier_name }}</td>
+                                        <td>{{ $supply->expiry_date }}</td>
                                         <td class="text-right">
                                             <div class="dropdown">
                                                 <a href="#" data-toggle="dropdown"

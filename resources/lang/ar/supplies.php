@@ -17,4 +17,5 @@ return [
         'quantity'                => ' الكمية  ',
         'price'                   => '  السعر   ',
         'Supplier_name'           => '  المورد   ',
+        'expiry_date'           => '  تاريخ الصلاحية   ',
 ];

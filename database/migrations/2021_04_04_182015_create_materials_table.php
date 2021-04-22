@@ -16,7 +16,6 @@ class CreateMaterialsTable extends Migration
         Schema::create('materials', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->date('expiry_date')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
