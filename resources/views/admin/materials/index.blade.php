@@ -96,10 +96,10 @@
                                         <label class="custom-control-label" for="user-list-select-all"></label>
                                     </div>
                                 </th>
-                                <th>#</th>
+                                <th>{{__('app.tables.num')}}</th>
                                 <th> {{__('materials.name')}}</th>
                                 <th> {{__('materials.expiry_date')}}</th>
-                                <th class="text-right"> خيارات</th>
+                                <th class="text-right"> {{__('app.tables.control')}}</th>
                             </tr>
                             </thead>
                             <tbody>

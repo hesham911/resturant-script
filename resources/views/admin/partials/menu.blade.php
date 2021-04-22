@@ -49,14 +49,19 @@
             <span class="nav-link-icon">
                 <i class="fa fa-map-marker fa-2x"></i>
             </span>
-            <span>المناطق</span>
+            <span>التحكم في المناطق</span>
         </a>
         <ul>
             <li>
-                <a class="{{(request()->is('zones'))? 'active' : '' }}" href="{{ route('zones') }}">عرض الكل</a>
-            </li>
-            <li>
-                <a class="{{(request()->is('zones/create'))? 'active' : '' }}" href="{{ route('zones.create') }}">إضافة جديد</a>
+                <a href="#">المناطق</a>
+                <ul>
+                    <li>
+                        <a href="{{route('zones.index')}}">كل المناطق</a>
+                    </li>
+                    <li>
+                        <a href="{{route('zones.create')}}">إضافة منطقة جديدة</a>
+                    </li>
+                </ul>
             </li>
         </ul>
     </li>

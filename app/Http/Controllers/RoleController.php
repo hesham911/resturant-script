@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ZoneRequest;
-use App\Zone;
 use Illuminate\Http\Request;
 
-class ZoneController extends Controller
+class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +13,7 @@ class ZoneController extends Controller
      */
     public function index()
     {
-        $zones = Zone::get();
-        return view('admin.geo.zones.index',['zones'=>$zones]);
+        //
     }
 
     /**
@@ -26,7 +23,7 @@ class ZoneController extends Controller
      */
     public function create()
     {
-        return view('admin.geo.zones.create');
+        //
     }
 
     /**
@@ -35,21 +32,18 @@ class ZoneController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ZoneRequest $request)
+    public function store(Request $request)
     {
-        $validated = $request->validated();
-        Zone::create($validated);
-        $request->session()->flash('message',__('geo.zones.massages.created_successfully'));
-        return redirect(route('zones.index'));
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Zone  $zone
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Zone $zone)
+    public function show($id)
     {
         //
     }
@@ -57,10 +51,10 @@ class ZoneController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Zone  $zone
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Zone $zone)
+    public function edit($id)
     {
         //
     }
@@ -69,10 +63,10 @@ class ZoneController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Zone  $zone
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Zone $zone)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -80,10 +74,10 @@ class ZoneController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Zone  $zone
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Zone $zone)
+    public function destroy($id)
     {
         //
     }

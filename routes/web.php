@@ -14,15 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-
 Route::get('/', function () {return view('admin.dashboard');})->name('dashboard');
 // zones middleware('auth')->
-Route::prefix('zones')->group(function()
-{
-    Route::get('/','ZoneController@index')->name('zones');
-    Route::get('/create','ZoneController@create')->name('zones.create');
-});
 
+
+Route::resource('/zones','ZoneController');
 Route::resource('/categories','CategoryController');
 Route::resource('/subcategories','SubcategoryController');
 Route::resource('/settings','SettingController');
