@@ -44,17 +44,6 @@ class ZoneController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Zone  $zone
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Zone $zone)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Zone  $zone
@@ -62,7 +51,7 @@ class ZoneController extends Controller
      */
     public function edit(Zone $zone)
     {
-        //
+        return view('admin.geo.zones.edit',['zone'=>$zone,]);
     }
 
     /**
@@ -72,9 +61,12 @@ class ZoneController extends Controller
      * @param  \App\Zone  $zone
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Zone $zone)
+    public function update(ZoneRequest $request, Zone $zone)
     {
-        //
+        $validated = $request->validated();
+        $zone->update($validated);
+        $request->session()->flash('message',__('geo.zones.massages.updated_successfully'));
+        return redirect(route('zones.index'));
     }
 
     /**
@@ -83,8 +75,10 @@ class ZoneController extends Controller
      * @param  \App\Zone  $zone
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Zone $zone)
+    public function destroy(Request $request,Zone $zone)
     {
-        //
+        $zone->delete();
+        $request->session()->flash('message',__('geo.zones.massages.deleted_successfully'));
+        return redirect(route('zones.index'));
     }
 }
