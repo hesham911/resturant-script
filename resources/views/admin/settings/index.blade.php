@@ -96,11 +96,11 @@
                                         <label class="custom-control-label" for="user-list-select-all"></label>
                                     </div>
                                 </th>
-                                <th>#</th>
+                                <th>{{__('app.tables.num')}}</th>
                                 <th> {{__('settings.name')}}</th>
                                 <th> {{__('settings.value')}}</th>
                                 <th> {{__('settings.active')}}</th>
-                                <th class="text-right"> خيارات</th>
+                                <th class="text-right"> {{__('app.tables.control')}}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -128,12 +128,12 @@
                                                     <i class="ti-more-alt"></i>
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                    <a href="{{route('settings.edit',$setting->id)}}" class="dropdown-item">{{__('app.edit')}}</a>
-                                                    <form method="POST" action="{{route('settings.destroy',$setting->id)}}" class="dropdown-item text-danger" >
+                                                    <a href="{{route('settings.edit',$setting->id)}}" class="dropdown-item">{{__('app.tables.btn.edit')}}</a>
+                                                    <form method="POST" action="{{route('settings.destroy',$setting->id)}}"  >
                                                         @csrf
                                                         <input type="hidden" name="_method" value="DELETE" >
-                                                        <button class="btn btn-link" >
-                                                            {{__('app.delete')}}
+                                                        <button class="dropdown-item text-danger" >
+                                                            {{__('app.tables.btn.delete')}}
                                                         </button>
                                                     </form>
                                                 </div>
