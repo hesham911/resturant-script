@@ -19,6 +19,7 @@ Route::get('/', function () {return view('admin.dashboard');})->name('dashboard'
 
 
 Route::resource('/zones','ZoneController');
+Route::resource('/employees','EmployeeController');
 Route::resource('/categories','CategoryController');
 Route::resource('/subcategories','SubcategoryController');
 Route::resource('/settings','SettingController');

@@ -15,7 +15,7 @@ class EmployeeController extends Controller
     public function index()
     {
         $employees = Employee::orderBy('id','DESC')->get();
-        return view('admin.employees.index',['employees'=>$employees]);
+        return view('admin.users.employees.index',['employees'=>$employees]);
     }
 
     /**
@@ -25,7 +25,7 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        return view('admin.employees.create');
+        return view('admin.users.employees.create');
     }
 
     /**
@@ -39,7 +39,7 @@ class EmployeeController extends Controller
         $validated = $request->validated();
         Employee::create($validated);
         $request->session()->flash('success',__('employees.massages.created_successfully'));
-        return redirect(route('admin.employees.index'));
+        return redirect(route('admin.users.employees.index'));
     }
 
     /**
@@ -51,7 +51,7 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
-        return view('admin.employees.view',['employee'   => $employee]);
+        return view('admin.users.employees.view',['employee'   => $employee]);
     }
 
     /**
@@ -63,7 +63,7 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
-        return view('admin.employees.edit',['employee'   => $employee]);
+        return view('admin.users.employees.edit',['employee'   => $employee]);
     }
 
     /**
@@ -78,7 +78,7 @@ class EmployeeController extends Controller
         $validated = $request->validated();
         $employee->update($validated);
         $request->session()->flash('success',__('employees.massages.update_successfully'));
-        return redirect(route('admin.employees.index'));
+        return redirect(route('admin.users.employees.index'));
     }
 
     /**
@@ -91,6 +91,6 @@ class EmployeeController extends Controller
     {
         $employee->delete();
         $request->session()->flash('message',__('employees.massages.deleted_successfully'));
-        return redirect(route('admin.employees.index'));
+        return redirect(route('admin.users.employees.index'));
     }
 }
