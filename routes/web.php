@@ -13,41 +13,50 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-Route::get('/', function () {return view('admin.dashboard');})->name('dashboard');
-// zones middleware('auth')->
-
-
-Route::resource('/zones','ZoneController');
-Route::resource('/categories','CategoryController');
-Route::resource('/subcategories','SubcategoryController');
-Route::resource('/settings','SettingController');
-Route::resource('/materials','MaterialController');
-Route::resource('/supplies','SupplyController');
+Route::middleware('auth')->group(function(){
+    Route::get('/', function () {return view('admin.dashboard');})->name('dashboard');
+    Route::prefix('zones')->group(function()
+    {
+        Route::get('/','ZoneController@index')->name('zones');
+        Route::get('/create','ZoneController@create')->name('zones.create');
+    });
 
 
-Route::get('orders', function () {
-    return view('admin.orders');
-})->name('orders');
+    Route::resource('/zones','ZoneController');
+    Route::resource('/categories','CategoryController');
+    Route::resource('/subcategories','SubcategoryController');
+    Route::resource('/settings','SettingController');
+    Route::resource('/materials','MaterialController');
+    Route::resource('/supplies','SupplyController');
+    // orders
+    Route::resource('/orders','OrderController');
+    Route::post('/orders/cancel/{order}','OrderController@cancel')->name('orders.cancel');
+    Route::get('/orders/status/{order}/{state}','OrderController@status')->name('orders.status');
 
-Route::get('mail', function () {
-    return view('mail');
-})->name('mail');
 
-// User
-Route::get('users', function () {
-    return view('admin.users');
-})->name('users');
+    /* Route::get('orders', function () {
+        return view('admin.orders');
+    })->name('orders'); */
 
-Route::get('profile', function () {
-    return view('admin.profile');
-})->name('profile');
-Route::get('blank-page', function () {
-    return view('admin.blank-page');
-})->name('blank-page');
-/*****/
-// not found page
-//Route::any('{catchall}',function(){return view('admin.partials.404');})->where('catchall', '.*');
-/****/
+    Route::get('mail', function () {
+        return view('mail');
+    })->name('mail');
+
+    // User
+    Route::get('users', function () {
+        return view('admin.users');
+    })->name('users');
+
+    Route::get('profile', function () {
+        return view('admin.profile');
+    })->name('profile');
+    Route::get('blank-page', function () {
+        return view('admin.blank-page');
+    })->name('blank-page');
+    /*****/
+    // not found page
+    //Route::any('{catchall}',function(){return view('admin.partials.404');})->where('catchall', '.*');
+    /****/
+    Route::get('/home', 'HomeController@index')->name('home');
+});
 Auth::routes();
-Route::get('/home', 'HomeController@index')->name('home');

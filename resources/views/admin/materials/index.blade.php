@@ -57,7 +57,7 @@
                     <div class="table-responsive">
                         <table id="user-list" class="table table-lg">
                             <thead>
-                            <tr>
+                            <tr>''
                                 <th>
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" id="user-list-select-all">

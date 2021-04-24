@@ -7,16 +7,26 @@
             <span>Dashboard</span>
         </a>
     </li>
+
     <li>
-        <a @if(request()->segment(1) == 'orders') class="active"
-           @endif href="{{ route('orders') }}">
+        <a href="#">
             <span class="nav-link-icon">
                 <i data-feather="shopping-cart"></i>
             </span>
-            <span>Orders</span>
-            <span class="badge badge-danger">2</span>
+            <span>{{__('orders.titles.index')}}</span>
         </a>
+        <ul>
+            <li>
+                <a class="{{(request()->is('orders'))? 'active' : '' }}"
+                    href="{{ route('orders.index') }}">{{__('app.menu.show_all')}}</a>
+            </li>
+            <li>
+                <a class="{{(request()->is('orders/create'))? 'active' : '' }}"
+                    href="{{ route('orders.create') }}">{{__('app.menu.add_new')}}</a>
+            </li>
+        </ul>
     </li>
+
     <li>
         <a @if(request()->segment(1) == 'users') class="active"
            @endif href="{{ route('users') }}">
