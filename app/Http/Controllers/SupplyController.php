@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Supply;
 use App\Material;
+use App\MaterialMeasuring;
 use Illuminate\Http\Request;
+use App\Http\Requests\SupplyRequest;
+
 
 class SupplyController extends Controller
 {
@@ -15,7 +18,7 @@ class SupplyController extends Controller
      */
     public function index()
     {
-        $supplies = Supply::get();
+        $supplies = Supply::with('measurings')->get();
         return view('admin.supplies.index',['supplies'=>$supplies]);
     }
 
@@ -27,7 +30,11 @@ class SupplyController extends Controller
     public function create()
     {
         $materials = Material::get();
-        return view('admin.supplies.create',['materials' => $materials]);
+        $measurings = MaterialMeasuring::get();
+        return view('admin.supplies.create',[
+            'materials' => $materials,
+            'measurings' => $measurings,
+            ]);
     }
 
     /**

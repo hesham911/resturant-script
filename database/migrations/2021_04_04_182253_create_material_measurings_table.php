@@ -16,9 +16,7 @@ class CreateMaterialMeasuringsTable extends Migration
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Schema::create('material_measurings', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('material_id')->unsigned();
-                $table->foreign('material_id')->references('id')->on('materials');
-            $table->string('measuring_unit');
+            $table->string('name');
             $table->timestamps();
             $table->softDeletes();
         });

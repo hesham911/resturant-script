@@ -52,7 +52,7 @@
                                     <label for="inputPassword" class="col-sm-2 col-form-label">{{__('supplies.material_id')}}</label>
                                     <div class="col-sm-10">
                                     <select class="select2 " name="material_id">
-                                        <option disabled ></option>
+                                        <option disabled  selected> اختر {{__('supplies.material_id')}}</option>
                                         @if ($materials->count() > 0)
                                             @foreach ($materials as $material)
                                                 <option  value="{{$material->id}}"> {{$material->name}} </option>
@@ -66,7 +66,7 @@
                                         {{__('supplies.quantity')}}
                                     </label>
                                   <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="inputPassword" placeholder="{{__('supplies.quantity')}}" name="quantity">
+                                    <input type="text" class="form-control" id="inputPassword" placeholder="{{__('supplies.quantity')}}" value="{{old('quantity')}}" name="quantity">
                                   </div>
                               </div>
                               <div class="form-group row">
@@ -74,7 +74,7 @@
                                         {{__('supplies.price')}}
                                     </label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inputPassword" placeholder="{{__('supplies.price')}}" name="price">
+                                        <input type="text" class="form-control" id="inputPassword" placeholder="{{__('supplies.price')}}" value="{{old('price')}}" name="price">
                                     </div>
                                </div>
                                <div class="form-group row">
@@ -82,7 +82,7 @@
                                         {{__('supplies.Supplier_name')}}
                                     </label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inputPassword" placeholder="{{__('supplies.Supplier_name')}}" name="Supplier_name">
+                                        <input type="text" class="form-control" id="inputPassword" placeholder="{{__('supplies.Supplier_name')}}" value="{{old('Supplier_name')}}" name="Supplier_name">
                                     </div>
                               </div>
                               <div class="form-group row">
@@ -94,17 +94,20 @@
                                     </div>
                               </div>
                               <div class="form-group row">
-                                    <label for="inputPassword" class="col-sm-2 col-form-label">{{__('supplies.unit')}}</label>
+                                    <label for="inputPassword" class="col-sm-2 col-form-label">{{__('supplies.measuring_id')}}</label>
                                     <div class="col-sm-10">
-                                    <select class="select2 " name="unit">
-                                        <option disabled > اختر الوحدة</option>
-                                        <option value=true  >{{__('supplies.bykilo')}}</option>
-                                        <option value=false >{{__('supplies.byunit')}}</option>
+                                    <select class="select2 " name="measuring_id">
+                                        <option disabled  selected> اختر الوحدة</option>
+                                        @if ($measurings->count() >0)
+                                            @foreach ($measurings as $measuring)
+                                                <option value="{{$measuring->id}}" >{{$measuring->name}}</option>
+                                            @endforeach
+                                        @endif
                                     </select>
                                     </div>
                               </div>
                               <div class="d-flex flex-row-reverse">
-                                <button class="btn btn-primary " type="submit">{{__('app.FormSubmit')}}</button>
+                                <button class="btn btn-primary " type="submit">{{__('app.forms.btn.FormSubmit')}}</button>
                               </div>
                             </form>
                         </div>

@@ -19,7 +19,5 @@ return [
         'Supplier_name'           => '  المورد   ',
         'expiry_date'             => '  تاريخ الصلاحية   ',
         'user_id'                 => '  الموظف  ',
-        'unit'                    => '  الوحدة  ',
-        'bykilo'                  => '  بالكيلو  ',
-        'byunit'                  => '  بالوحدة  ',
+        'measuring_id'                    => '  الوحدة  ',
 ];
