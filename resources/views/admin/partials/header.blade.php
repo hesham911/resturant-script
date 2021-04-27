@@ -202,8 +202,11 @@
                         </div>
                         <div class="list-group">
                             <a href="{{ route('profile') }}" class="list-group-item">View Profile</a>
-                            <a href="http://bifor.laborasyon.com/login" class="list-group-item text-danger"
-                            data-sidebar-target="#settings">Sign Out!</a>
+                            <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                     document.getElementById('logout-form').submit();" class="list-group-item text-danger">{{ __('Logout') }}</a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
                         </div>
                         <div class="p-4">
                             <div class="mb-4">
