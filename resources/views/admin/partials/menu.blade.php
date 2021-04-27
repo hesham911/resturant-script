@@ -155,4 +155,17 @@
             </li>
         </ul>
     </li>
+    <li>
+        <a href="#">
+            <span class="nav-link-icon">
+                <i class="fa fa-clipboard" ></i>
+            </span>
+            <span> {{__('stocks.warehousestock')}}</span>
+        </a>
+        <ul>
+            <li>
+                <a class="{{(request()->is('warehousestock'))? 'active' : '' }}" href="{{route('warehousestock.index')}}">عرض الكل</a>
+            </li>
+        </ul>
+    </li>
 </ul>

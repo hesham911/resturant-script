@@ -6,6 +6,7 @@ use App\Supply;
 use App\Material;
 use App\Employee;
 use App\MaterialMeasuring;
+use App\WarehouseStock;
 use Illuminate\Http\Request;
 use App\Http\Requests\SupplyRequest;
 
@@ -45,6 +46,7 @@ class SupplyController extends Controller
     public function store(SupplyRequest  $request)
     {
         $validated = $request->validated();
+        // dd($validated['material_id']);
         $supply = new Supply;
         $supply->material_id =  $validated['material_id'];
         $supply->quantity =  $validated['quantity'];
@@ -54,7 +56,10 @@ class SupplyController extends Controller
         $employee = Employee::where('user_id',$request->user_id)->get()->first();
         $supply->employee_id =  $employee->id;
         $supply->save();
-        $stock = 
+        $stock = WarehouseStock::firstOrNew(['material_id'=>$validated['material_id']]);
+        $stock->material_id = $validated['material_id'];
+        $stock->quantity = $stock->quantity + $validated['quantity'];
+        $stock->save();
         $request->session()->flash('message',__('supplies.massages.created_succesfully'));
         return redirect(route('supplies.index'));
     }
@@ -95,6 +100,10 @@ class SupplyController extends Controller
     public function update(SupplyRequest $request,Supply $supply)
     {
         $validated = $request->validated();
+        //to reset the last added quantity
+        $warehouse_stock = WarehouseStock::findOrFail($supply->material_id);
+        $warehouse_stock->quantity = $warehouse_stock->quantity - $supply->quantity ;
+        $warehouse_stock->save();
         $supply->material_id =  $validated['material_id'];
         $supply->quantity =  $validated['quantity'];
         $supply->price =  $validated['price'];
@@ -102,6 +111,9 @@ class SupplyController extends Controller
         $supply->expiry_date =  $validated['expiry_date'];
         $supply->employee_id =  $request->employee_id;
         $supply->save();
+        $warehouse_stock = WarehouseStock::findOrFail($validated['material_id']);
+        $warehouse_stock->quantity = $warehouse_stock->quantity + $supply->quantity ;
+        $warehouse_stock->save();
         $request->session()->flash('message',__('supplies.massages.updated_succesfully'));
         return redirect(route('supplies.index'));
     }
