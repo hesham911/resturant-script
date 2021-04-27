@@ -13,41 +13,44 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+ROute::group([
+    'prefix' =>'dashbord',
+    'middleware'=>'is_admin'
+],function (){
+    Route::get('/', function () {return view('admin.dashboard');})->name('dashboard');
 
-Route::get('/', function () {return view('admin.dashboard');})->name('dashboard');
-// zones middleware('auth')->
+    Route::resource('/zones','ZoneController');
+    Route::resource('/employees','EmployeeController');
+    Route::resource('/clients','ClientController');
+    Route::resource('/categories','CategoryController');
+    Route::resource('/subcategories','SubcategoryController');
+    Route::resource('/settings','SettingController');
+    Route::resource('/materials','MaterialController');
 
 
-Route::resource('/zones','ZoneController');
-Route::resource('/employees','EmployeeController');
-Route::resource('/categories','CategoryController');
-Route::resource('/subcategories','SubcategoryController');
-Route::resource('/settings','SettingController');
-Route::resource('/materials','MaterialController');
+    Route::get('orders', function () {
+        return view('admin.orders');
+    })->name('orders');
 
-
-Route::get('orders', function () {
-    return view('admin.orders');
-})->name('orders');
-
-Route::get('mail', function () {
-    return view('mail');
-})->name('mail');
+    Route::get('mail', function () {
+        return view('mail');
+    })->name('mail');
 
 // User
-Route::get('users', function () {
-    return view('admin.users');
-})->name('users');
+    Route::get('users', function () {
+        return view('admin.users');
+    })->name('users');
 
-Route::get('profile', function () {
-    return view('admin.profile');
-})->name('profile');
-Route::get('blank-page', function () {
-    return view('admin.blank-page');
-})->name('blank-page');
-/*****/
-// not found page
-//Route::any('{catchall}',function(){return view('admin.partials.404');})->where('catchall', '.*');
-/****/
-Auth::routes();
-Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('profile', function () {
+        return view('admin.profile');
+    })->name('profile');
+    Route::get('blank-page', function () {
+        return view('admin.blank-page');
+    })->name('blank-page');
+});
+
+Auth::routes([
+    'register' => false,
+]);
+Route::get('/','HomeController@home');
+
