@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Employee;
 use App\Http\Requests\EmployeeRequest;
+use App\User;
+use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
+
 
 class EmployeeController extends Controller
 {
@@ -14,7 +18,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = Employee::orderBy('id','DESC')->get();
+        $employees = Employee::orderBy('id','DESC')->with(['roles:name','user:name,id,type'])->get();
         return view('admin.users.employees.index',['employees'=>$employees]);
     }
 
@@ -25,7 +29,11 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        return view('admin.users.employees.create');
+        $types = Employee::type();
+
+        $roles = Role::all()->pluck('name');
+
+        return view('admin.users.employees.create',['types'=> $types,'roles'=>$roles]);
     }
 
     /**
@@ -36,10 +44,26 @@ class EmployeeController extends Controller
      */
     public function store(EmployeeRequest $request)
     {
+
         $validated = $request->validated();
-        Employee::create($validated);
-        $request->session()->flash('success',__('employees.massages.created_successfully'));
-        return redirect(route('admin.users.employees.index'));
+        $validated['password'] = bcrypt($request->password);
+        $validated['type'] = 1;
+        $validated['is_admin'] = 1;
+        //dd($request->all(),$validated);
+        $user = User::create($validated);
+
+        $employee = $user->employee()->create([
+            'user_id'   =>$user->id,
+            'type'      =>$request->type_employees,
+            'status'    =>$request->status_employees,
+        ]);
+
+        if ($employee){
+            $user->phones()->createMany($request->group_a);
+            $user->assignRole($request->roles);
+        }
+        $request->session()->flash('message',__('users.employees.massages.created_successfully'));
+        return redirect(route('employees.index'));
     }
 
     /**
@@ -63,7 +87,18 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
-        return view('admin.users.employees.edit',['employee'   => $employee]);
+        $types  = Employee::type();
+        $employeeRoles = $employee->user->roles->pluck('name');
+        $roles  = Role::whereNotIn('name',$employeeRoles)->get()->pluck('name');
+        $phones = $employee->user->phones->pluck('number');
+
+        return view('admin.users.employees.edit',[
+            'employee'          => $employee ,
+            'types'             => $types ,
+            'roles'             => $roles,
+            'employeeRoles'     => $employeeRoles,
+            'phones'            => $phones
+        ]);
     }
 
     /**
@@ -75,10 +110,26 @@ class EmployeeController extends Controller
      */
     public function update(EmployeeRequest $request, Employee $employee)
     {
+
         $validated = $request->validated();
-        $employee->update($validated);
-        $request->session()->flash('success',__('employees.massages.update_successfully'));
-        return redirect(route('admin.users.employees.index'));
+        $validated['password'] = bcrypt($request->password);
+        $validated['type'] = 1;
+        $validated['is_admin'] = 1;
+       // dd($request->all(),$validated);
+        $employee->user->update($validated);
+        //dd($request->all());
+        $updated = $employee->update([
+            'type'      =>  $request->type_employees,
+            'status'    =>  $request->status_employees,
+        ]);
+
+        if ($updated){
+            $employee->user->phones()->delete();
+            $employee->user->phones()->createMany($request->group_a);
+            $employee->user->syncRoles($request->roles);
+        }
+        $request->session()->flash('message',__('users.employees.massages.update_successfully'));
+        return redirect(route('employees.index'));
     }
 
     /**
@@ -87,10 +138,11 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Employee $employee,EmployeeRequest $request)
+    public function destroy(Employee $employee,Request $request)
     {
-        $employee->delete();
-        $request->session()->flash('message',__('employees.massages.deleted_successfully'));
-        return redirect(route('admin.users.employees.index'));
+         $employee->delete();
+        //dd($x);
+        $request->session()->flash('message',__('users.employees.massages.deleted_successfully'));
+        return redirect(route('employees.index'));
     }
 }
