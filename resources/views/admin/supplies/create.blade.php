@@ -55,7 +55,7 @@
                                         <option disabled  selected> اختر {{__('supplies.material_id')}}</option>
                                         @if ($materials->count() > 0)
                                             @foreach ($materials as $material)
-                                                <option  value="{{$material->id}}"> {{$material->name}} </option>
+                                                <option  value="{{$material->id}}"> {{$material->name}} ({{$material->measuring->name}}) </option>
                                             @endforeach
                                         @endif
                                     </select>
@@ -93,19 +93,8 @@
                                     <input type="date" class="form-control" id="inputPassword" placeholder="{{__('supplies.expiry_date')}}" name="expiry_date" value="{{old('expiry_date')}}">
                                     </div>
                               </div>
-                              <div class="form-group row">
-                                    <label for="inputPassword" class="col-sm-2 col-form-label">{{__('supplies.measuring_id')}}</label>
-                                    <div class="col-sm-10">
-                                    <select class="select2 " name="measuring_id">
-                                        <option disabled  selected> اختر الوحدة</option>
-                                        @if ($measurings->count() >0)
-                                            @foreach ($measurings as $measuring)
-                                                <option value="{{$measuring->id}}" >{{$measuring->name}}</option>
-                                            @endforeach
-                                        @endif
-                                    </select>
-                                    </div>
-                              </div>
+                              
+                              <input type="hidden" value="{{Auth::id()}}" name="user_id">
                               <div class="d-flex flex-row-reverse">
                                 <button class="btn btn-primary " type="submit">{{__('app.forms.btn.FormSubmit')}}</button>
                               </div>

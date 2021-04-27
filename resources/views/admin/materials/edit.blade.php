@@ -55,6 +55,19 @@
                                       <input type="text" class="form-control" id="inputPassword" placeholder="{{__('materials.name')}}" name="name"  value="{{old('name',$material->name)}}">
                                     </div>
                                 </div>
+                                <div class="form-group row">
+                                        <label for="inputPassword" class="col-sm-2 col-form-label">{{__('materials.measuring_id')}}</label>
+                                        <div class="col-sm-10">
+                                        <select class="select2 " name="measuring_id">
+                                            <option disabled  selected> اختر الوحدة</option>
+                                            @if ($measurings->count() >0)
+                                                @foreach ($measurings as $measuring)
+                                                    <option value="{{$measuring->id}}" @if ($measuring->id == old('measuring_id',$material->measuring_id)) selected @endif >{{$measuring->name}}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                        </div>
+                                </div>
                                 <div class="d-flex flex-row-reverse" >
                                     <button class="btn btn-primary " type="submit">{{__('app.forms.btn.edit')}}</button>
                               </div>

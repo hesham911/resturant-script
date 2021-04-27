@@ -15,11 +15,11 @@ class DatabaseSeeder extends Seeder
         $this->call(FloorSeeder::class);
         $this->call(TableSeeder::class);
         $this->call(CategorySeeder::class);
+        $this->call(MeasuringSeeder::class);
         $this->call(SubcategorySeeder::class);
         $this->call(MaterialSeeder::class);
         $this->call(PermissionSeeder::class);
         $this->call(RoleSeeder::class);
         $this->call(UserSeeder::class);
-        $this->call(MeasuringSeeder::class);
     }
 }

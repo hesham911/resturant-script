@@ -8,8 +8,20 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Supply extends Model
 {
     use SoftDeletes;
+    protected $fillable = [
+        'quantity',
+        'price',
+        'Supplier_name',
+        'expiry_date',
+        'user_id',
+        'measuring_id',
+    ];
 
-    public function measurings (){
-        return $this->belongsTo(MaterialMeasuring::class , 'measuring_id');
+    public function material (){
+        return $this->belongsTo(Material::class);
+    }
+
+    public function employee (){
+        return $this->belongsTo(Employee::class);
     }
 }

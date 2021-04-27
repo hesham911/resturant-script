@@ -65,8 +65,10 @@
                                     </div>
                                 </th>
                                 <th>#</th>
+                                <th> {{__('supplies.employee_id')}}</th>
                                 <th> {{__('supplies.material_id')}}</th>
                                 <th> {{__('supplies.quantity')}}</th>
+                                <th> {{__('supplies.measuring_id')}}</th>
                                 <th> {{__('supplies.price')}}</th>
                                 <th> {{__('supplies.Supplier_name')}}</th>
                                 <th> {{__('supplies.expiry_date')}}</th>
@@ -79,8 +81,10 @@
                                     <tr>
                                         <td></td>
                                         <td>{{ $supply->id }}</td>
+                                        <td>{{ $supply->employee->user->name }}</td>
                                         <td>{{ $supply->material->name }}</td>
                                         <td>{{ $supply->quantity }}</td>
+                                        <td>{{ $supply->material->measuring->name }}</td>
                                         <td>{{ $supply->price }}</td>
                                         <td>{{ $supply->Supplier_name }}</td>
                                         <td>{{ $supply->expiry_date }}</td>
@@ -92,12 +96,12 @@
                                                     <i class="ti-more-alt"></i>
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                    <a href="{{route('supplies.edit',$supply->id)}}" class="dropdown-item">{{__('app.edit')}}</a>
+                                                    <a href="{{route('supplies.edit',$supply->id)}}" class="dropdown-item">{{__('app.forms.btn.edit')}}</a>
                                                     <form method="POST" action="{{route('supplies.destroy',$supply->id)}}" class="dropdown-item text-danger" >
                                                         @csrf
                                                         <input type="hidden" name="_method" value="DELETE" >
                                                         <button class="btn btn-link" >
-                                                            {{__('app.delete')}}
+                                                            {{__('app.forms.btn.delete')}}
                                                         </button>
                                                     </form>
                                                 </div>

@@ -25,13 +25,15 @@ class MaterialRequest extends FormRequest
     {
         return [
             'name'=>'required',
+            'measuring_id'=>'required',
         ];
     }
 
     public function attributes()
     {
         return [
-            'name'=>__('settings.name'),
+            'name'=>__('materials.name'),
+            'measuring_id'=>__('materials.measuring_id'),
         ];
     }
 }

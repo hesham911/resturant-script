@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Material;
 use Illuminate\Http\Request;
 use App\Http\Requests\MaterialRequest;
+use App\MaterialMeasuring;
 
 class MaterialController extends Controller
 {
@@ -15,7 +16,7 @@ class MaterialController extends Controller
      */
     public function index()
     {
-        $materials = Material::get();
+        $materials = Material::with('measuring')->get();
         return view('admin.materials.index',['materials'=>$materials]);
     }
 
@@ -26,7 +27,8 @@ class MaterialController extends Controller
      */
     public function create()
     {
-        return view('admin.materials.create');
+        $measurings = MaterialMeasuring::get();
+        return view('admin.materials.create',['measurings'=>$measurings]);
     }
 
     /**
@@ -62,7 +64,11 @@ class MaterialController extends Controller
      */
     public function edit(Material $material)
     {
-        return view('admin.materials.edit',['material'=>$material,]);
+        $measurings = MaterialMeasuring::get();
+        return view('admin.materials.edit',[
+            'material'=>$material,
+            'measurings'=>$measurings,
+            ]);
     }
 
     /**

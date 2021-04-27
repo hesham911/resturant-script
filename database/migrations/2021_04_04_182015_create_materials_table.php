@@ -16,6 +16,8 @@ class CreateMaterialsTable extends Migration
         Schema::create('materials', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->bigInteger('measuring_id')->unsigned();
+                $table->foreign('measuring_id')->references('id')->on('material_measurings');
             $table->timestamps();
             $table->softDeletes();
         });

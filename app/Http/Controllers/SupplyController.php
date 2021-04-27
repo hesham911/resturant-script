@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Supply;
 use App\Material;
+use App\Employee;
 use App\MaterialMeasuring;
 use Illuminate\Http\Request;
 use App\Http\Requests\SupplyRequest;
@@ -18,7 +19,7 @@ class SupplyController extends Controller
      */
     public function index()
     {
-        $supplies = Supply::with('measurings')->get();
+        $supplies = Supply::with('employee','material','material.measuring')->get();
         return view('admin.supplies.index',['supplies'=>$supplies]);
     }
 
@@ -29,11 +30,9 @@ class SupplyController extends Controller
      */
     public function create()
     {
-        $materials = Material::get();
-        $measurings = MaterialMeasuring::get();
+        $materials = Material::with('measuring')->get();
         return view('admin.supplies.create',[
             'materials' => $materials,
-            'measurings' => $measurings,
             ]);
     }
 
@@ -46,7 +45,16 @@ class SupplyController extends Controller
     public function store(SupplyRequest  $request)
     {
         $validated = $request->validated();
-        Supply::create($validated);
+        $supply = new Supply;
+        $supply->material_id =  $validated['material_id'];
+        $supply->quantity =  $validated['quantity'];
+        $supply->price =  $validated['price'];
+        $supply->Supplier_name =  $validated['Supplier_name'];
+        $supply->expiry_date =  $validated['expiry_date'];
+        $employee = Employee::where('user_id',$request->user_id)->get()->first();
+        $supply->employee_id =  $employee->id;
+        $supply->save();
+        $stock = 
         $request->session()->flash('message',__('supplies.massages.created_succesfully'));
         return redirect(route('supplies.index'));
     }
@@ -70,8 +78,10 @@ class SupplyController extends Controller
      */
     public function edit(Supply $supply)
     {
+        $materials = Material::get();
         return view('admin.supplies.edit',[
             'supply'=>$supply,
+            'materials'=>$materials,
         ]);
     }
 
@@ -85,7 +95,13 @@ class SupplyController extends Controller
     public function update(SupplyRequest $request,Supply $supply)
     {
         $validated = $request->validated();
-        $supply->update ($validated);
+        $supply->material_id =  $validated['material_id'];
+        $supply->quantity =  $validated['quantity'];
+        $supply->price =  $validated['price'];
+        $supply->Supplier_name =  $validated['Supplier_name'];
+        $supply->expiry_date =  $validated['expiry_date'];
+        $supply->employee_id =  $request->employee_id;
+        $supply->save();
         $request->session()->flash('message',__('supplies.massages.updated_succesfully'));
         return redirect(route('supplies.index'));
     }

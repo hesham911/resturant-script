@@ -15,12 +15,12 @@ class MeasuringSeeder extends Seeder
     {
         MaterialMeasuring::insert([
             [
-                'name'=>' بالكيلو ',
+                'name'=>'بالكيلو',
                 'created_at'=> Carbon::now()->toDateTimeString(),
                 'updated_at'=> Carbon::now()->toDateTimeString(),
             ]
             ,[
-                'name'=>' بالوحدة ',
+                'name'=>'بالوحدة',
                 'created_at'=> Carbon::now()->toDateTimeString(),
                 'updated_at'=> Carbon::now()->toDateTimeString(),
             ]

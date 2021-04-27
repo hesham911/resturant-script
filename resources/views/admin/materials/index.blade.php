@@ -66,6 +66,7 @@
                                 </th>
                                 <th>{{__('app.tables.num')}}</th>
                                 <th> {{__('materials.name')}}</th>
+                                <th> {{__('materials.measuring_id')}}</th>
                                 <th class="text-right"> {{__('app.tables.control')}}</th>
                             </tr>
                             </thead>
@@ -76,6 +77,7 @@
                                         <td></td>
                                         <td>{{ $material->id }}</td>
                                         <td>{{ $material->name }}</td>
+                                        <td>{{ $material->measuring->name }}</td>
                                         <td class="text-right">
                                             <div class="dropdown">
                                                 <a href="#" data-toggle="dropdown"

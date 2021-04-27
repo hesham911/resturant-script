@@ -15,4 +15,5 @@ return [
         ],
         'name'                    => ' الاسم ',
         'expiry_date'             => ' تاريخ الصلاحية ',
+        'measuring_id'            => ' وحدة القياس',
 ];
