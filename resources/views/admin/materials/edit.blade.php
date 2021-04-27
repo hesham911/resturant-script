@@ -14,17 +14,11 @@
     <div class="page-header">
         <div>
             <h3> {{__('materials.titles.edit')}} </h3>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                        <a href="#">Home</a>
-                    </li>
-                    <li class="breadcrumb-item">
-                        <a href="#">Forms</a>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">Form Validation</li>
-                </ol>
-            </nav>
+            @include('admin.partials.breadcrumb',[
+                'parent' => [
+                    'name' => __("materials.titles.edit"),
+                ]
+            ])
         </div>
     </div>
     <div class="row">

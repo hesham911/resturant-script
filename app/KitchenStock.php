@@ -11,4 +11,8 @@ class KitchenStock extends Model
         'quantity',
         'material_id',
     ];
+
+    public function material(){
+        return $this->belongsTo(Material::class);
+    }
 }

@@ -12,13 +12,11 @@
     <div class="page-header d-md-flex justify-content-between">
         <div>
             <h3> {{__('materials.titles.index')}} </h3>
-            {{-- @include('admin.partials.breadcrumbs',[
-                        'name' => 'الأقسام',
-                        'parent' => [
-                            'name' => 'Blog',
-                            'url' =>'articles/'
-                            ]
-                        ]) --}}
+            @include('admin.partials.breadcrumb',[
+                'parent' => [
+                    'name' => __("materials.titles.index"),
+                ]
+            ])
             <nav aria-label="breadcrumb" class="d-flex align-items-start">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
