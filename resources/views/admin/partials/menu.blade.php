@@ -184,4 +184,20 @@
             </li>
         </ul>
     </li>
+    <li>
+        <a href="#">
+            <span class="nav-link-icon">
+                <i class="fa fa-clipboard" ></i>
+            </span>
+            <span> {{__('kitchenrequests.titles.index')}}</span>
+        </a>
+        <ul>
+            <li>
+                <a class="{{(request()->is('kitchenrequests'))? 'active' : '' }}" href="{{route('kitchenrequests.index')}}">عرض الكل</a>
+            </li>
+            <li>
+                <a class="{{(request()->is('kitchenrequests/create'))? 'active' : '' }}" href="{{ route('kitchenrequests.create') }}">إضافة جديد</a>
+            </li>
+        </ul>
+    </li>
 </ul>
