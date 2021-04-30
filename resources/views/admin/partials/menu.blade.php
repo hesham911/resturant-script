@@ -168,4 +168,20 @@
             </li>
         </ul>
     </li>
+    <li>
+        <a href="#">
+            <span class="nav-link-icon">
+                <i class="fa fa-clipboard" ></i>
+            </span>
+            <span> {{__('productmanufactures.titles.index')}}</span>
+        </a>
+        <ul>
+            <li>
+                <a class="{{(request()->is('productmanufactures'))? 'active' : '' }}" href="{{route('productmanufactures.index')}}">عرض الكل</a>
+            </li>
+            <li>
+                <a class="{{(request()->is('productmanufactures/create'))? 'active' : '' }}" href="{{ route('productmanufactures.create') }}">إضافة جديد</a>
+            </li>
+        </ul>
+    </li>
 </ul>
