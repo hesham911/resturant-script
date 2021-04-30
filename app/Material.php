@@ -18,4 +18,12 @@ class Material extends Model
     public function supplies (){
         return $this->hasMany(Supply::class);
     }
+
+    public function ProductManufacture (){
+        return $this->hasMany(ProductManufacture::class);
+    }
+
+    public function warehousestock(){
+        return $this->hasOne(WarehouseStock::class);
+    }
 }

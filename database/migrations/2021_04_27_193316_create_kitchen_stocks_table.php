@@ -17,7 +17,7 @@ class CreateKitchenStocksTable extends Migration
             $table->id();
             $table->bigInteger('material_id')->unsigned();
                 $table->foreign('material_id')->references('id')->on('materials');
-            $table->integer('quantity')->unsigned();
+            $table->decimal('quantity')->unsigned();
             $table->softDeletes();
             $table->timestamps();
         });

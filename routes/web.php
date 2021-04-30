@@ -28,6 +28,8 @@ Route::middleware('auth')->group(function(){
     Route::resource('/settings','SettingController');
     Route::resource('/materials','MaterialController');
     Route::resource('/supplies','SupplyController');
+    Route::resource('/productmanufactures','ProductManufactureController');
+    Route::resource('/kitchenrequests','KitchenRequestController');
     Route::get('/warehousestock','WarehouseStockController@index')
     ->name('warehousestock.index');
     // orders
