@@ -22,6 +22,7 @@ class CreateKitchenRequestsTable extends Migration
             $table->tinyInteger('status')->default(0);
             $table->bigInteger('employee_id')->unsigned();
                 $table->foreign('employee_id')->references('id')->on('employees');
+            $table->decimal('total_cost');
             $table->timestamps();
             $table->softDeletes();
         });
