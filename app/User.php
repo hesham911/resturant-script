@@ -63,6 +63,10 @@ class User extends Authenticatable
         return $this->hasOne(Employee::class,'user_id');
     }
 
+    public function client()
+    {
+        return $this->hasOne(Client::class,'user_id');
+    }
     public function phones()
     {
         return $this->hasMany(Phone::class,'user_id');
