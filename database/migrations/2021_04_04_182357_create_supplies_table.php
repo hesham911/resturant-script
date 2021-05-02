@@ -24,6 +24,8 @@ class CreateSuppliesTable extends Migration
             $table->integer('price');
             $table->string('Supplier_name');
             $table->date('expiry_date')->nullable();
+            $table->boolean('status')->default(false);
+            $table->decimal('used_amount')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

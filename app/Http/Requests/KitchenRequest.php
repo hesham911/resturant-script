@@ -27,7 +27,6 @@ class KitchenRequest extends FormRequest
             'material_id'=>'required',
             'quantity'=>'required',
             'employee_id'=>'required',
-            'employee_id'=>'required',
         ];
     }
     public function attributes()

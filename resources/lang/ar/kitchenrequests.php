@@ -8,7 +8,7 @@ return [
             'show'      => ' عرض  طلب التوريد  ',
         ],
         'massages' => [
-            'created_succesfully' => 'تم  تسجيل  قسم   بنجاح',
+            'created_succesfully' => 'تم  تسجيل  طلب توريد   بنجاح',
             'updated_succesfully' => 'تم تعديل  طلب التوريد بنجاح',
             'deleted_succesfully' => 'تم حذف  طلب التوريد بنجاح',
             'error_occured'       => 'حدث خطأ من فضلك راجع البيانات المطلوبة',
