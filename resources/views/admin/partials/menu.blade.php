@@ -7,16 +7,26 @@
             <span>Dashboard</span>
         </a>
     </li>
+
     <li>
-        <a @if(request()->segment(1) == 'orders') class="active"
-           @endif href="{{ route('orders') }}">
+        <a href="#">
             <span class="nav-link-icon">
                 <i data-feather="shopping-cart"></i>
             </span>
-            <span>Orders</span>
-            <span class="badge badge-danger">2</span>
+            <span>{{__('orders.titles.index')}}</span>
         </a>
+        <ul>
+            <li>
+                <a class="{{(request()->is('orders'))? 'active' : '' }}"
+                    href="{{ route('orders.index') }}">{{__('app.menu.show_all')}}</a>
+            </li>
+            <li>
+                <a class="{{(request()->is('orders/create'))? 'active' : '' }}"
+                    href="{{ route('orders.create') }}">{{__('app.menu.add_new')}}</a>
+            </li>
+        </ul>
     </li>
+
     <li>
         <a @if(request()->segment(1) == 'users') class="active"
            @endif href="{{ route('users') }}">
@@ -126,6 +136,67 @@
             </li>
             <li>
                 <a class="{{(request()->is('materials/create'))? 'active' : '' }}" href="{{ route('materials.create') }}">إضافة جديد</a>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a href="#">
+            <span class="nav-link-icon">
+                <i class="fa fa-clipboard" ></i>
+            </span>
+            <span> {{__('supplies.titles.index')}}</span>
+        </a>
+        <ul>
+            <li>
+                <a class="{{(request()->is('supplies'))? 'active' : '' }}" href="{{route('supplies.index')}}">عرض الكل</a>
+            </li>
+            <li>
+                <a class="{{(request()->is('supplies/create'))? 'active' : '' }}" href="{{ route('supplies.create') }}">إضافة جديد</a>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a href="#">
+            <span class="nav-link-icon">
+                <i class="fa fa-clipboard" ></i>
+            </span>
+            <span> {{__('stocks.warehousestock')}}</span>
+        </a>
+        <ul>
+            <li>
+                <a class="{{(request()->is('warehousestock'))? 'active' : '' }}" href="{{route('warehousestock.index')}}">عرض الكل</a>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a href="#">
+            <span class="nav-link-icon">
+                <i class="fa fa-clipboard" ></i>
+            </span>
+            <span> {{__('productmanufactures.titles.index')}}</span>
+        </a>
+        <ul>
+            <li>
+                <a class="{{(request()->is('productmanufactures'))? 'active' : '' }}" href="{{route('productmanufactures.index')}}">عرض الكل</a>
+            </li>
+            <li>
+                <a class="{{(request()->is('productmanufactures/create'))? 'active' : '' }}" href="{{ route('productmanufactures.create') }}">إضافة جديد</a>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a href="#">
+            <span class="nav-link-icon">
+                <i class="fa fa-clipboard" ></i>
+            </span>
+            <span> {{__('kitchenrequests.titles.index')}}</span>
+        </a>
+        <ul>
+            <li>
+                <a class="{{(request()->is('kitchenrequests'))? 'active' : '' }}" href="{{route('kitchenrequests.index')}}">عرض الكل</a>
+            </li>
+            <li>
+                <a class="{{(request()->is('kitchenrequests/create'))? 'active' : '' }}" href="{{ route('kitchenrequests.create') }}">إضافة جديد</a>
             </li>
         </ul>
     </li>

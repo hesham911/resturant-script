@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Client;
+use App\Http\Requests\OrderRequest;
+use App\User;
 use App\Order;
+use App\Table;
+use App\Subcategory;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -14,7 +19,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $orders = Order::get();
+        return view('admin.orders.index',['orders'=>$orders]);
     }
 
     /**
@@ -22,9 +28,14 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $clients = Client::all();
+        $subcategories = Subcategory::all();
+        $tables = Table::all();
+        $types = Order::type();
+        return view('admin.orders.create',['clients'=>$clients,'subcategories'=>$subcategories,
+            'tables'=>$tables,'types'=>$types]);
     }
 
     /**
@@ -33,9 +44,12 @@ class OrderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(OrderRequest $request)
     {
-        //
+        $validated = $request->validated();
+        Order::create($validated);
+        $request->session()->flash('message',__('geo.zones.massages.created_successfully'));
+        return redirect(route('orders.index'));
     }
 
     /**
@@ -47,6 +61,34 @@ class OrderController extends Controller
     public function show(Order $order)
     {
         //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Order  $order
+     * @return \Illuminate\Http\Response
+     */
+    public function status(Order $order,$state,Request $request)
+    {
+        $order->update(['status'=>$state]);
+        $request->session()->flash('message',__('orders.notifications.change_status'));
+        return redirect(route('orders.index'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Order  $order
+     * @return \Illuminate\Http\Response
+     */
+    public function cancel(Order $order,Request $request)
+    {
+        $order->status=4;
+        $order->cancel_reason=$request->cancel_reason;
+        $order->save();
+        $request->session()->flash('message',__('orders.notifications.cancel_succesfully'));
+        return redirect(route('orders.index'));
     }
 
     /**

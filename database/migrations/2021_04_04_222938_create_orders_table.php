@@ -23,6 +23,8 @@ class CreateOrdersTable extends Migration
             $table->bigInteger('table_id')->unsigned()->nullable();
                 $table->foreign('table_id')->references('id')->on('tables');
             $table->tinyInteger('type');
+            $table->tinyInteger('status')->default(0);
+            $table->text('cancel_reason')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

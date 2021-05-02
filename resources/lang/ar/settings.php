@@ -7,13 +7,13 @@ return [
             'edit'      => 'تعديل  الاعدادات  ',
             'show'      => ' عرض  الاعدادات  ',
         ],
-        'notifications' => [
+        'massages' => [
             'created_succesfully' => 'تم  تسجيل  اعدادات   بنجاح',
             'updated_succesfully' => 'تم تعديل  الاعدادات بنجاح',
             'deleted_succesfully' => 'تم حذف  الاعدادات بنجاح',
-            'error_occured' => 'حدث خطأ من فضلك راجع البيانات المطلوبة',
+            'error_occured'       => 'حدث خطأ من فضلك راجع البيانات المطلوبة',
         ],
         'name'                    => ' الاسم ',
-        'value'                    => ' القيمة ',
-        'active'            => '  الحالة   ',
+        'value'                   => ' القيمة ',
+        'active'                  => '  الحالة   ',
 ];
