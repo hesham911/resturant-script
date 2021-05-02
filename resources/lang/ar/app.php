@@ -21,4 +21,7 @@ return [
         'show_all'     => 'عرض الكل',
         'add_new'      => ' إضافة جديد  ',
     ],
+    'settings'  =>[
+        'currency'     => 'جنيه',
+    ],
 ];

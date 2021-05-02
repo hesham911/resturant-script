@@ -32,6 +32,8 @@ Route::resource('/materials','MaterialController');
 Route::resource('/orders','OrderController');
 Route::post('/orders/cancel/{order}','OrderController@cancel')->name('orders.cancel');
 Route::get('/orders/status/{order}/{state}','OrderController@status')->name('orders.status');
+// products
+Route::resource('/products','ProductController');
 
 
 /* Route::get('orders', function () {
