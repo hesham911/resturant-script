@@ -52,12 +52,12 @@ class KitchenRequestController extends Controller
         $request_total_price=0 ;
         if ($WarehouseStock->quantity >= $validated['quantity']) {
             foreach ($supplies as $supply) {
-                $supply_remaining_amount = $supply->quantity-$supply->used_amount;
+                $supply_remaining_amount = $supply->quantity - $supply->used_amount;
                 $supply_unit_price = $supply->price / $supply->quantity;
                 while ( $request_quantity  > 0) {
                     if ($supply_remaining_amount < $request_quantity) {
                         $request_quantity =  $request_quantity - $supply_remaining_amount;
-                        $supply->quantity = 0;
+                        $supply->used_amount = $supply->quantity;
                         $supply->status = true;
                         $request_total_price = $request_total_price + ( $supply_unit_price * $supply_remaining_amount);
                         $supply->save();

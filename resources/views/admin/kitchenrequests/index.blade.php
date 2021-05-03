@@ -56,6 +56,7 @@
                                 <th> {{__('kitchenrequests.quantity')}}</th>
                                 <th> {{__('kitchenrequests.status')}}</th>
                                 <th> {{__('kitchenrequests.employee_id')}}</th>
+                                <th> {{__('kitchenrequests.total_cost')}}</th>
                                 <th class="text-right"> خيارات</th>
                             </tr>
                             </thead>
@@ -69,6 +70,7 @@
                                         <td>{{ $kitchenrequest->quantity }}</td>
                                         <td>{{ $kitchenrequest->status() [$kitchenrequest->status]}}</td>
                                         <td>{{ $kitchenrequest->employee->user->name }}</td>
+                                        <td>{{ $kitchenrequest->total_cost }}</td>
                                         <td class="text-right">
                                             <div class="dropdown">
                                                 <a href="#" data-toggle="dropdown"

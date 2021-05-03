@@ -17,4 +17,5 @@ return [
         'material_id'                => ' المادة الخام ',
         'quantity'                => ' الكمية ',
         'status'                => ' الحالة ',
+        'total_cost'                => ' اجمالي التكلفة  ',
 ];
