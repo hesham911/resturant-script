@@ -19,10 +19,10 @@ class CreateOrdersTable extends Migration
             $table->bigInteger('client_id')->unsigned()->nullable();
                 $table->foreign('client_id')->references('id')->on('clients');
             $table->bigInteger('subcategory_id')->unsigned()->nullable();
-                $table->foreign('category_id')->references('id')->on('categories');
+                $table->foreign('subcategory_id')->references('id')->on('subcategories');
             $table->bigInteger('table_id')->unsigned()->nullable();
                 $table->foreign('table_id')->references('id')->on('tables');
-            $table->tinyInteger('type')->default(1);
+            $table->tinyInteger('type');
             $table->tinyInteger('status')->default(0);
             $table->text('cancel_reason')->nullable();
             $table->timestamps();
