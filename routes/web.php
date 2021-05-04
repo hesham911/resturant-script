@@ -32,11 +32,12 @@ Route::middleware('auth')->group(function(){
     Route::resource('/kitchenrequests','KitchenRequestController');
     Route::get('/warehousestock','WarehouseStockController@index')
     ->name('warehousestock.index');
+    Route::resource('/employees','EmployeeController');
+
     // orders
     Route::resource('/orders','OrderController');
     Route::post('/orders/cancel/{order}','OrderController@cancel')->name('orders.cancel');
     Route::get('/orders/status/{order}/{state}','OrderController@status')->name('orders.status');
-
 
     /* Route::get('orders', function () {
         return view('admin.orders');

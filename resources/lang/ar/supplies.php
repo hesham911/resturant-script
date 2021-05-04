@@ -19,6 +19,8 @@ return [
         'Supplier_name'           => '  المورد   ',
         'expiry_date'             => '  تاريخ الصلاحية   ',
         'user_id'                 => '  المستخدم  ',
-        'measuring_id'                    => '  الوحدة  ',
-        'employee_id'                    => '  الموظف  ',
+        'measuring_id'            => '  الوحدة  ',
+        'status'                  => ' الحالة ',
+        'used_amount'             => '  الكمية المستهلكة  ',
+        'employee_id'             => '  الموظف  ',
 ];
