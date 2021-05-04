@@ -50,6 +50,7 @@ class KitchenRequestController extends Controller
         $request_quantity = $validated['quantity'];
         $WarehouseStock = WarehouseStock::where('material_id',$validated['material_id'])->get()->first();
         $request_total_price=0 ;
+        $supply_ids = [];
         if ($WarehouseStock->quantity >= $validated['quantity']) {
             foreach ($supplies as $supply) {
                 $supply_remaining_amount = $supply->quantity - $supply->used_amount;
@@ -73,17 +74,19 @@ class KitchenRequestController extends Controller
                         $request_quantity = 0;
                         $supply->save();
                     }
+                    $supply_ids[]= $supply->id;
                 }
             }
             $WarehouseStock->quantity =$WarehouseStock->quantity - $validated['quantity'] ;
             $WarehouseStock->save();
             // dd($validated);
-            $kitshen_request = new KitchenRequest;
-            $kitshen_request->material_id = $validated['material_id'];
-            $kitshen_request->quantity = $validated['quantity'];
-            $kitshen_request->employee_id = $validated['employee_id'];
-            $kitshen_request->total_cost = $request_total_price;
-            $kitshen_request->save();
+            $kitchenrequest = new KitchenRequest;
+            $kitchenrequest->material_id = $validated['material_id'];
+            $kitchenrequest->quantity = $validated['quantity'];
+            $kitchenrequest->employee_id = $validated['employee_id'];
+            $kitchenrequest->total_cost = $request_total_price;
+            $kitchenrequest->save();
+            $kitchenrequest->supplies()->sync($supply_ids);
             $request->session()->flash('message',__('kitchenrequests.massages.created_succesfully'));
             return redirect(route('kitchenrequests.index'));
         }else {
@@ -128,7 +131,66 @@ class KitchenRequestController extends Controller
     public function update(KitchenRequestRequest $request, KitchenRequest $kitchenrequest)
     {
         $validated = $request->validated();
-        $kitchenrequest->update ($validated);
+        $oldWarehouseStock = WarehouseStock::where('material_id', $kitchenrequest->material_id)->get()->first();
+        foreach ($kitchenrequest->supplies as  $supply) {
+            if ( $kitchenrequest->quantity  != 0) {
+                if ($supply->used_amount <= $kitchenrequest->quantity ) {
+                    $supply->used_amount = 0;
+                }else{
+                    $supply->used_amount = $supply->used_amount - $kitchenrequest->quantity;
+                }
+                $supply->status = false;
+                $supply->save();
+            }
+        }
+        $oldWarehouseStock->quantity = $oldWarehouseStock->quantity +  $kitchenrequest->quantity ;
+        $oldWarehouseStock->save();
+        $WarehouseStock = WarehouseStock::where('material_id',$validated['material_id'])->get()->first();
+        $material = Material::find($validated['material_id']);
+        $supplies = $material->supplies->where('status',false);
+        $request_quantity = $validated['quantity'];
+        $request_total_price=0 ;
+        $supply_ids = [];
+        if ($WarehouseStock->quantity >= $validated['quantity']) {
+            foreach ($supplies as $supply) {
+                $supply_remaining_amount = $supply->quantity - $supply->used_amount;
+                $supply_unit_price = $supply->price / $supply->quantity;
+                if ( $request_quantity  > 0) {
+                    if ($supply_remaining_amount < $request_quantity) {
+                        $request_quantity =  $request_quantity - $supply_remaining_amount;
+                        $supply->used_amount = $supply->quantity;
+                        $supply->status = true;
+                        $request_total_price = $request_total_price + ( $supply_unit_price * $supply_remaining_amount);
+                        $supply->save();
+                    }elseif ( $supply_remaining_amount > $request_quantity ) {
+                        $supply->used_amount = $supply->used_amount + $request_quantity;
+                        $request_total_price = $request_total_price + ( $supply_unit_price * $request_quantity);
+                        $request_quantity = 0;
+                        $supply->save();
+                    }else {
+                        $supply->used_amount = $supply->used_amount + $request_quantity;
+                        $supply->status = true;
+                        $request_total_price = $request_total_price + ( $supply_unit_price * $request_quantity);
+                        $request_quantity = 0;
+                        $supply->save();
+                    }
+                    $supply_ids[]= $supply->id;
+                }
+            }
+            $WarehouseStock->quantity =$WarehouseStock->quantity - $validated['quantity'] ;
+            $WarehouseStock->save();
+            $kitchenrequest->material_id = $validated['material_id'];
+            $kitchenrequest->quantity = $validated['quantity'];
+            $kitchenrequest->employee_id = $validated['employee_id'];
+            $kitchenrequest->total_cost = $request_total_price;
+            $kitchenrequest->save();
+            $kitchenrequest->supplies()->sync($supply_ids);
+            $request->session()->flash('message',__('kitchenrequests.massages.created_succesfully'));
+            return redirect(route('kitchenrequests.index'));
+        }else {
+            $request->session()->flash('message',' الكمية المطلوبة أكبر من المخزون ');
+            return redirect(route('kitchenrequests.create'));   
+        }
         $request->session()->flash('message',__('kitchenrequests.massages.updated_succesfully'));
         return redirect(route('kitchenrequests.index'));
     }
@@ -141,6 +203,20 @@ class KitchenRequestController extends Controller
      */
     public function destroy( Request $request,KitchenRequest $kitchenrequest)
     {
+        $WarehouseStock = WarehouseStock::where('material_id', $kitchenrequest->material_id)->get()->first();
+        foreach ($kitchenrequest->supplies as  $supply) {
+            if ( $kitchenrequest->quantity  != 0) {
+                if ($supply->used_amount <= $kitchenrequest->quantity ) {
+                    $supply->used_amount = 0;
+                }else{
+                    $supply->used_amount = $supply->used_amount - $kitchenrequest->quantity;
+                }
+                $supply->status = false;
+                $supply->save();
+            }
+        }
+        $WarehouseStock->quantity = $WarehouseStock->quantity +  $kitchenrequest->quantity ;
+        $WarehouseStock->save();
         $kitchenrequest->delete();
         $request->session()->flash('message',__('kitchenrequests.massages.deleted_succesfully'));
         return redirect(route('kitchenrequests.index'));

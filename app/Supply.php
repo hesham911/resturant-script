@@ -24,4 +24,8 @@ class Supply extends Model
     public function employee (){
         return $this->belongsTo(Employee::class);
     }
+
+    public function kitchen_requests(){
+        return $this->belongsToMany(KitchenRequest::class, 'request_supply'  , 'supply_id' ,'request_id');
+    }
 }

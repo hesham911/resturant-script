@@ -17,17 +17,6 @@
                     'name' => __("settings.titles.index"),
                 ]
             ])
-            <nav aria-label="breadcrumb" class="d-flex align-items-start">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                        <a href="{{ url('/') }}">Home</a>
-                    </li>
-                    <li class="breadcrumb-item">
-                        <a href="#">Pages</a>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">Users</li>
-                </ol>
-            </nav>
         </div>
         <div class="mt-2 mt-md-0">
             <div class="dropdown ml-2">

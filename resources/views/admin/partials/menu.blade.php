@@ -1,14 +1,14 @@
 <ul>
-    <li>
+    {{-- <li>
         <a @if(!request()->segment(1)) class="active" @endif href="{{ route('dashboard') }}">
             <span class="nav-link-icon">
                 <i data-feather="pie-chart"></i>
             </span>
             <span>Dashboard</span>
         </a>
-    </li>
+    </li> --}}
 
-    <li>
+    {{-- <li>
         <a href="#">
             <span class="nav-link-icon">
                 <i data-feather="shopping-cart"></i>
@@ -25,9 +25,9 @@
                     href="{{ route('orders.create') }}">{{__('app.menu.add_new')}}</a>
             </li>
         </ul>
-    </li>
+    </li> --}}
 
-    <li>
+    {{-- <li>
         <a @if(request()->segment(1) == 'users') class="active"
            @endif href="{{ route('users') }}">
             <span class="nav-link-icon">
@@ -35,25 +35,25 @@
             </span>
             <span>Clients</span>
         </a>
-    </li>
+    </li> --}}
     <li>
-        <a href="#">
+        {{-- <a href="#">
             <span class="nav-link-icon">
                 <i data-feather="copy"></i>
             </span>
             <span>Pages</span>
-        </a>
+        </a> --}}
         <ul>
             {{-- <li>
                 <a @if(request()->segment(1) == 'settings') class="active"
                    @endif href="{{ route('settings') }}">Settings</a>
             </li> --}}
-            <li>
+            {{-- <li>
                 <a @if(request()->segment(1) == 'blank-page') class="active"
                    @endif href="{{ route('blank-page') }}">Blank Page</a>
-            </li>
+            </li> --}}
         </ul>
-    </li>
+    </li> 
     <li>
         <a href="#">
             <span class="nav-link-icon">
