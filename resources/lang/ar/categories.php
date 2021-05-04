@@ -7,12 +7,12 @@ return [
             'edit'      => 'تعديل  القسم  ',
             'show'      => ' عرض  القسم  ',
         ],
-        'notifications' => [
+        'massages' => [
             'created_succesfully' => 'تم  تسجيل  قسم   بنجاح',
             'updated_succesfully' => 'تم تعديل  القسم بنجاح',
             'deleted_succesfully' => 'تم حذف  القسم بنجاح',
-            'error_occured' => 'حدث خطأ من فضلك راجع البيانات المطلوبة',
+            'error_occured'       => 'حدث خطأ من فضلك راجع البيانات المطلوبة',
         ],
-        'name'                    => ' الاسم ',
-        'type'            => ' النوع ',
+        'name'                => ' الاسم ',
+        'type'                => ' النوع ',
 ];

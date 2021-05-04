@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\KitchenRequest;
+use App\Product;
+use App\Material;
+use App\WarehouseStock;
 use Illuminate\Http\Request;
+use App\Http\Requests\KitchenRequest as KitchenRequestRequest;
+use Illuminate\Support\Arr;
 
 class KitchenRequestController extends Controller
 {
@@ -14,7 +19,8 @@ class KitchenRequestController extends Controller
      */
     public function index()
     {
-        //
+        $kitchenrequests = KitchenRequest::with('employee','material')->get();
+        return view('admin.kitchenrequests.index',['kitchenrequests'=>$kitchenrequests]);
     }
 
     /**
@@ -24,7 +30,10 @@ class KitchenRequestController extends Controller
      */
     public function create()
     {
-        //
+        $materials = Material::has('warehousestock')->get();
+        return view('admin.kitchenrequests.create',[
+            'materials'=>$materials,
+        ]);
     }
 
     /**
@@ -33,53 +42,107 @@ class KitchenRequestController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(KitchenRequestRequest  $request)
     {
-        //
+        $validated = $request->validated();
+        $material = Material::find($validated['material_id']);
+        $supplies = $material->supplies->where('status',false);
+        $request_quantity = $validated['quantity'];
+        $WarehouseStock = WarehouseStock::where('material_id',$validated['material_id'])->get()->first();
+        $request_total_price=0 ;
+        if ($WarehouseStock->quantity >= $validated['quantity']) {
+            foreach ($supplies as $supply) {
+                $supply_remaining_amount = $supply->quantity - $supply->used_amount;
+                $supply_unit_price = $supply->price / $supply->quantity;
+                if ( $request_quantity  > 0) {
+                    if ($supply_remaining_amount < $request_quantity) {
+                        $request_quantity =  $request_quantity - $supply_remaining_amount;
+                        $supply->used_amount = $supply->quantity;
+                        $supply->status = true;
+                        $request_total_price = $request_total_price + ( $supply_unit_price * $supply_remaining_amount);
+                        $supply->save();
+                    }elseif ( $supply_remaining_amount > $request_quantity ) {
+                        $supply->used_amount = $supply->used_amount + $request_quantity;
+                        $request_total_price = $request_total_price + ( $supply_unit_price * $request_quantity);
+                        $request_quantity = 0;
+                        $supply->save();
+                    }else {
+                        $supply->used_amount = $supply->used_amount + $request_quantity;
+                        $supply->status = true;
+                        $request_total_price = $request_total_price + ( $supply_unit_price * $request_quantity);
+                        $request_quantity = 0;
+                        $supply->save();
+                    }
+                }
+            }
+            $WarehouseStock->quantity =$WarehouseStock->quantity - $validated['quantity'] ;
+            $WarehouseStock->save();
+            // dd($validated);
+            $kitshen_request = new KitchenRequest;
+            $kitshen_request->material_id = $validated['material_id'];
+            $kitshen_request->quantity = $validated['quantity'];
+            $kitshen_request->employee_id = $validated['employee_id'];
+            $kitshen_request->total_cost = $request_total_price;
+            $kitshen_request->save();
+            $request->session()->flash('message',__('kitchenrequests.massages.created_succesfully'));
+            return redirect(route('kitchenrequests.index'));
+        }else {
+            $request->session()->flash('message',' الكمية المطلوبة أكبر من المخزون ');
+            return redirect(route('kitchenrequests.create'));   
+        }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\KitchenRequest  $kitchenRequest
+     * @param  \App\KitchenRequest  $kitchenrequest
      * @return \Illuminate\Http\Response
      */
-    public function show(KitchenRequest $kitchenRequest)
+    public function show(KitchenRequestRequest $kitchenrequest)
     {
-        //
+        return view('admin.kitchenrequests.show',['kitchenrequest',$kitchenrequest]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\KitchenRequest  $kitchenRequest
+     * @param  \App\KitchenRequest  $kitchenrequest
      * @return \Illuminate\Http\Response
      */
-    public function edit(KitchenRequest $kitchenRequest)
+    public function edit(KitchenRequest $kitchenrequest)
     {
-        //
+        $materials = Material::get();
+        return view('admin.kitchenrequests.edit',[
+            'kitchenrequest'=>$kitchenrequest,
+            'materials'=>$materials,
+            ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\KitchenRequest  $kitchenRequest
+     * @param  \App\KitchenRequest  $kitchenrequest
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, KitchenRequest $kitchenRequest)
+    public function update(KitchenRequestRequest $request, KitchenRequest $kitchenrequest)
     {
-        //
+        $validated = $request->validated();
+        $kitchenrequest->update ($validated);
+        $request->session()->flash('message',__('kitchenrequests.massages.updated_succesfully'));
+        return redirect(route('kitchenrequests.index'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\KitchenRequest  $kitchenRequest
+     * @param  \App\KitchenRequest  $kitchenrequest
      * @return \Illuminate\Http\Response
      */
-    public function destroy(KitchenRequest $kitchenRequest)
+    public function destroy( Request $request,KitchenRequest $kitchenrequest)
     {
-        //
+        $kitchenrequest->delete();
+        $request->session()->flash('message',__('kitchenrequests.massages.deleted_succesfully'));
+        return redirect(route('kitchenrequests.index'));
     }
 }

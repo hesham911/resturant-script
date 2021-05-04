@@ -39,7 +39,7 @@ class SettingController extends Controller
     {
         $validated = $request->validated();
         Setting::create($validated);
-        $request->session()->flash('message',__('settings.notifications.created_succesfully'));
+        $request->session()->flash('message',__('settings.massages.created_succesfully'));
         return redirect(route('settings.index'));
     }
 
@@ -78,7 +78,7 @@ class SettingController extends Controller
     {
         $validated = $request->validated();
         $setting->update ($validated);
-        $request->session()->flash('message',__('settings.notifications.updated_succesfully'));
+        $request->session()->flash('message',__('settings.massages.updated_succesfully'));
         return redirect(route('settings.index'));
     }
 
@@ -91,7 +91,7 @@ class SettingController extends Controller
     public function destroy(Request $request,Setting $setting)
     {
         $setting->delete();
-        $request->session()->flash('message',__('settings.notifications.deleted_succesfully'));
+        $request->session()->flash('message',__('settings.massages.deleted_succesfully'));
         return redirect(route('settings.index'));
     }
 }
