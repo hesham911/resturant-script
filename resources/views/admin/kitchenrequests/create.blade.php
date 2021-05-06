@@ -40,12 +40,11 @@
                                 </div>
                             @endif
                             <h6 class="card-title">{{__('kitchenrequests.titles.create')}}</h6>
-                            <form  method="POST"  action="{{route('kitchenrequests.store') }}" >
+                            <form  method="POST"  action="{{route('kitchenrequests.store') }}" class="repeater" >
                               @CSRF
-                              <div class="form-group row">
-                                    <label for="inputPassword" class="col-sm-2 col-form-label">{{__('kitchenrequests.material_id')}}</label>
-                                    <div class="col-sm-10">
-                                    <select class="select2 " name="material_id">
+                              <div data-repeater-list="group-a">
+                                <div data-repeater-item class="d-flex my-2 justify-content-around">
+                                    <select class="select2  mx-3" name="material_id">
                                         <option disabled  selected> اختر {{__('kitchenrequests.material_id')}}</option>
                                         @if ($materials->count() > 0)
                                             @foreach ($materials as $material)
@@ -53,19 +52,15 @@
                                             @endforeach
                                         @endif
                                     </select>
-                                    </div>
+                                    <input type="text" class="form-control mx-3" id="inputPassword" placeholder="{{__('kitchenrequests.quantity')}}" value="{{old('quantity')}}" name="quantity">
+
+                                  <input data-repeater-delete type="button" value="Delete" class="btn btn-danger w-25"/>
+                                </div>
                               </div>
-                              <div class="form-group row">
-                                    <label for="inputPassword" class="col-sm-2 col-form-label">
-                                        {{__('kitchenrequests.quantity')}}
-                                    </label>
-                                  <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="inputPassword" placeholder="{{__('kitchenrequests.quantity')}}" value="{{old('quantity')}}" name="quantity">
-                                  </div>
-                              </div>
+                              <input data-repeater-create type="button" value="Add" class="btn btn-primary"/>
                               <input type="hidden" value="{{Auth::user()->employee->id}}" name="employee_id">
-                              <div class="d-flex flex-row-reverse">
-                                <button class="btn btn-primary " type="submit">{{__('app.forms.btn.FormSubmit')}}</button>
+                              <div class="d-flex flex-row-reverse  mt-5">
+                                <button class="btn btn-primary mt-5" type="submit">{{__('app.forms.btn.FormSubmit')}}</button>
                               </div>
                             </form>
                         </div>
@@ -83,9 +78,15 @@
     <script src="{{ url('vendors/prism/prism.js') }}"></script>
     <!-- selectto -->
     <script src="../../vendors/select2/js/select2.min.js"></script>
+    {{-- repeater --}}
+    <script src="{{ url('vendors/jquery.repeater.min.js') }}"></script>
   <script>
-    $('.select2').select2({
+   $(document).ready(function ()
+    {
+        $('.select2').select2({
         placeholder: 'اختر'
+        });
+        $('.repeater').repeater();
     });
   </script>
 @endsection

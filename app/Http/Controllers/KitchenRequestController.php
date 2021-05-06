@@ -44,6 +44,8 @@ class KitchenRequestController extends Controller
      */
     public function store(KitchenRequestRequest  $request)
     {
+        dd($request);
+
         $validated = $request->validated();
         $material = Material::find($validated['material_id']);
         $supplies = $material->supplies->where('status',false);
