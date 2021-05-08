@@ -43,7 +43,7 @@
                             <form  method="POST"  action="{{route('kitchenrequests.store') }}"  class="repeater">
                                 @CSRF
                                 <div >
-                                   <div data-repeater-list="group">
+                                    <div data-repeater-list="group">
                                         <div data-repeater-item class="d-flex my-2 justify-content-around">
                                             <select class="select2  mx-3" name="material_id" required=''>
                                                 <option disabled  selected> اختر {{__('kitchenrequests.material_id')}}</option>

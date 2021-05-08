@@ -45,7 +45,14 @@ class ProductManufactureController extends Controller
     public function store(ProductManufactureRequest  $request)
     {
         $validated = $request->validated();
-        ProductManufacture::create($validated);
+        foreach ($validated['group'] as $material) {
+            $productmanufacture = new ProductManufacture;
+            $productmanufacture->product_id = $validated['product_id'];
+            $productmanufacture->material_id = $material['material_id'];
+            $productmanufacture->required_quantity = $material['required_quantity'];
+            $productmanufacture->waste_percentage = $material['waste_percentage'];
+            $productmanufacture->save();
+        }
         $request->session()->flash('message',__('productmanufactures.massages.created_succesfully'));
         return redirect(route('productmanufactures.index'));
     }
@@ -56,9 +63,9 @@ class ProductManufactureController extends Controller
      * @param  \App\ProductManufacture  $productmanufacture
      * @return \Illuminate\Http\Response
      */
-    public function show(ProductManufacture $productmanufacture)
+    public function show(ProductManufacture $product_manufacture)
     {
-        return view('admin.productmanufactures.show',['category',$productmanufacture]);
+        return view('admin.productmanufactures.show',['product_manufacture',$product_manufacture]);
     }
 
     /**
@@ -85,10 +92,24 @@ class ProductManufactureController extends Controller
      * @param  \App\ProductManufacture  $productmanufacture
      * @return \Illuminate\Http\Response
      */
-    public function update(ProductManufactureRequest $request, ProductManufacture $productmanufacture)
+    public function update(Request $request, ProductManufacture $productmanufacture)
     {
-        $validated = $request->validated();
-        $productmanufacture->update ($validated);
+        $validated = $request->validate([
+            'material_id'=>'required',
+            'product_id'=>'required',
+            'required_quantity'=>'required',
+            'waste_percentage'=>'required',
+        ],[
+            'material_id'=>__('productmanufactures.material_id'),
+            'product_id'=>__('productmanufactures.product_id'),
+            'required_quantity'=>__('productmanufactures.required_quantity'),
+            'waste_percentage'=>__('productmanufactures.waste_percentage'),
+        ]);
+        $productmanufacture->product_id = $validated['product_id'];
+        $productmanufacture->material_id = $validated['material_id'];
+        $productmanufacture->required_quantity = $validated['required_quantity'];
+        $productmanufacture->waste_percentage = $validated['waste_percentage'];
+        $productmanufacture->save();
         $request->session()->flash('message',__('productmanufactures.massages.updated_succesfully'));
         return redirect(route('productmanufactures.index'));
     }
