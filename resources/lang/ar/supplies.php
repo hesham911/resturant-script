@@ -23,4 +23,5 @@ return [
         'status'                  => ' الحالة ',
         'used_amount'             => '  الكمية المستهلكة  ',
         'employee_id'             => '  الموظف  ',
+        'bill_number'             => '  رقم الفاتورة   ',
 ];

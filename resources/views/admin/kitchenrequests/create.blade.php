@@ -45,7 +45,7 @@
                                 <div >
                                    <div data-repeater-list="group">
                                         <div data-repeater-item class="d-flex my-2 justify-content-around">
-                                            <select class="select2  mx-3" name="material_id">
+                                            <select class="select2  mx-3" name="material_id" required=''>
                                                 <option disabled  selected> اختر {{__('kitchenrequests.material_id')}}</option>
                                                 @if ($materials->count() > 0)
                                                     @foreach ($materials as $material)
@@ -53,7 +53,7 @@
                                                     @endforeach
                                                 @endif
                                             </select>
-                                            <input type="text" class="form-control mx-3" id="inputPassword" placeholder="{{__('kitchenrequests.quantity')}}" value="{{old('quantity')}}" name="quantity">
+                                            <input type="text" class="form-control mx-3" id="inputPassword" placeholder="{{__('kitchenrequests.quantity')}}" value="{{old('quantity')}}" name="quantity" required>
                                             <input data-repeater-delete type="button" value="Delete" class="btn btn-danger w-25"/>
                                         </div>
                                     </div> 

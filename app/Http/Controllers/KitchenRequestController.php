@@ -42,16 +42,17 @@ class KitchenRequestController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request  $request)
+    public function store(KitchenRequestRequest  $request)
     {
-        foreach ($request->group as  $validated) {
-            $material = Material::find($validated['material_id']);
+        $validated_data = $request->validated();
+        foreach ($validated_data['group'] as  $kitchen_request) {
+            $material = Material::find($kitchen_request['material_id']);
             $supplies = $material->supplies->where('status',false);
-            $request_quantity = $validated['quantity'];
-            $WarehouseStock = WarehouseStock::where('material_id',$validated['material_id'])->get()->first();
+            $request_quantity = $kitchen_request['quantity'];
+            $WarehouseStock = WarehouseStock::where('material_id',$kitchen_request['material_id'])->get()->first();
             $request_total_price=0 ;
             $supply_ids = [];
-            if ($WarehouseStock->quantity >= $validated['quantity']) {
+            if ($WarehouseStock->quantity >= $kitchen_request['quantity']) {
                 foreach ($supplies as $supply) {
                     $supply_remaining_amount = $supply->quantity - $supply->used_amount;
                     $supply_unit_price = $supply->price / $supply->quantity;
@@ -77,11 +78,11 @@ class KitchenRequestController extends Controller
                         $supply_ids[]= $supply->id;
                     }
                 }
-                $WarehouseStock->quantity =$WarehouseStock->quantity - $validated['quantity'] ;
+                $WarehouseStock->quantity =$WarehouseStock->quantity - $kitchen_request['quantity'] ;
                 $WarehouseStock->save();
                 $kitchenrequest = new KitchenRequest;
-                $kitchenrequest->material_id = $validated['material_id'];
-                $kitchenrequest->quantity = $validated['quantity'];
+                $kitchenrequest->material_id = $kitchen_request['material_id'];
+                $kitchenrequest->quantity = $kitchen_request['quantity'];
                 $kitchenrequest->employee_id = $request->employee_id;
                 $kitchenrequest->total_cost = $request_total_price;
                 $kitchenrequest->save();
