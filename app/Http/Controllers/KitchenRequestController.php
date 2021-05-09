@@ -44,55 +44,56 @@ class KitchenRequestController extends Controller
      */
     public function store(KitchenRequestRequest  $request)
     {
-        $validated = $request->validated();
-        $material = Material::find($validated['material_id']);
-        $supplies = $material->supplies->where('status',false);
-        $request_quantity = $validated['quantity'];
-        $WarehouseStock = WarehouseStock::where('material_id',$validated['material_id'])->get()->first();
-        $request_total_price=0 ;
-        $supply_ids = [];
-        if ($WarehouseStock->quantity >= $validated['quantity']) {
-            foreach ($supplies as $supply) {
-                $supply_remaining_amount = $supply->quantity - $supply->used_amount;
-                $supply_unit_price = $supply->price / $supply->quantity;
-                if ( $request_quantity  > 0) {
-                    if ($supply_remaining_amount < $request_quantity) {
-                        $request_quantity =  $request_quantity - $supply_remaining_amount;
-                        $supply->used_amount = $supply->quantity;
-                        $supply->status = true;
-                        $request_total_price = $request_total_price + ( $supply_unit_price * $supply_remaining_amount);
-                        $supply->save();
-                    }elseif ( $supply_remaining_amount > $request_quantity ) {
-                        $supply->used_amount = $supply->used_amount + $request_quantity;
-                        $request_total_price = $request_total_price + ( $supply_unit_price * $request_quantity);
-                        $request_quantity = 0;
-                        $supply->save();
-                    }else {
-                        $supply->used_amount = $supply->used_amount + $request_quantity;
-                        $supply->status = true;
-                        $request_total_price = $request_total_price + ( $supply_unit_price * $request_quantity);
-                        $request_quantity = 0;
-                        $supply->save();
+        $validated_data = $request->validated();
+        foreach ($validated_data['group'] as  $kitchen_request) {
+            $material = Material::find($kitchen_request['material_id']);
+            $supplies = $material->supplies->where('status',false);
+            $request_quantity = $kitchen_request['quantity'];
+            $WarehouseStock = WarehouseStock::where('material_id',$kitchen_request['material_id'])->get()->first();
+            $request_total_price=0 ;
+            $supply_ids = [];
+            if ($WarehouseStock->quantity >= $kitchen_request['quantity']) {
+                foreach ($supplies as $supply) {
+                    $supply_remaining_amount = $supply->quantity - $supply->used_amount;
+                    $supply_unit_price = $supply->price / $supply->quantity;
+                    if ( $request_quantity  > 0) {
+                        if ($supply_remaining_amount < $request_quantity) {
+                            $request_quantity =  $request_quantity - $supply_remaining_amount;
+                            $supply->used_amount = $supply->quantity;
+                            $supply->status = true;
+                            $request_total_price = $request_total_price + ( $supply_unit_price * $supply_remaining_amount);
+                            $supply->save();
+                        }elseif ( $supply_remaining_amount > $request_quantity ) {
+                            $supply->used_amount = $supply->used_amount + $request_quantity;
+                            $request_total_price = $request_total_price + ( $supply_unit_price * $request_quantity);
+                            $request_quantity = 0;
+                            $supply->save();
+                        }else {
+                            $supply->used_amount = $supply->used_amount + $request_quantity;
+                            $supply->status = true;
+                            $request_total_price = $request_total_price + ( $supply_unit_price * $request_quantity);
+                            $request_quantity = 0;
+                            $supply->save();
+                        }
+                        $supply_ids[]= $supply->id;
                     }
-                    $supply_ids[]= $supply->id;
                 }
+                $WarehouseStock->quantity =$WarehouseStock->quantity - $kitchen_request['quantity'] ;
+                $WarehouseStock->save();
+                $kitchenrequest = new KitchenRequest;
+                $kitchenrequest->material_id = $kitchen_request['material_id'];
+                $kitchenrequest->quantity = $kitchen_request['quantity'];
+                $kitchenrequest->employee_id = $request->employee_id;
+                $kitchenrequest->total_cost = $request_total_price;
+                $kitchenrequest->save();
+                $kitchenrequest->supplies()->sync($supply_ids);
+            }else {
+                $request->session()->flash('message',' الكمية المطلوبة أكبر من المخزون ');
+                return redirect(route('kitchenrequests.create'));   
             }
-            $WarehouseStock->quantity =$WarehouseStock->quantity - $validated['quantity'] ;
-            $WarehouseStock->save();
-            // dd($validated);
-            $kitchenrequest = new KitchenRequest;
-            $kitchenrequest->material_id = $validated['material_id'];
-            $kitchenrequest->quantity = $validated['quantity'];
-            $kitchenrequest->employee_id = $validated['employee_id'];
-            $kitchenrequest->total_cost = $request_total_price;
-            $kitchenrequest->save();
-            $kitchenrequest->supplies()->sync($supply_ids);
-            $request->session()->flash('message',__('kitchenrequests.massages.created_succesfully'));
-            return redirect(route('kitchenrequests.index'));
-        }else {
-            $request->session()->flash('message',' الكمية المطلوبة أكبر من المخزون ');
-            return redirect(route('kitchenrequests.create'));   
         }
+        $request->session()->flash('message',__('kitchenrequests.massages.created_succesfully'));
+        return redirect(route('kitchenrequests.index'));
     }
 
     /**

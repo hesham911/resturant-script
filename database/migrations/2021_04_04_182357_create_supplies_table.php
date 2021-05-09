@@ -26,6 +26,7 @@ class CreateSuppliesTable extends Migration
             $table->date('expiry_date')->nullable();
             $table->boolean('status')->default(false);
             $table->decimal('used_amount')->default(0);
+            $table->bigInteger('bill_number')->unsigned();
             $table->timestamps();
             $table->softDeletes();
         });

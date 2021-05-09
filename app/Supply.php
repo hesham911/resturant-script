@@ -13,8 +13,9 @@ class Supply extends Model
         'price',
         'Supplier_name',
         'expiry_date',
-        'user_id',
-        'measuring_id',
+        'employee_id',
+        'material_id',
+        'bill_number',
     ];
 
     public function material (){
