@@ -5,6 +5,8 @@
 @section('head')
     <!-- Datatable -->
     <link rel="stylesheet" href="{{ url('vendors/dataTable/datatables.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ url('vendors/dataTable/Buttons-1.6.1/css/buttons.dataTables.min.css') }}" type="text/css">
+
 @endsection
 
 @section('content')
@@ -42,7 +44,7 @@
                         </div>
                     @endif
                     <div class="table-responsive">
-                        <table id="user-list" class="table table-lg">
+                        <table id="myTable" class="table table-lg">
                             <thead>
                             <tr>
                                 <th>
@@ -106,6 +108,15 @@
 @section('script')
     <!-- Datatable -->
     <script src="{{ url('vendors/dataTable/datatables.min.js') }}"></script>
+    <script src="{{ url('vendors/dataTable/Buttons-1.6.1/js/dataTables.buttons.min.js') }}"></script>
 
     <script src="{{ url('assets/js/examples/pages/user-list.js') }}"></script>
+    <script>
+        $('#myTable').DataTable( {
+            dom: 'Bfrtip',
+            buttons: [
+                'print','excel', 'pdf'
+            ]
+        } );
+    </script>
 @endsection

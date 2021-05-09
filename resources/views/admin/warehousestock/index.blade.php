@@ -5,6 +5,7 @@
 @section('head')
     <!-- Datatable -->
     <link rel="stylesheet" href="{{ url('vendors/dataTable/datatables.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ url('vendors/dataTable/Buttons-1.6.1/css/buttons.dataTables.min.css') }}" type="text/css">
 @endsection
 
 @section('content')
@@ -37,15 +38,10 @@
                         </div>
                     @endif
                     <div class="table-responsive">
-                        <table id="user-list" class="table table-lg">
+                        <table id="myTable" class="table table-lg">
                             <thead>
                             <tr>
-                                <th>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="user-list-select-all">
-                                        <label class="custom-control-label" for="user-list-select-all"></label>
-                                    </div>
-                                </th>
+                                
                                 <th>#</th>
                                 <th> {{__('stocks.material_id')}}</th>
                                 <th> {{__('stocks.quantity')}}</th>
@@ -56,7 +52,6 @@
                                 @if($stocks->count() > 0)
                                     @foreach($stocks as $stock )
                                     <tr>
-                                        <td></td>
                                         <td>{{ $stock->id }}</td>
                                         <td>{{ $stock->material->name }}</td>
                                         <td>{{ $stock->quantity }}</td>
@@ -77,6 +72,15 @@
 @section('script')
     <!-- Datatable -->
     <script src="{{ url('vendors/dataTable/datatables.min.js') }}"></script>
+    <script src="{{ url('vendors/dataTable/Buttons-1.6.1/js/dataTables.buttons.min.js') }}"></script>
 
     <script src="{{ url('assets/js/examples/pages/user-list.js') }}"></script>
-@endsection
+    <script>
+        $('#myTable').DataTable( {
+            dom: 'Bfrtip',
+            buttons: [
+                'print','excel', 'pdf'
+            ]
+        } );
+    </script>
+@endsection 
