@@ -61,6 +61,7 @@
                                 <th> {{__('supplies.expiry_date')}}</th>
                                 <th> {{__('supplies.status')}}</th>
                                 <th> {{__('supplies.used_amount')}}</th>
+                                <th> {{__('supplies.bill_number')}}</th>
                                 <th class="text-right"> خيارات</th>
                             </tr>
                             </thead>
@@ -79,6 +80,7 @@
                                         <td>{{ $supply->expiry_date }}</td>
                                         <td>{{ $supply->status == false ? "غير منتهي" : "منتهي" }}</td>
                                         <td>{{ $supply->used_amount }}</td>
+                                        <td>{{ $supply->bill_number }}</td>
                                         <td class="text-right">
                                             <div class="dropdown">
                                                 <a href="#" data-toggle="dropdown"

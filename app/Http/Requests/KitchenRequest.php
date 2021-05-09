@@ -24,16 +24,16 @@ class KitchenRequest extends FormRequest
     public function rules()
     {
         return [
-            'material_id'=>'required',
-            'quantity'=>'required',
+            'group.*.material_id'=>'required',
+            'group.*.quantity'=>'required|numeric|min:1|max:7',
             'employee_id'=>'required',
         ];
     }
     public function attributes()
     {
         return [
-            'material_id'=>__('kitchenrequests.material_id'),
-            'quantity'=>__('kitchenrequests.quantity'),
+            'group.*.material_id'=>__('kitchenrequests.material_id'),
+            'group.*.quantity'=>__('kitchenrequests.quantity'),
             'employee_id'=>__('kitchenrequests.employee_id'),
         ];
     }

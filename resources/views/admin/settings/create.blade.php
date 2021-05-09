@@ -62,15 +62,10 @@
                                     <label for="inputPassword" class="col-sm-2 col-form-label">
                                         {{__('settings.active')}}
                                     </label>
-                                    <div class="col-sm-10 d-flex justify-content-around">
-                                        <div>
-                                            <label for=""> فعال </label>
-                                            <input type="radio" class="form-control" id="inputPassword" value="1" name="active">
-                                        </div>
-                                        <div>
-                                            <label for=""> غير فعال </label>
-                                            <input type="radio" class="form-control" id="inputPassword" value="0" name="active">
-                                        </div>
+                                    <div class="custom-control custom-switch custom-checkbox-success">
+                                        <input type="hidden" value="0"  name="active">
+                                        <input type="checkbox" name="active" class="custom-control-input" value="1"  id="active" {{ old('active') ? 'checked="checked"' : '' }}>
+                                        <label for="active" class="custom-control-label"></label>
                                     </div>
                                 </div>
                               <div class="d-flex flex-row-reverse">

@@ -32,8 +32,14 @@ class SupplyController extends Controller
     public function create()
     {
         $materials = Material::with('measuring')->get();
+        if (Supply::get()->count() >0) {
+            $bill_number = Supply::orderBy('id','desc')->get()->first()->bill_number;
+        }else {
+            $bill_number = 0;
+        }
         return view('admin.supplies.create',[
             'materials' => $materials,
+            'bill_number' => $bill_number,
             ]);
     }
 
@@ -46,20 +52,21 @@ class SupplyController extends Controller
     public function store(SupplyRequest  $request)
     {
         $validated = $request->validated();
-        // dd($validated['material_id']);
-        $supply = new Supply;
-        $supply->material_id =  $validated['material_id'];
-        $supply->quantity =  $validated['quantity'];
-        $supply->price =  $validated['price'];
-        $supply->Supplier_name =  $validated['Supplier_name'];
-        $supply->expiry_date =  $validated['expiry_date'];
-        $employee = Employee::where('user_id',$request->user_id)->get()->first();
-        $supply->employee_id =  $employee->id;
-        $supply->save();
-        $stock = WarehouseStock::firstOrNew(['material_id'=>$validated['material_id']]);
-        $stock->material_id = $validated['material_id'];
-        $stock->quantity = $stock->quantity + $validated['quantity'];
-        $stock->save();
+        foreach($validated['group'] as $supply_data){
+            $supply = new Supply;
+            $supply->material_id =  $supply_data['material_id'];
+            $supply->quantity =  $supply_data['quantity'];
+            $supply->price =  $supply_data['price'];
+            $supply->Supplier_name =  $supply_data['Supplier_name'];
+            $supply->expiry_date =  $supply_data['expiry_date'];
+            $supply->employee_id =  $validated['employee_id'];
+            $supply->bill_number =  $validated['bill_number'];
+            $supply->save();
+            $stock = WarehouseStock::firstOrNew(['material_id'=>$supply_data['material_id']]);
+            $stock->material_id = $supply_data['material_id'];
+            $stock->quantity = $stock->quantity + $supply_data['quantity'];
+            $stock->save();
+        }
         $request->session()->flash('message',__('supplies.massages.created_succesfully'));
         return redirect(route('supplies.index'));
     }

@@ -24,19 +24,19 @@ class ProductManufactureRequest extends FormRequest
     public function rules()
     {
         return [
-            'material_id'=>'required',
+            'group.*.material_id'=>'required',
             'product_id'=>'required',
-            'required_quantity'=>'required',
-            'waste_percentage'=>'required',
+            'group.*.required_quantity'=>'required',
+            'group.*.waste_percentage'=>'required',
         ];
     }
     public function attributes()
     {
         return [
-            'material_id'=>__('productmanufactures.material_id'),
+            'group.*.material_id'=>__('productmanufactures.material_id'),
             'product_id'=>__('productmanufactures.product_id'),
-            'required_quantity'=>__('productmanufactures.required_quantity'),
-            'waste_percentage'=>__('productmanufactures.waste_percentage'),
+            'group.*.required_quantity'=>__('productmanufactures.required_quantity'),
+            'group.*.waste_percentage'=>__('productmanufactures.waste_percentage'),
         ];
     }
 }
