@@ -9,6 +9,8 @@
     </li> --}}
 
     {{-- <li>
+    <!-- Orders -->
+    <li>
         <a href="#">
             <span class="nav-link-icon">
                 <i data-feather="shopping-cart"></i>
@@ -28,6 +30,29 @@
     </li> --}}
 
     {{-- <li>
+    <!-- Products -->
+    <li>
+        <a href="#">
+            <span class="nav-link-icon">
+                <i class="fas fa-product-hunt" aria-hidden="true"></i>
+            </span>
+            <span>{{__('products.titles.index')}}</span>
+        </a>
+        <ul>
+            <li>
+                <a class="{{(request()->is('products'))? 'active' : '' }}"
+                    href="{{ route('products.index') }}">{{__('app.menu.show_all')}}</a>
+            </li>
+            <li>
+                <a class="{{(request()->is('products/create'))? 'active' : '' }}"
+                    href="{{ route('products.create') }}">{{__('app.menu.add_new')}}</a>
+            </li>
+        </ul>
+    </li>
+
+
+
+    <li>
         <a @if(request()->segment(1) == 'users') class="active"
            @endif href="{{ route('users') }}">
             <span class="nav-link-icon">
