@@ -8,7 +8,7 @@
         </a>
     </li> --}}
 
-    {{-- <li>
+    <li>
     <!-- Orders -->
     <li>
         <a href="#">
@@ -27,7 +27,7 @@
                     href="{{ route('orders.create') }}">{{__('app.menu.add_new')}}</a>
             </li>
         </ul>
-    </li> --}}
+    </li>
 
     {{-- <li>
     <!-- Products -->

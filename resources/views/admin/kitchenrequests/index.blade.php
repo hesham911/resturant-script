@@ -57,6 +57,7 @@
                                 <th> {{__('kitchenrequests.material_id')}}</th>
                                 <th> {{__('kitchenrequests.quantity')}}</th>
                                 <th> {{__('kitchenrequests.status')}}</th>
+                                <th> {{__('kitchenrequests.used_amount')}}</th>
                                 <th> {{__('kitchenrequests.employee_id')}}</th>
                                 <th> {{__('kitchenrequests.total_cost')}}</th>
                                 <th class="text-right"> خيارات</th>
@@ -71,6 +72,7 @@
                                         <td>{{ $kitchenrequest->material->name }}</td>
                                         <td>{{ $kitchenrequest->quantity }}</td>
                                         <td>{{ $kitchenrequest->status() [$kitchenrequest->status]}}</td>
+                                        <td>{{ $kitchenrequest->used_amount }}</td>
                                         <td>{{ $kitchenrequest->employee->user->name }}</td>
                                         <td>{{ $kitchenrequest->total_cost }}</td>
                                         <td class="text-right">

@@ -10,6 +10,7 @@ use App\Payment;
 use App\Product;
 use App\Category;
 use App\Subcategory;
+use App\KitchenRequest;
 use Illuminate\Http\Request;
 use App\Http\Requests\OrderRequest;
 use Illuminate\Support\Facades\Auth;
@@ -56,6 +57,45 @@ class OrderController extends Controller
         $validated = $request->validated();
         $order=Order::create($validated);
         $order->products()->attach($request->group_a);
+        foreach ( $order->products as $product ) {
+            // for ($i=0; $i = 1 ; $i++) { 
+            //     # code...
+            // }
+            foreach ($product->ProductManufactures as $ProductManufacture) {
+                $kitchenrequests = KitchenRequest::where('material_id',$ProductManufacture->material_id)->where('status',0)->get();
+                $productmanufacturequantity = $ProductManufacture->required_quantity;
+                if ($productmanufacturequantity > 0) {
+                    if ($kitchenrequests->count() > 0) {
+                        foreach ($kitchenrequests as $kitchenrequest) {
+                            $quantitydifference = $kitchenrequest->quantity - $kitchenrequest->used_amount;
+                            if ($productmanufacturequantity < $quantitydifference) {
+                                dd($quantitydifference);
+                                $kitchenrequest->used_amount = $kitchenrequest->used_amount + $ProductManufacture->required_quantity;
+                                $kitchenrequest->save();
+                                $productmanufacturequantity = 0 ; 
+                                break;
+                            }elseif ($productmanufacturequantity > $quantitydifference){
+                                $kitchenrequest->used_amount = ($productmanufacturequantity - $kitchenrequest->used_amount) + $kitchenrequest->quantity ;
+                                // dd($kitchenrequest->used_amount);    
+                                $kitchenrequest->status =  1;
+                                $kitchenrequest->save();
+                                $productmanufacturequantity =  $productmanufacturequantity-$quantitydifference ;
+                            }else {
+                                dd('test');
+                                $kitchenrequest->used_amount = $kitchenrequest->used_amount + $ProductManufacture->required_quantity;
+                                $kitchenrequest->status =  1;
+                                $kitchenrequest->save();
+                                $productmanufacturequantity = 0 ; 
+                                break;
+                            }
+                        }
+                    }else {
+                        $request->session()->flash('message',__('orders.massages.material_doesnt_exist'));
+                        return redirect(back());
+                    }
+                }
+            }
+        }
         /* if($order)
         {
             //dd($request->group_a);

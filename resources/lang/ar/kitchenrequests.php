@@ -18,4 +18,5 @@ return [
         'quantity'                => ' الكمية ',
         'status'                => ' الحالة ',
         'total_cost'                => ' اجمالي التكلفة  ',
+        'used_amount'                => ' الكمية المستخدمة ',
 ];
