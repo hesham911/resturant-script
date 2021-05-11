@@ -18,6 +18,7 @@ return [
             'deleted_successfully' => 'تم حذف  الطلب بنجاح',
             'error_occured' => 'حدث خطأ من فضلك راجع البيانات المطلوبة',
             'material_doesnt_exist' => ' المادة الخام المطلوبة غير مسجلة ',
+            'please_enter_productmanufacture' => ' من فضلك قم باضافة مواد التصنيع للمنتج المطلوب  ',
         ],
         'type'       =>[
             'floor'         => 'داخل الصالة',
