@@ -57,6 +57,7 @@ class OrderController extends Controller
         $validated = $request->validated();
         $order=Order::create($validated);
         $order->products()->attach($request->group_a);
+        $requests = [];
         foreach ( $order->products as $product ) {
             for ($i=0; $i < $product->pivot->quantity ; $i++) { 
                 if ($product->ProductManufactures->count() > 0) {                
@@ -71,17 +72,20 @@ class OrderController extends Controller
                                         $kitchenrequest->used_amount = $kitchenrequest->used_amount + $productmanufacturequantity;
                                         $kitchenrequest->save();
                                         $productmanufacturequantity = 0 ; 
+                                        $requests[]=$kitchenrequest->id;
                                         break;
                                     }elseif ($productmanufacturequantity > $quantitydifference){
                                         $kitchenrequest->used_amount =  $kitchenrequest->quantity ;
                                         $kitchenrequest->status =  1;
                                         $kitchenrequest->save();
                                         $productmanufacturequantity =  $productmanufacturequantity-$quantitydifference ;
+                                        $requests[]=$kitchenrequest->id;
                                     }else {
                                         $kitchenrequest->used_amount = $kitchenrequest->used_amount + $ProductManufacture->required_quantity;
                                         $kitchenrequest->status =  1;
                                         $kitchenrequest->save();
                                         $productmanufacturequantity = 0 ; 
+                                        $requests[]=$kitchenrequest->id;
                                         break;
                                     }
                                 }
@@ -102,6 +106,7 @@ class OrderController extends Controller
             //dd($request->group_a);
             $order->products()->createMany($request->group_a);
         } */
+        $order->requests()->sync($requests);
         $request->session()->flash('message',__('orders.massages.created_successfully'));
         return redirect(route('orders.index'));
     }
@@ -145,6 +150,23 @@ class OrderController extends Controller
      */
     public function cancel(Order $order,Request $request)
     {
+        foreach ( $order->products as $product ) {
+            for ($i=0; $i < $product->pivot->quantity ; $i++) { 
+                if ($product->ProductManufactures->count() > 0) {                
+                    foreach ($product->ProductManufactures as $ProductManufacture) {
+                        $kitchenrequests = $order->requests->where('material_id',$ProductManufacture->material_id)->first();
+                        $productmanufacturequantity = $ProductManufacture->required_quantity;
+                        if ($productmanufacturequantity > 0) {
+                            foreach ($kitchenrequests as $kitchenrequest) {
+                                $kitchenrequest->used_amount =  $kitchenrequest->used_amount -  $productmanufacturequantity
+                                $kitchenrequest->status =0 ;
+                                $kitchenrequest->save()
+                            }
+                        }
+                    }
+                }
+            }
+        }
         $order->status=4;
         $order->cancel_reason=$request->cancel_reason;
         $order->save();
@@ -178,8 +200,70 @@ class OrderController extends Controller
     public function update(OrderRequest $request, Order $order)
     {
         $validated = $request->validated();
+        foreach ( $order->products as $product ) {
+            for ($i=0; $i < $product->pivot->quantity ; $i++) { 
+                if ($product->ProductManufactures->count() > 0) {                
+                    foreach ($product->ProductManufactures as $ProductManufacture) {
+                        $kitchenrequests = $order->requests->where('material_id',$ProductManufacture->material_id)->first();
+                        $productmanufacturequantity = $ProductManufacture->required_quantity;
+                        if ($productmanufacturequantity > 0) {
+                            foreach ($kitchenrequests as $kitchenrequest) {
+                                $kitchenrequest->used_amount =  $kitchenrequest->used_amount -  $productmanufacturequantity
+                                $kitchenrequest->status =0 ;
+                                $kitchenrequest->save()
+                            }
+                        }
+                    }
+                }
+            }
+        }
         $order->update($validated);
         $order->products()->attach($request->group_a);
+        $requests = [];
+        foreach ( $order->products as $product ) {
+            for ($i=0; $i < $product->pivot->quantity ; $i++) { 
+                if ($product->ProductManufactures->count() > 0) {                
+                    foreach ($product->ProductManufactures as $ProductManufacture) {
+                        $kitchenrequests = KitchenRequest::where('material_id',$ProductManufacture->material_id)->where('status',0)->get();
+                        $productmanufacturequantity = $ProductManufacture->required_quantity;
+                        if ($productmanufacturequantity > 0) {
+                            if ($kitchenrequests->count() > 0) {
+                                foreach ($kitchenrequests as $kitchenrequest) {
+                                    $quantitydifference = $kitchenrequest->quantity - $kitchenrequest->used_amount;
+                                    if ($productmanufacturequantity < $quantitydifference) {
+                                        $kitchenrequest->used_amount = $kitchenrequest->used_amount + $productmanufacturequantity;
+                                        $kitchenrequest->save();
+                                        $productmanufacturequantity = 0 ; 
+                                        $requests[]=$kitchenrequest->id;
+                                        break;
+                                    }elseif ($productmanufacturequantity > $quantitydifference){
+                                        $kitchenrequest->used_amount =  $kitchenrequest->quantity ;
+                                        $kitchenrequest->status =  1;
+                                        $kitchenrequest->save();
+                                        $productmanufacturequantity =  $productmanufacturequantity-$quantitydifference ;
+                                        $requests[]=$kitchenrequest->id;
+                                    }else {
+                                        $kitchenrequest->used_amount = $kitchenrequest->used_amount + $ProductManufacture->required_quantity;
+                                        $kitchenrequest->status =  1;
+                                        $kitchenrequest->save();
+                                        $productmanufacturequantity = 0 ; 
+                                        $requests[]=$kitchenrequest->id;
+                                        break;
+                                    }
+                                }
+                            }else {
+                                $request->session()->flash('message',__('orders.massages.material_doesnt_exist'));
+                                return redirect(route('orders.create'));
+                            }
+                        }
+                    }
+                }else {
+                    $request->session()->flash('message',__('orders.massages.please_enter_productmanufacture'));
+                    return redirect(route('orders.create'));
+                }
+            }
+        }
+        $order->requests()->sync($requests);
         $request->session()->flash('message',__('orders.massages.updated_successfully'));
         return redirect(route('orders.index'));
     }

@@ -74,4 +74,9 @@ class Order extends Model
     {
         return $this->hasOne(Payment::class);
     }
+
+    public function requests()
+    {
+    	return $this->belongsToMany(KitchenRequest::class , 'order_request' , 'order_id' ,'request_id' );
+    }
 }
