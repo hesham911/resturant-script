@@ -158,9 +158,9 @@ class OrderController extends Controller
                         $productmanufacturequantity = $ProductManufacture->required_quantity;
                         if ($productmanufacturequantity > 0) {
                             foreach ($kitchenrequests as $kitchenrequest) {
-                                $kitchenrequest->used_amount =  $kitchenrequest->used_amount -  $productmanufacturequantity
+                                $kitchenrequest->used_amount =  $kitchenrequest->used_amount -  $productmanufacturequantity;
                                 $kitchenrequest->status =0 ;
-                                $kitchenrequest->save()
+                                $kitchenrequest->save();
                             }
                         }
                     }
@@ -208,9 +208,9 @@ class OrderController extends Controller
                         $productmanufacturequantity = $ProductManufacture->required_quantity;
                         if ($productmanufacturequantity > 0) {
                             foreach ($kitchenrequests as $kitchenrequest) {
-                                $kitchenrequest->used_amount =  $kitchenrequest->used_amount -  $productmanufacturequantity
+                                $kitchenrequest->used_amount =  $kitchenrequest->used_amount -  $productmanufacturequantity;
                                 $kitchenrequest->status =0 ;
-                                $kitchenrequest->save()
+                                $kitchenrequest->save();
                             }
                         }
                     }
