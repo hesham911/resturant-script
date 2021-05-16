@@ -25,12 +25,12 @@ class SupplyRequest extends FormRequest
     {
         return [
             'group.*.material_id'=>'required',
-            'group.*.quantity'=>'required|numeric|min:1|max:7',
-            'group.*.price'=>'required|numeric|min:1|max:7',
+            'group.*.quantity'=>'required|numeric|max:999999',
+            'group.*.price'=>'required|numeric|max:999999',
             'group.*.Supplier_name'=>'required',
             'group.*.expiry_date'=>'required',
             'employee_id'=>'required',
-            'bill_number'=>'required|numeric|min:1|max:7',
+            'bill_number'=>'required|numeric|max:999999',
         ];
     }
 

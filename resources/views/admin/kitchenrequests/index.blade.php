@@ -5,6 +5,8 @@
 @section('head')
     <!-- Datatable -->
     <link rel="stylesheet" href="{{ url('vendors/dataTable/datatables.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ url('vendors/dataTable/Buttons-1.6.1/css/buttons.dataTables.min.css') }}" type="text/css">
+
 @endsection
 
 @section('content')
@@ -42,7 +44,7 @@
                         </div>
                     @endif
                     <div class="table-responsive">
-                        <table id="user-list" class="table table-lg">
+                        <table id="myTable" class="table table-lg">
                             <thead>
                             <tr>
                                 <th>
@@ -55,6 +57,7 @@
                                 <th> {{__('kitchenrequests.material_id')}}</th>
                                 <th> {{__('kitchenrequests.quantity')}}</th>
                                 <th> {{__('kitchenrequests.status')}}</th>
+                                <th> {{__('kitchenrequests.used_amount')}}</th>
                                 <th> {{__('kitchenrequests.employee_id')}}</th>
                                 <th> {{__('kitchenrequests.total_cost')}}</th>
                                 <th class="text-right"> خيارات</th>
@@ -69,6 +72,7 @@
                                         <td>{{ $kitchenrequest->material->name }}</td>
                                         <td>{{ $kitchenrequest->quantity }}</td>
                                         <td>{{ $kitchenrequest->status() [$kitchenrequest->status]}}</td>
+                                        <td>{{ $kitchenrequest->used_amount }}</td>
                                         <td>{{ $kitchenrequest->employee->user->name }}</td>
                                         <td>{{ $kitchenrequest->total_cost }}</td>
                                         <td class="text-right">
@@ -106,6 +110,15 @@
 @section('script')
     <!-- Datatable -->
     <script src="{{ url('vendors/dataTable/datatables.min.js') }}"></script>
+    <script src="{{ url('vendors/dataTable/Buttons-1.6.1/js/dataTables.buttons.min.js') }}"></script>
 
     <script src="{{ url('assets/js/examples/pages/user-list.js') }}"></script>
+    <script>
+        $('#myTable').DataTable( {
+            dom: 'Bfrtip',
+            buttons: [
+                'print','excel', 'pdf'
+            ]
+        } );
+    </script>
 @endsection

@@ -25,7 +25,7 @@ class KitchenRequest extends FormRequest
     {
         return [
             'group.*.material_id'=>'required',
-            'group.*.quantity'=>'required|numeric|min:1|max:7',
+            'group.*.quantity'=>'required|numeric|max:999999',
             'employee_id'=>'required',
         ];
     }
