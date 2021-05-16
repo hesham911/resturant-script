@@ -35,4 +35,8 @@ class KitchenRequest extends Model
         return $this->belongsToMany(Supply::class, 'request_supply'  ,'request_id' , 'supply_id');
     }
 
+    public function orders(){
+        return $this->belongsToMany(Order::class, 'order_request'  ,'request_id' , 'order_id');
+    }
+
 }

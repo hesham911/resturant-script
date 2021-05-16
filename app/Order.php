@@ -10,18 +10,16 @@ use function PHPSTORM_META\type;
 class Order extends Model
 {
     use SoftDeletes;
-    protected $fillable= ['client_id','subcategory_id','table_id','type','status','cancel_reason'];
+    protected $fillable= ['client_id','employee_id','category_id','table_id','type','status',
+    'cancel_reason'];
     // type
     static function type()
     {
         $array=
             [
-                /* 0 => __('orders.type.floor'), // الصالة
+                0 => __('orders.type.floor'), // الصالة
                 1 => __('orders.type.delivery'), // ديليفري
-                2 => __('orders.type.take_away'), // تيك اوي */
-                0         => 'داخل الصالة',
-                1         => 'ديليفري',
-                2         => 'تيك اوي',
+                2 => __('orders.type.take_away'), // تيك اوي
             ];
         return $array;
     }
@@ -35,15 +33,11 @@ class Order extends Model
     {
         $array=
             [
-                /* 0 => __('orders.status.orderd'), // تم الطلب
-                1 => __('orders.status.prepared '), // تم التجهيز
+                0 => __('orders.status.orderd'), // تم الطلب
+                1 => __('orders.status.prepared'), // تم التجهيز
                 2 => __('orders.status.closed'), //  تم إغلاق الطلب
-                3 => __('orders.status.payment'), //  تمت عملية الدفع */
-                0        => 'تم الطلب',
-                1        => 'تم التجهيز',
-                2        => 'تم إغلاق الطلب',
-                3        => 'تم الدفع',
-                4        => 'تم الإلغاء',
+                3 => __('orders.status.payment'), //  تم الدفع
+                4 => __('orders.status.canceled'), //  تم الإلغاء
             ];
         return $array;
     }
@@ -52,9 +46,37 @@ class Order extends Model
     {
         return self::status()[$this->status];
     }
-    // subcategory
-    public function subcategory()
+    // get total price
+    public function getTotalPriceAttribute()
     {
-    	return $this->belongsTo(Subcategory::class);
+
+        $total=0;
+        foreach($this->products as $product)
+        {
+            $for_one=$product->price * $product->pivot->quantity;
+            $total +=$for_one;
+        }
+        return $total;
+        //return $this->products->sum('price');
+    }
+    // category
+    public function category()
+    {
+    	return $this->belongsTo(Category::class);
+    }
+    // products
+    public function products()
+    {
+    	return $this->belongsToMany(Product::class)->withPivot('quantity');
+    }
+    // payment
+    public function payment()
+    {
+        return $this->hasOne(Payment::class);
+    }
+
+    public function requests()
+    {
+    	return $this->belongsToMany(KitchenRequest::class , 'order_request' , 'order_id' ,'request_id' );
     }
 }
