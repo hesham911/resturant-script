@@ -75,20 +75,21 @@
                                     </select>
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <label for="inputPassword" class="col-sm-2 col-form-label">{{__('orders.order_type')}}</label>
-                                    <div class="col-sm-10">
-                                    <select class="select2" name="type">
-                                        <option disabled ></option>
-                                        @if (count($types) > 0)
-                                            @foreach ($types as $key=>$type)
-                                                <option  value="{{$key}}"
-                                                {{($key == old("type", $order->type))? 'selected':''}}>
-                                                     {{$type}} </option>
-                                            @endforeach
-                                        @endif
-                                    </select>
-                                    </div>
+                                
+                                <div class="row">
+                                    @foreach($order->products as $key=>$product)
+                                        <div class="col-md-6 col-sm-12 form-group">
+                                            <label for="product_id">{{__('products.name')}}</label>
+                                            <select class="form-control">
+                                                <option selected>{{$product->name}} - {{$product->price}} {{__('app.settings.currency')}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3 col-sm-12 form-group">
+                                            <label for="quantity">{{__('products.quantity')}}</label>
+                                            <input type="number" class="form-control" readonly
+                                             value="{{$product->pivot->quantity}}">
+                                        </div>
+                                    @endforeach
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-2">{{__('orders.products')}}</label>

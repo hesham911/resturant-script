@@ -90,6 +90,21 @@
                                     </select>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    @foreach($order->products as $key=>$product)
+                                        <div class="col-md-6 col-sm-12 form-group">
+                                            <label for="product_id">{{__('products.name')}}</label>
+                                            <select class="form-control">
+                                                <option selected>{{$product->name}} - {{$product->price}} {{__('app.settings.currency')}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3 col-sm-12 form-group">
+                                            <label for="quantity">{{__('products.quantity')}}</label>
+                                            <input type="number" class="form-control" readonly
+                                             value="{{$product->pivot->quantity}}">
+                                        </div>
+                                    @endforeach
+                                </div>
                                 <div class="form-group row">
                                     <label class="col-sm-2">{{__('orders.products')}}</label>
                                     <div class="basic-repeater">
@@ -111,7 +126,7 @@
                                                         <div class="col-md-3 col-sm-12 form-group">
                                                             <label for="quantity">{{__('products.quantity')}}</label>
                                                             <input type="number" class="form-control" name="quantity" id="quantity"
-                                                                min="1" value="{{$prodc->pivot->quantity}}">
+                                                                min="1" value="{{$}}">
                                                         </div>
                                                         <div class="col-md-2 col-sm-12 form-group mt-4">
                                                             <button type="button" class="btn btn-danger" data-repeater-delete>

@@ -120,8 +120,7 @@ class OrderController extends Controller
         $products = Product::all();
         $ordProducts=$order->products;
         return view('admin.orders.edit',['order'=>$order,'categories'=>$categories,
-            'tables'=>$tables,'types'=>$types,'products'=>$products,
-            'ordProducts'=>$ordProducts]);
+            'tables'=>$tables,'types'=>$types,'products'=>$products]);
     }
 
     /**

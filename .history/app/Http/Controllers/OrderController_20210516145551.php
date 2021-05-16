@@ -121,7 +121,7 @@ class OrderController extends Controller
         $ordProducts=$order->products;
         return view('admin.orders.edit',['order'=>$order,'categories'=>$categories,
             'tables'=>$tables,'types'=>$types,'products'=>$products,
-            'ordProducts'=>$ordProducts]);
+            'ordProducts'=]);
     }
 
     /**

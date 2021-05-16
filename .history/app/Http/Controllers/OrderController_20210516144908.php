@@ -118,10 +118,8 @@ class OrderController extends Controller
         $tables = Table::all();
         $types = Order::type();
         $products = Product::all();
-        $ordProducts=$order->products;
         return view('admin.orders.edit',['order'=>$order,'categories'=>$categories,
-            'tables'=>$tables,'types'=>$types,'products'=>$products,
-            'ordProducts'=>$ordProducts]);
+            'tables'=>$tables,'types'=>$types,'products'=>$products]);
     }
 
     /**
@@ -135,8 +133,8 @@ class OrderController extends Controller
     {
         $validated = $request->validated();
         $order->update($validated);
-        //$order->products()->attach($request->group_a);
-        $order->products()->sync($request->group_a);
+        $order->products()->attach($request->group_a);
+        //$order->products()->sync($request->group_a);
         $request->session()->flash('message',__('orders.massages.updated_successfully'));
         return redirect(route('orders.index'));
     }

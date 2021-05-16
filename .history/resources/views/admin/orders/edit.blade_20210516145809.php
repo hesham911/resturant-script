@@ -90,36 +90,27 @@
                                     </select>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    @foreach($order->products as $key=>$product)
+                                        <div class="col-md-6 col-sm-12 form-group">
+                                            <label for="product_id">{{__('products.name')}}</label>
+                                            <select class="form-control">
+                                                <option selected>{{$product->name}} - {{$product->price}} {{__('app.settings.currency')}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3 col-sm-12 form-group">
+                                            <label for="quantity">{{__('products.quantity')}}</label>
+                                            <input type="number" class="form-control" readonly
+                                             value="{{$product->pivot->quantity}}">
+                                        </div>
+                                    @endforeach
+                                </div>
                                 <div class="form-group row">
                                     <label class="col-sm-2">{{__('orders.products')}}</label>
                                     <div class="basic-repeater">
                                         <div data-repeater-list="group_a">
                                             @foreach ($ordProducts as $prodc)
-                                                <div data-repeater-item>
-                                                    <div class="row">
-                                                        <div class="col-md-6 col-sm-12 form-group">
-                                                            <label for="product_id">{{__('products.name')}}</label>
-                                                            <select name="product_id" id="product_id" class="form-control">
-                                                                @if (count($products) > 0)
-                                                                    @foreach ($products as $product)
-                                                                        <option  value="{{$product->id}}"  {{($prodc->id==$product->id)? 'selected':''}}>
-                                                                            {{$product->name}} - {{$product->price}} {{__('app.settings.currency')}}</option>
-                                                                    @endforeach
-                                                                @endif
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-md-3 col-sm-12 form-group">
-                                                            <label for="quantity">{{__('products.quantity')}}</label>
-                                                            <input type="number" class="form-control" name="quantity" id="quantity"
-                                                                min="1" value="{{$prodc->pivot->quantity}}">
-                                                        </div>
-                                                        <div class="col-md-2 col-sm-12 form-group mt-4">
-                                                            <button type="button" class="btn btn-danger" data-repeater-delete>
-                                                                <i class="ti-close font-size-10 mr-2"></i> {{__('app.forms.btn.delete')}}
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                
                                             @endforeach
                                         </div>
                                         <button type="button" class="btn btn-primary" data-repeater-create>

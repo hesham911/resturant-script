@@ -90,6 +90,7 @@
                                     </select>
                                     </div>
                                 </div>
+    
                                 <div class="form-group row">
                                     <label class="col-sm-2">{{__('orders.products')}}</label>
                                     <div class="basic-repeater">
