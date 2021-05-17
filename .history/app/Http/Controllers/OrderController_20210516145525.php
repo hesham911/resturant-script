@@ -118,10 +118,9 @@ class OrderController extends Controller
         $tables = Table::all();
         $types = Order::type();
         $products = Product::all();
-        $ordProducts=$order->products;
+        
         return view('admin.orders.edit',['order'=>$order,'categories'=>$categories,
-            'tables'=>$tables,'types'=>$types,'products'=>$products,
-            'ordProducts'=>$ordProducts]);
+            'tables'=>$tables,'types'=>$types,'products'=>$products]);
     }
 
     /**
