@@ -29,6 +29,7 @@ Route::middleware('auth')->group(function(){
     Route::resource('/materials','MaterialController');
     Route::resource('/supplies','SupplyController');
     Route::resource('/productmanufactures','ProductManufactureController');
+    Route::post('/productmanufactures/materialselectto/{product_id?}','ProductManufactureController@material_select2_ajax')->name('productmanufactures.selectto');
     Route::resource('/kitchenrequests','KitchenRequestController');
     Route::get('/warehousestock','WarehouseStockController@index')
     ->name('warehousestock.index');

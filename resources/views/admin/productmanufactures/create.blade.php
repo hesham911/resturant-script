@@ -46,7 +46,7 @@
                                 <div class="form-group row">
                                     <label for="inputPassword" class="col-sm-2 col-form-label">{{__('productmanufactures.product_id')}}</label>
                                     <div class="col-sm-10">
-                                        <select class="select2 " name="product_id">
+                                        <select class="productselect " name="product_id">
                                             <option disabled  selected> اختر {{__('productmanufactures.product_id')}}</option>
                                             @if ($products->count() > 0)
                                                 @foreach ($products as $product)
@@ -61,12 +61,14 @@
                                         <label class="col-sm-2 col-form-label">مواد التصنيع </label>
                                         <div class="form-group  col-md-3 col-sm-12">
                                             <div class="col-sm-10">
-                                                <select class="select2 " name="material_id">
+                                                <select class="ajaxmaterial " name="material_id">
                                                     <option disabled  selected> اختر {{__('productmanufactures.material_id')}}</option>
+                                                    @if(isset($materials))
                                                     @if ($materials->count() > 0)
                                                         @foreach ($materials as $material)
                                                             <option  value="{{$material->id}}"> {{$material->name}} ({{$material->measuring->name}}) </option>
                                                         @endforeach
+                                                    @endif
                                                     @endif
                                                 </select>
                                             </div>
@@ -111,14 +113,54 @@
     <script src="{{ url('vendors/jquery.repeater.min.js') }}"></script>
   <script>
     $(document).ready(function (){
-        $('.select2').select2({
-            placeholder: 'اختر'
-        });
+        var product_id ;
+        function MaterialSelect() {
+            $('.ajaxmaterial').select2({
+                placeholder: 'اختر',
+                ajax: {
+                        url: '{{route('productmanufactures.selectto')}}',
+                        dataType: 'json',
+                        type:'POST',
+                        headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                        delay: 1000,
+                        data: function (params) {
+                            var query = {
+                                search: params.term,
+                                product_id: product_id,
+                            }
+                            return query;
+                        },
+                        processResults: function (data) {
+                            return {
+                            results:  $.map(data, function (material) {
+                                    return {
+                                        text: material.name,
+                                        id: material.id
+                                    }
+
+                                })
+                            };
+                        }
+
+                    },
+            });
+        }
+        function ProductSelect() {
+            $('.productselect').select2();
+            $('.productselect').on('select2:select', function (e) {
+                product_id = $(e.params.data.element).val();
+                console.log(product_id);
+            });
+            MaterialSelect();
+        }   
+        ProductSelect();
         $('.repeater').repeater({
             show: function () {
                 $(this).slideDown();
                 $('.select2-container').remove();
-                $('.select2').select2({});
+                ProductSelect();
                 $('.select2-container').css('width','100%');
             }
         });

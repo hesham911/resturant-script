@@ -31,7 +31,6 @@ class ProductManufactureController extends Controller
          
         $products = Product::get();
         return view('admin.productmanufactures.create',[
-            'materials'=>$materials,
             'products'=>$products,
             ]);
     }
@@ -127,19 +126,22 @@ class ProductManufactureController extends Controller
         return redirect(route('productmanufactures.index'));
     }
 
-    public function material_select2_ajax ($product_id){
-        // $product_id = 1;
-        if ($product_id) {
+    public function material_select2_ajax (Request $request){
+        $product_id = $request->product_id;
+        $search = $request->search;
+        // dd($search);   
+        $materials = Material::get();
+        if (isset($product_id)) {
             $relatedMaterials= Material::whereHas('ProductManufacture',function($query)use($product_id){
                 $query->where('product_id',$product_id);
             })->get();
-            $materials = Material::get();
             $materials = $materials->diff($relatedMaterials); 
-            return $materials;
-        }else{
-            $materials = Material::get();
-            return $materials;
+            if($search != null){
+                $materials = $materials->where('name','LiKE',$search);
+            }
         }
+        return $materials;
+
         
     }
 }
