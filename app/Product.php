@@ -9,9 +9,7 @@ class Product extends Model
 {
     use SoftDeletes;
 
-    public function ProductManufacture (){
-        return $this->hasMany(ProductManufacture::class);
-    }
+
     
     protected $fillable= ['name','subcategory_id','type','price'];
     // type
