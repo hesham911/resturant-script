@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function(){
 
 
     Route::resource('/zones','ZoneController');
+    Route::resource('/products','ProductController');
     Route::resource('/categories','CategoryController');
     Route::resource('/subcategories','SubcategoryController');
     Route::resource('/settings','SettingController');

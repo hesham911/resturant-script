@@ -6,6 +6,7 @@ use App\Subcategory;
 use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\SubcategoryRequest;
+use Illuminate\Support\Facades\Auth;
 
 class SubcategoryController extends Controller
 {
@@ -27,8 +28,12 @@ class SubcategoryController extends Controller
      */
     public function create()
     {
-        $categories = Category::get();
-        return view('admin.subcategories.create',['categories'=>$categories]);
+        if (Auth::user()->hasPermissionTo('add-category')) {
+            $categories = Category::get();
+            return view('admin.subcategories.create',['categories'=>$categories]);
+        }else {
+            abort(503);
+        }
     }
 
     /**
@@ -39,10 +44,14 @@ class SubcategoryController extends Controller
      */
     public function store(SubcategoryRequest  $request)
     {
-        $validated = $request->validated();
-        Subcategory::create($validated);
-        $request->session()->flash('message',__('subcategories.massages.created_succesfully'));
-        return redirect(route('subcategories.index'));
+        if (Auth::user()->hasPermissionTo('add-category')) {
+            $validated = $request->validated();
+            Subcategory::create($validated);
+            $request->session()->flash('message',__('subcategories.massages.created_succesfully'));
+            return redirect(route('subcategories.index'));
+        }else {
+            abort(503);
+        }
     }
 
     /**
@@ -64,11 +73,15 @@ class SubcategoryController extends Controller
      */
     public function edit(Subcategory $subcategory)
     {
-        $categories = Category::get();
-        return view('admin.subcategories.edit',[
-            'subcategory'=>$subcategory,
-            'categories'=>$categories,
-        ]);
+        if (Auth::user()->hasPermissionTo('edit-category')) {
+            $categories = Category::get();
+            return view('admin.subcategories.edit',[
+                'subcategory'=>$subcategory,
+                'categories'=>$categories,
+            ]);
+        }else {
+            abort(503);
+        }
     }
 
     /**
@@ -80,10 +93,14 @@ class SubcategoryController extends Controller
      */
     public function update(SubcategoryRequest $request, Subcategory $subcategory)
     {
-        $validated = $request->validated();
-        $subcategory->update ($validated);
-        $request->session()->flash('message',__('subcategories.massages.updated_succesfully'));
-        return redirect(route('subcategories.index'));
+        if (Auth::user()->hasPermissionTo('edit-category')) {
+            $validated = $request->validated();
+            $subcategory->update ($validated);
+            $request->session()->flash('message',__('subcategories.massages.updated_succesfully'));
+            return redirect(route('subcategories.index'));
+        }else {
+            abort(503);
+        }
     }
 
     /**
@@ -94,8 +111,12 @@ class SubcategoryController extends Controller
      */
     public function destroy(Request $request,Subcategory $subcategory)
     {
-        $subcategory->delete();
-        $request->session()->flash('message',__('subcategories.massages.deleted_succesfully'));
-        return redirect(route('subcategories.index'));
+        if (Auth::user()->hasPermissionTo('delete-category')) {
+            $subcategory->delete();
+            $request->session()->flash('message',__('subcategories.massages.deleted_succesfully'));
+            return redirect(route('subcategories.index'));
+        }else {
+            abort(503);
+        }
     }
 }

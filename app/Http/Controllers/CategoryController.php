@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\CategoryRequest;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -15,6 +16,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        
         $categories = Category::get();
         return view('admin.categories.index',['categories'=>$categories]);
     }
@@ -26,7 +28,11 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.categories.create');
+        if (Auth::user()->hasPermissionTo('add-category')) {
+            return view('admin.categories.create');
+        }else {
+            abort(503);
+        }
     }
 
     /**
@@ -37,10 +43,14 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest  $request)
     {
-        $validated = $request->validated();
-        Category::create($validated);
-        $request->session()->flash('message',__('categories.massages.created_succesfully'));
-        return redirect(route('categories.index'));
+        if (Auth::user()->hasPermissionTo('add-category')) {
+            $validated = $request->validated();
+            Category::create($validated);
+            $request->session()->flash('message',__('categories.massages.created_succesfully'));
+            return redirect(route('categories.index'));
+        }else {
+            abort(503);
+        }
     }
 
     /**
@@ -62,7 +72,11 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return view('admin.categories.edit',['category'=>$category,]);
+        if (Auth::user()->hasPermissionTo('edit-category')) {
+            return view('admin.categories.edit',['category'=>$category,]);
+        }else {
+            abort(503);
+        }
     }
 
     /**
@@ -74,10 +88,14 @@ class CategoryController extends Controller
      */
     public function update(CategoryRequest $request, Category $category)
     {
-        $validated = $request->validated();
-        $category->update ($validated);
-        $request->session()->flash('message',__('categories.massages.updated_succesfully'));
-        return redirect(route('categories.index'));
+        if (Auth::user()->hasPermissionTo('edit-category')) {
+            $validated = $request->validated();
+            $category->update ($validated);
+            $request->session()->flash('message',__('categories.massages.updated_succesfully'));
+            return redirect(route('categories.index'));
+        }else {
+            abort(503);
+        }
     }
 
     /**
@@ -88,8 +106,12 @@ class CategoryController extends Controller
      */
     public function destroy( Request $request,Category $category)
     {
-        $category->delete();
-        $request->session()->flash('message',__('categories.massages.deleted_succesfully'));
-        return redirect(route('categories.index'));
+        if (Auth::user()->hasPermissionTo('delete-category')) {
+            $category->delete();
+            $request->session()->flash('message',__('categories.massages.deleted_succesfully'));
+            return redirect(route('categories.index'));
+        }else {
+            abort(503);
+        }
     }
 }

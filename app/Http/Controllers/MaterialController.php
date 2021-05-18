@@ -6,6 +6,7 @@ use App\Material;
 use Illuminate\Http\Request;
 use App\Http\Requests\MaterialRequest;
 use App\MaterialMeasuring;
+use Illuminate\Support\Facades\Auth;
 
 class MaterialController extends Controller
 {
@@ -27,8 +28,12 @@ class MaterialController extends Controller
      */
     public function create()
     {
-        $measurings = MaterialMeasuring::get();
-        return view('admin.materials.create',['measurings'=>$measurings]);
+        if (Auth::user()->hasPermissionTo('add-material')) {
+            $measurings = MaterialMeasuring::get();
+            return view('admin.materials.create',['measurings'=>$measurings]);
+        }else {
+            abort(503);
+        }
     }
 
     /**
@@ -39,10 +44,14 @@ class MaterialController extends Controller
      */
     public function store(MaterialRequest  $request)
     {
-        $validated = $request->validated();
-        Material::create($validated);
-        $request->session()->flash('message',__('materials.massages.created_succesfully'));
-        return redirect(route('materials.index'));
+        if (Auth::user()->hasPermissionTo('add-material')) {
+            $validated = $request->validated();
+            Material::create($validated);
+            $request->session()->flash('message',__('materials.massages.created_succesfully'));
+            return redirect(route('materials.index'));
+        }else {
+            abort(503);
+        }
     }
 
     /**
@@ -64,11 +73,15 @@ class MaterialController extends Controller
      */
     public function edit(Material $material)
     {
-        $measurings = MaterialMeasuring::get();
-        return view('admin.materials.edit',[
-            'material'=>$material,
-            'measurings'=>$measurings,
-            ]);
+        if (Auth::user()->hasPermissionTo('edit-material')) {
+            $measurings = MaterialMeasuring::get();
+            return view('admin.materials.edit',[
+                'material'=>$material,
+                'measurings'=>$measurings,
+            );
+        }else {
+            abort(503);
+        }
     }
 
     /**
@@ -80,10 +93,14 @@ class MaterialController extends Controller
      */
     public function update(MaterialRequest $request, Material $material)
     {
-        $validated = $request->validated();
-        $material->update ($validated);
-        $request->session()->flash('message',__('materials.massages.updated_succesfully'));
-        return redirect(route('materials.index'));
+        if (Auth::user()->hasPermissionTo('edit-material')) {
+            $validated = $request->validated();
+            $material->update ($validated);
+            $request->session()->flash('message',__('materials.massages.updated_succesfully'));
+            return redirect(route('materials.index'));
+        }else {
+            abort(503);
+        }
     }
 
     /**
@@ -94,8 +111,13 @@ class MaterialController extends Controller
      */
     public function destroy( Request $request,Material $material)
     {
-        $material->delete();
-        $request->session()->flash('message',__('materials.massages.deleted_succesfully'));
-        return redirect(route('materials.index'));
+        if (Auth::user()->hasPermissionTo('delete-material')) {
+            $material->delete();
+            $request->session()->flash('message',__('materials.massages.deleted_succesfully'));
+            return redirect(route('materials.index'));
+            
+        }else {
+            abort(503);
+        }
     }
 }

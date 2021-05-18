@@ -29,7 +29,7 @@
         </ul>
     </li>
 
-    {{-- <li>
+    <li>
     <!-- Products -->
     <li>
         <a href="#">
@@ -60,7 +60,7 @@
             </span>
             <span>Clients</span>
         </a>
-    </li> --}}
+    </li>
     <li>
         {{-- <a href="#">
             <span class="nav-link-icon">

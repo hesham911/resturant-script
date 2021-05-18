@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Setting;
 use Illuminate\Http\Request;
 use App\Http\Requests\SettingRequest;
+use Illuminate\Support\Facades\Auth;
 
 class SettingController extends Controller
 {
@@ -26,7 +27,11 @@ class SettingController extends Controller
      */
     public function create()
     {
-        return view('admin.settings.create');
+        if (Auth::user()->hasPermissionTo('add-setting')) {
+            return view('admin.settings.create');
+        }else {
+            abort(503);
+        }
     }
 
     /**
@@ -37,10 +42,14 @@ class SettingController extends Controller
      */
     public function store(SettingRequest  $request)
     {
-        $validated = $request->validated();
-        Setting::create($validated);
-        $request->session()->flash('message',__('settings.massages.created_succesfully'));
-        return redirect(route('settings.index'));
+        if (Auth::user()->hasPermissionTo('add-setting')) {
+            $validated = $request->validated();
+            Setting::create($validated);
+            $request->session()->flash('message',__('settings.massages.created_succesfully'));
+            return redirect(route('settings.index'));
+        }else {
+            abort(503);
+        }
     }
 
     /**
@@ -62,9 +71,13 @@ class SettingController extends Controller
      */
     public function edit(Setting $setting)
     {
-        return view('admin.settings.edit',[
-            'setting'=>$setting,
-        ]);
+        if (Auth::user()->hasPermissionTo('edit-setting')) {
+            return view('admin.settings.edit',[
+                'setting'=>$setting,
+            ]);
+        }else {
+            abort(503);
+        }
     }
 
     /**
@@ -76,10 +89,14 @@ class SettingController extends Controller
      */
     public function update(SettingRequest $request,Setting $setting)
     {
-        $validated = $request->validated();
-        $setting->update ($validated);
-        $request->session()->flash('message',__('settings.massages.updated_succesfully'));
-        return redirect(route('settings.index'));
+        if (Auth::user()->hasPermissionTo('edit-setting')) {
+            $validated = $request->validated();
+            $setting->update ($validated);
+            $request->session()->flash('message',__('settings.massages.updated_succesfully'));
+            return redirect(route('settings.index'));
+        }else {
+            abort(503);
+        }
     }
 
     /**
@@ -90,8 +107,12 @@ class SettingController extends Controller
      */
     public function destroy(Request $request,Setting $setting)
     {
-        $setting->delete();
-        $request->session()->flash('message',__('settings.massages.deleted_succesfully'));
-        return redirect(route('settings.index'));
+        if (Auth::user()->hasPermissionTo('delete-setting')) {
+            $setting->delete();
+            $request->session()->flash('message',__('settings.massages.deleted_succesfully'));
+            return redirect(route('settings.index'));
+        }else {
+            abort(503);
+        }
     }
 }
