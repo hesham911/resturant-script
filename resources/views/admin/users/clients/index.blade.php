@@ -45,7 +45,7 @@
                             <tr>
                                 <th>{{__('app.tables.num')}}</th>
                                 <th>{{__('users.clients.name')}}</th>
-                                <th>{{__('users.clients.price')}}</th>
+                                <th>{{__('users.clients.phone')}}</th>
                                 <th class="text-right">{{__('app.tables.control')}}</th>
                             </tr>
                             </thead>
@@ -53,8 +53,8 @@
                             @foreach($clients as $client)
                                 <tr>
                                     <td>{{$client->id}}</td>
-                                    <td>{{$client->name}}</td>
-                                    <td>{{$client->price}}</td>
+                                    <td>{{$client->user->name}}</td>
+                                    <td>{{$client->user->getNumbersPhones($client->user)}}</td>
                                     <td class="text-right">
                                         <div class="dropdown">
                                             <a href="#" data-toggle="dropdown"
