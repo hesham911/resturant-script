@@ -65,6 +65,23 @@
     <li>
         <a href="#">
             <span class="nav-link-icon">
+                <i class="fa fa-lock fa-2x" ></i>
+            </span>
+            <span> الصلاحيات</span>
+        </a>
+        <ul>
+            <li>
+                <a class="{{(request()->is('dashbord/roles'))? 'active' : '' }}" href="{{route('roles.index')}}">عرض كل</a>
+            </li>
+            <li>
+                <a class="{{(request()->is('dashbord/roles/create'))? 'active' : '' }}" href="{{ route('roles.create') }}">إضافة جديد</a>
+            </li>
+        </ul>
+    </li>
+
+    <li>
+        <a href="#">
+            <span class="nav-link-icon">
                 <i class="fa fa-users"></i>
             </span>
             <span>التحكم المستخدمين</span>
