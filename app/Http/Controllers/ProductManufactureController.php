@@ -30,14 +30,11 @@ class ProductManufactureController extends Controller
      */
     public function create()
     {
-        if (Auth::user()->hasPermissionTo('add-product-manufacture')) {
-            $products = Product::get();
-            return view('admin.productmanufactures.create',[
-                'products'=>$products,
-            ]);
-        }else {
-            abort(503);
-        }
+        $products = Product::get();
+        return view('admin.productmanufactures.create',[
+            'products'=>$products,
+        ]);
+        
     }
 
     /**
@@ -48,21 +45,18 @@ class ProductManufactureController extends Controller
      */
     public function store(ProductManufactureRequest  $request)
     {
-        if (Auth::user()->hasPermissionTo('add-product-manufacture')) {
-            $validated = $request->validated();
-            foreach ($validated['group'] as $material) {
-                $productmanufacture = new ProductManufacture;
-                $productmanufacture->product_id = $validated['product_id'];
-                $productmanufacture->material_id = $material['material_id'];
-                $productmanufacture->required_quantity = $material['required_quantity'];
-                $productmanufacture->waste_percentage = $material['waste_percentage'] / 100;
-                $productmanufacture->save();
-            }
-            $request->session()->flash('message',__('productmanufactures.massages.created_succesfully'));
-            return redirect(route('productmanufactures.index'));
-        }else {
-            abort(503);
+        $validated = $request->validated();
+        foreach ($validated['group'] as $material) {
+            $productmanufacture = new ProductManufacture;
+            $productmanufacture->product_id = $validated['product_id'];
+            $productmanufacture->material_id = $material['material_id'];
+            $productmanufacture->required_quantity = $material['required_quantity'];
+            $productmanufacture->waste_percentage = $material['waste_percentage'] / 100;
+            $productmanufacture->save();
         }
+        $request->session()->flash('message',__('productmanufactures.massages.created_succesfully'));
+        return redirect(route('productmanufactures.index'));
+        
     }
 
     /**
@@ -84,17 +78,14 @@ class ProductManufactureController extends Controller
      */
     public function edit(ProductManufacture $productmanufacture)
     {
-        if (Auth::user()->hasPermissionTo('edit-product-manufacture')) {
-            $materials = Material::get();
-            $products = Product::get();  
-            return view('admin.productmanufactures.edit',[
-                'productmanufacture'=>$productmanufacture,
-                'materials'=>$materials,
-                'products'=>$products,
-            ]);
-        }else {
-            abort(503);
-        }
+        $materials = Material::get();
+        $products = Product::get();  
+        return view('admin.productmanufactures.edit',[
+            'productmanufacture'=>$productmanufacture,
+            'materials'=>$materials,
+            'products'=>$products,
+        ]);
+        
     }
 
     /**
@@ -106,29 +97,24 @@ class ProductManufactureController extends Controller
      */
     public function update(Request $request, ProductManufacture $productmanufacture)
     {
-        if (Auth::user()->hasPermissionTo('edit-product-manufacture')) {
-            $validated = $request->validate([
-                'material_id'=>'required',
-                'product_id'=>'required',
-                'required_quantity'=>'required',
-                'waste_percentage'=>'required',
-            ],[
-                'material_id'=>__('productmanufactures.material_id'),
-                'product_id'=>__('productmanufactures.product_id'),
-                'required_quantity'=>__('productmanufactures.required_quantity'),
-                'waste_percentage'=>__('productmanufactures.waste_percentage'),
-            ]);
-            $productmanufacture->product_id = $validated['product_id'];
-            $productmanufacture->material_id = $validated['material_id'];
-            $productmanufacture->required_quantity = $validated['required_quantity'];
-            $productmanufacture->waste_percentage = $validated['waste_percentage'];
-            $productmanufacture->save();
-            $request->session()->flash('message',__('productmanufactures.massages.updated_succesfully'));
-            return redirect(route('productmanufactures.index'));
-        }else {
-            abort(503);
-        }
-        
+        $validated = $request->validate([
+            'material_id'=>'required',
+            'product_id'=>'required',
+            'required_quantity'=>'required',
+            'waste_percentage'=>'required',
+        ],[
+            'material_id'=>__('productmanufactures.material_id'),
+            'product_id'=>__('productmanufactures.product_id'),
+            'required_quantity'=>__('productmanufactures.required_quantity'),
+            'waste_percentage'=>__('productmanufactures.waste_percentage'),
+        ]);
+        $productmanufacture->product_id = $validated['product_id'];
+        $productmanufacture->material_id = $validated['material_id'];
+        $productmanufacture->required_quantity = $validated['required_quantity'];
+        $productmanufacture->waste_percentage = $validated['waste_percentage'];
+        $productmanufacture->save();
+        $request->session()->flash('message',__('productmanufactures.massages.updated_succesfully'));
+        return redirect(route('productmanufactures.index'));
     }
 
     /**
@@ -139,14 +125,9 @@ class ProductManufactureController extends Controller
      */
     public function destroy(Request $request,ProductManufacture $productmanufacture)
     {
-        if (Auth::user()->hasPermissionTo('delete-product-manufacture')) {
             $productmanufacture->delete();
             $request->session()->flash('message',__('productmanufactures.massages.deleted_succesfully'));
             return redirect(route('productmanufactures.index'));
-        }else {
-            abort(503);
-        }
-        
     }
 
     public function material_select2_ajax (Request $request){

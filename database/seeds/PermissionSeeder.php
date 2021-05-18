@@ -52,6 +52,9 @@ class PermissionSeeder extends Seeder
 
         Permission::create(['name' => 'add-setting']);
         Permission::create(['name' => 'edit-setting']);
+        Permission::create(['name' => 'delete-setting']);
+
+        Permission::create(['name' => 'show-warehouse-stock']);
 
         //>>>>>>>Create system Accounting operations
         Permission::create(['name' => 'view-report']);

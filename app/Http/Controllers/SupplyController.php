@@ -32,20 +32,16 @@ class SupplyController extends Controller
      */
     public function create()
     {
-        if (Auth::user()->hasPermissionTo('add-supply')) {
-            $materials = Material::with('measuring')->get();
-            if (Supply::get()->count() >0) {
-                $bill_number = Supply::orderBy('id','desc')->get()->first()->bill_number;
-            }else {
-                $bill_number = 0;
-            }
-            return view('admin.supplies.create',[
-                'materials' => $materials,
-                'bill_number' => $bill_number,
-            ]);
+        $materials = Material::with('measuring')->get();
+        if (Supply::get()->count() >0) {
+            $bill_number = Supply::orderBy('id','desc')->get()->first()->bill_number;
         }else {
-            abort(503);
+            $bill_number = 0;
         }
+        return view('admin.supplies.create',[
+            'materials' => $materials,
+            'bill_number' => $bill_number,
+        ]);
     }
 
     /**
@@ -56,29 +52,24 @@ class SupplyController extends Controller
      */
     public function store(SupplyRequest  $request)
     {
-        if (Auth::user()->hasPermissionTo('add-supply')) {
-            $validated = $request->validated();
-            foreach($validated['group'] as $supply_data){
-                $supply = new Supply;
-                $supply->material_id =  $supply_data['material_id'];
-                $supply->quantity =  $supply_data['quantity'];
-                $supply->price =  $supply_data['price'];
-                $supply->Supplier_name =  $supply_data['Supplier_name'];
-                $supply->expiry_date =  $supply_data['expiry_date'];
-                $supply->employee_id =  $validated['employee_id'];
-                $supply->bill_number =  $validated['bill_number'];
-                $supply->save();
-                $stock = WarehouseStock::firstOrNew(['material_id'=>$supply_data['material_id']]);
-                $stock->material_id = $supply_data['material_id'];
-                $stock->quantity = $stock->quantity + $supply_data['quantity'];
-                $stock->save();
-            }
-            $request->session()->flash('message',__('supplies.massages.created_succesfully'));
-            return redirect(route('supplies.index'));
-        }else {
-            abort(503);
+        $validated = $request->validated();
+        foreach($validated['group'] as $supply_data){
+            $supply = new Supply;
+            $supply->material_id =  $supply_data['material_id'];
+            $supply->quantity =  $supply_data['quantity'];
+            $supply->price =  $supply_data['price'];
+            $supply->Supplier_name =  $supply_data['Supplier_name'];
+            $supply->expiry_date =  $supply_data['expiry_date'];
+            $supply->employee_id =  $validated['employee_id'];
+            $supply->bill_number =  $validated['bill_number'];
+            $supply->save();
+            $stock = WarehouseStock::firstOrNew(['material_id'=>$supply_data['material_id']]);
+            $stock->material_id = $supply_data['material_id'];
+            $stock->quantity = $stock->quantity + $supply_data['quantity'];
+            $stock->save();
         }
-        
+        $request->session()->flash('message',__('supplies.massages.created_succesfully'));
+        return redirect(route('supplies.index'));
     }
 
     /**
@@ -100,15 +91,11 @@ class SupplyController extends Controller
      */
     public function edit(Supply $supply)
     {
-        if (Auth::user()->hasPermissionTo('edit-supply')) {
-            $materials = Material::get();
-            return view('admin.supplies.edit',[
-                'supply'=>$supply,
-                'materials'=>$materials,
-            ]);
-        }else {
-            abort(503);
-        }
+        $materials = Material::get();
+        return view('admin.supplies.edit',[
+            'supply'=>$supply,
+            'materials'=>$materials,
+        ]);
     }
 
     /**
@@ -120,27 +107,23 @@ class SupplyController extends Controller
      */
     public function update(SupplyRequest $request,Supply $supply)
     {
-        if (Auth::user()->hasPermissionTo('edit-supply')) {
-            $validated = $request->validated();
-            //to reset the last added quantity
-            $warehouse_stock = WarehouseStock::findOrFail($supply->material_id);
-            $warehouse_stock->quantity = $warehouse_stock->quantity - $supply->quantity ;
-            $warehouse_stock->save();
-            $supply->material_id =  $validated['material_id'];
-            $supply->quantity =  $validated['quantity'];
-            $supply->price =  $validated['price'];
-            $supply->Supplier_name =  $validated['Supplier_name'];
-            $supply->expiry_date =  $validated['expiry_date'];
-            $supply->employee_id =  $request->employee_id;
-            $supply->save();
-            $warehouse_stock = WarehouseStock::findOrFail($validated['material_id']);
-            $warehouse_stock->quantity = $warehouse_stock->quantity + $supply->quantity ;
-            $warehouse_stock->save();
-            $request->session()->flash('message',__('supplies.massages.updated_succesfully'));
-            return redirect(route('supplies.index'));
-        }else {
-            abort(503);
-        }
+        $validated = $request->validated();
+        //to reset the last added quantity
+        $warehouse_stock = WarehouseStock::findOrFail($supply->material_id);
+        $warehouse_stock->quantity = $warehouse_stock->quantity - $supply->quantity ;
+        $warehouse_stock->save();
+        $supply->material_id =  $validated['material_id'];
+        $supply->quantity =  $validated['quantity'];
+        $supply->price =  $validated['price'];
+        $supply->Supplier_name =  $validated['Supplier_name'];
+        $supply->expiry_date =  $validated['expiry_date'];
+        $supply->employee_id =  $request->employee_id;
+        $supply->save();
+        $warehouse_stock = WarehouseStock::findOrFail($validated['material_id']);
+        $warehouse_stock->quantity = $warehouse_stock->quantity + $supply->quantity ;
+        $warehouse_stock->save();
+        $request->session()->flash('message',__('supplies.massages.updated_succesfully'));
+        return redirect(route('supplies.index'));
     }
 
     /**
@@ -151,12 +134,8 @@ class SupplyController extends Controller
      */
     public function destroy(Request $request,Supply $supply)
     {
-        if (Auth::user()->hasPermissionTo('delete-supply')) {
-            $supply->delete();
-            $request->session()->flash('message',__('supplies.massages.deleted_succesfully'));
-            return redirect(route('supplies.index'));
-        }else {
-            abort(503);
-        }
+        $supply->delete();
+        $request->session()->flash('message',__('supplies.massages.deleted_succesfully'));
+        return redirect(route('supplies.index'));
     }
 }

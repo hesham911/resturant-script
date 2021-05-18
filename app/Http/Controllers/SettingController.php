@@ -42,14 +42,10 @@ class SettingController extends Controller
      */
     public function store(SettingRequest  $request)
     {
-        if (Auth::user()->hasPermissionTo('add-setting')) {
-            $validated = $request->validated();
-            Setting::create($validated);
-            $request->session()->flash('message',__('settings.massages.created_succesfully'));
-            return redirect(route('settings.index'));
-        }else {
-            abort(503);
-        }
+        $validated = $request->validated();
+        Setting::create($validated);
+        $request->session()->flash('message',__('settings.massages.created_succesfully'));
+        return redirect(route('settings.index'));
     }
 
     /**
@@ -71,13 +67,9 @@ class SettingController extends Controller
      */
     public function edit(Setting $setting)
     {
-        if (Auth::user()->hasPermissionTo('edit-setting')) {
-            return view('admin.settings.edit',[
-                'setting'=>$setting,
-            ]);
-        }else {
-            abort(503);
-        }
+        return view('admin.settings.edit',[
+            'setting'=>$setting,
+        ]);
     }
 
     /**
@@ -89,14 +81,10 @@ class SettingController extends Controller
      */
     public function update(SettingRequest $request,Setting $setting)
     {
-        if (Auth::user()->hasPermissionTo('edit-setting')) {
-            $validated = $request->validated();
-            $setting->update ($validated);
-            $request->session()->flash('message',__('settings.massages.updated_succesfully'));
-            return redirect(route('settings.index'));
-        }else {
-            abort(503);
-        }
+        $validated = $request->validated();
+        $setting->update ($validated);
+        $request->session()->flash('message',__('settings.massages.updated_succesfully'));
+        return redirect(route('settings.index'));
     }
 
     /**
@@ -107,12 +95,8 @@ class SettingController extends Controller
      */
     public function destroy(Request $request,Setting $setting)
     {
-        if (Auth::user()->hasPermissionTo('delete-setting')) {
-            $setting->delete();
-            $request->session()->flash('message',__('settings.massages.deleted_succesfully'));
-            return redirect(route('settings.index'));
-        }else {
-            abort(503);
-        }
+        $setting->delete();
+        $request->session()->flash('message',__('settings.massages.deleted_succesfully'));
+        return redirect(route('settings.index'));
     }
 }
