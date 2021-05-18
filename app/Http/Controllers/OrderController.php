@@ -63,7 +63,7 @@ class OrderController extends Controller
                 if ($product->ProductManufactures->count() > 0) {                
                     foreach ($product->ProductManufactures as $ProductManufacture) {
                         $kitchenrequests = KitchenRequest::where('material_id',$ProductManufacture->material_id)->where('status',0)->get();
-                        $productmanufacturequantity = $ProductManufacture->required_quantity;
+                        $productmanufacturequantity = $ProductManufacture->required_quantity + $ProductManufacture->waste_percentage;
                         if ($productmanufacturequantity > 0) {
                             if ($kitchenrequests->count() > 0) {
                                 foreach ($kitchenrequests as $kitchenrequest) {

@@ -68,7 +68,7 @@
                                         <td>{{ $product_manufacture->product->name }}</td>
                                         <td>{{ $product_manufacture->material->name }}</td>
                                         <td>{{ $product_manufacture->required_quantity }}</td>
-                                        <td>{{ $product_manufacture->waste_percentage }}</td>
+                                        <td>{{ $product_manufacture->waste_percentage *100}} %</td>
                                         <td class="text-right">
                                             <div class="dropdown">
                                                 <a href="#" data-toggle="dropdown"

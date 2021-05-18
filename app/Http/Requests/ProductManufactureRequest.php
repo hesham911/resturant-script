@@ -26,8 +26,8 @@ class ProductManufactureRequest extends FormRequest
         return [
             'group.*.material_id'=>'required',
             'product_id'=>'required',
-            'group.*.required_quantity'=>'required',
-            'group.*.waste_percentage'=>'required',
+            'group.*.required_quantity'=>'required|numeric|max:999999',
+            'group.*.waste_percentage'=>'required|numeric|max:999999',
         ];
     }
     public function attributes()

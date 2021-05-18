@@ -49,7 +49,7 @@ class ProductManufactureController extends Controller
             $productmanufacture->product_id = $validated['product_id'];
             $productmanufacture->material_id = $material['material_id'];
             $productmanufacture->required_quantity = $material['required_quantity'];
-            $productmanufacture->waste_percentage = $material['waste_percentage'];
+            $productmanufacture->waste_percentage = $material['waste_percentage'] / 100;
             $productmanufacture->save();
         }
         $request->session()->flash('message',__('productmanufactures.massages.created_succesfully'));
