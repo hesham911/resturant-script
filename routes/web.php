@@ -20,6 +20,7 @@ ROute::group([
     Route::get('/', function () {return view('admin.dashboard');})->name('dashboard');
 
     Route::resource('/zones','ZoneController');
+    Route::resource('/roles','RoleController');
     Route::resource('/employees','EmployeeController');
     Route::resource('/clients','ClientController');
     Route::resource('/categories','CategoryController');
