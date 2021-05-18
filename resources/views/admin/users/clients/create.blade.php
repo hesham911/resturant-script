@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    {{__('users.employees.titles.create')}}
+    {{__('users.clients.titles.create')}}
 @endsection
 @section('head')
     <!-- Prism -->
@@ -14,10 +14,10 @@
 
     <div class="page-header">
         <div>
-            <h3>{{__('users.employees.titles.create')}}</h3>
+            <h3>{{__('users.clients.titles.create')}}</h3>
             @include('admin.partials.breadcrumb',[
                 'parent' => [
-                    'name' => __("users.employees.titles.create"),
+                    'name' => __("users.clients.titles.create"),
                 ]
             ])
         </div>
@@ -43,48 +43,24 @@
                                     </ul>
                                 </div>
                             @endif
-                            <h6 class="card-title">{{__('users.employees.titles.subcreate')}}</h6>
-                            <form method="post" action="{{route('employees.store')}}" multiple>
+                            <h6 class="card-title">{{__('users.clients.titles.subcreate')}}</h6>
+                            <form method="post" action="{{route('clients.store')}}" multiple>
                                 @csrf
                                 <div class="form-group row">
-                                    <label for="name" class="col-sm-2 col-form-label">{{__('users.employees.name')}}</label>
+                                    <label for="name" class="col-sm-2 col-form-label">{{__('users.clients.name')}}</label>
                                     <div class="col-sm-10">
-                                        <input type="text" name="name" value="{{old('name')}}" class="form-control" id="name" placeholder="{{__('users.employees.placeholder.name')}}">
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="roles" class="col-sm-2 col-form-label">{{__('users.employees.roles_employees')}}</label>
-                                    <div class="col-sm-10">
-                                        <select name="roles[]" id="roles" class="roles-employees" multiple>
-                                            <option disabled >{{__('users.employees.placeholder.roles_employees')}}</option>
-                                            @if(count($roles) > 0)
-                                                @foreach($roles as $key => $role)
-                                                    <option value="{{$role}}" {{(old('roles')==$role)? 'selected':''}}>{{$role}}</option>
-                                                @endforeach
-                                            @endif
-                                        </select>
+                                        <input type="text" name="name" value="{{old('name')}}" class="form-control" id="name" placeholder="{{__('users.clients.placeholder.name')}}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-2">{{__('users.employees.status')}}</label>
-                                    <div class="col-sm-10">
-                                        <div class="custom-control custom-switch custom-checkbox-success">
-                                            <input type="hidden" value="0"  name="status_employees">
-                                            <input type="checkbox" name="status_employees" class="custom-control-input" value="1"  id="status_employees" {{ old('status_employees') ? 'checked="checked"' : '' }}>
-                                            <label for="status_employees" class="custom-control-label"></label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-2">{{__('users.employees.phone')}}</label>
-                                    <div class="basic-repeater">
+                                    <label class="col-sm-2">{{__('users.clients.phone')}}</label>
+                                    <div class="basic-repeater col-sm-4">
                                         <div data-repeater-list="group_a">
                                             <div data-repeater-item>
                                                 <div class="row">
                                                     <div class="col-md-10 col-sm-12 form-group">
                                                         <input type="text" class="form-control" name="number" id="number"
-                                                               placeholder="{{__('users.employees.placeholder.phone')}}">
+                                                               placeholder="{{__('users.clients.placeholder.phone')}}">
                                                     </div>
                                                     <div class="col-md-2 col-sm-12 form-group">
                                                         <button type="button" class="btn btn-danger" data-repeater-delete>
@@ -101,6 +77,44 @@
                                         </button>
                                     </div>
                                 </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-2">{{__('users.clients.address')}}</label>
+                                    <div class="basic-repeater col-sm-10">
+                                        <div data-repeater-list="group_b">
+                                            <div data-repeater-item >
+                                                <div class="row">
+                                                    <div class="col-md-5 col-sm-12 form-group">
+                                                        <label  for="zone">{{__('users.clients.zone')}}</label>
+                                                        <select name="zone" id="zone" class="zone">
+                                                            <option disabled >{{__('users.clients.placeholder.zone')}}</option>
+                                                            @if(count($zones) > 0)
+                                                                @foreach($zones as $key => $zone)
+                                                                    <option value="{{$zone->id}}" {{(old('zone')==$zone->id)? 'selected':''}}>{{$zone->name}}</option>
+                                                                @endforeach
+                                                            @endif
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-5 col-sm-12 form-group">
+                                                        <label for="address">{{__('users.clients.address_details')}}</label>
+                                                        <input class="form-control" name="address" id="address" placeholder="{{__('users.clients.placeholder.address')}}"/>
+                                                    </div>
+                                                    <div class="col-md-2 col-sm-12 form-group">
+                                                        <div><label>&nbsp;</label></div>
+                                                        <button type="button" class="btn btn-danger" data-repeater-delete>
+                                                            <i class="ti-close font-size-10 mr-2"></i> {{__('app.forms.btn.delete')}}
+                                                        </button>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <button type="button" class="btn btn-primary" data-repeater-create>
+                                            <i class="ti-plus font-size-10 mr-2"></i> {{__('app.forms.btn.add')}}
+                                        </button>
+                                    </div>
+                                </div>
+
                                 <div class="form-group row">
                                     <div class="col-sm-10">
                                         <button type="submit" class="btn btn-primary">{{__('app.forms.btn.add')}}</button>
@@ -129,15 +143,21 @@
     <script src="{{asset('vendors/jquery.repeater.min.js')}}"></script>
     <script>
         $(document).ready(function () {
-            $('.basic-repeater').repeater();
-
-            $('.type-employees').select2({
-                placeholder: "الوظيفة"
+            $('.zone').select2({
+                placeholder: "المنطقة"
             });
 
-            $('.roles-employees').select2({
-                placeholder: "الصلاحية"
+            $('.basic-repeater').repeater({
+                show: function () {
+                    $(this).slideDown();
+                    $('.select2-container').remove();
+                    $('.zone').select2({});
+                    $('.select2-container').css('width','100%');
+                }
             });
+
+
+
         });
     </script>
 
