@@ -15,7 +15,7 @@ class ClientController extends Controller
     public function index()
     {
         $clients = Client::orderBy('id','DESC')->get();
-        return view('admin.clients.index',['clients'=>$clients]);
+        return view('admin.users.clients.index',['clients'=>$clients]);
     }
 
     /**
@@ -25,7 +25,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        return view('admin.clients.create');
+        return view('admin.users.clients.create');
     }
 
     /**
@@ -39,7 +39,7 @@ class ClientController extends Controller
         $validated = $request->validated();
         Client::create($validated);
         $request->session()->flash('success',__('clients.massages.created_successfully'));
-        return redirect(route('admin.clients.index'));
+        return redirect(route('admin.users.clients.index'));
     }
 
     /**
@@ -51,7 +51,7 @@ class ClientController extends Controller
      */
     public function show(Client $client)
     {
-        return view('admin.clients.view',['client'   => $client]);
+        return view('admin.users.clients.view',['client'   => $client]);
     }
 
     /**
@@ -63,7 +63,7 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {
-        return view('admin.clients.edit',['client'   => $client]);
+        return view('admin.users.clients.edit',['client'   => $client]);
     }
 
     /**
@@ -78,7 +78,7 @@ class ClientController extends Controller
         $validated = $request->validated();
         $client->update($validated);
         $request->session()->flash('success',__('clients.massages.update_successfully'));
-        return redirect(route('admin.clients.index'));
+        return redirect(route('admin.users.clients.index'));
     }
 
     /**
@@ -91,6 +91,6 @@ class ClientController extends Controller
     {
         $client->delete();
         $request->session()->flash('message',__('clients.massages.deleted_successfully'));
-        return redirect(route('admin.clients.index'));
+        return redirect(route('admin.users.clients.index'));
     }
 }

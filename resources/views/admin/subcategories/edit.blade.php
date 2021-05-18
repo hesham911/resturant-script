@@ -63,7 +63,7 @@
                                     </div>
                                 </div>
                                 <div class="d-flex flex-row-reverse" >
-                                    <button class="btn btn-primary " type="submit">{{__('app.forms.bnt.edit')}}</button>
+                                    <button class="btn btn-primary " type="submit">{{__('app.forms.btn.edit')}}</button>
                                 </div>
                             </form>
                         </div>

@@ -25,4 +25,12 @@ class HomeController extends Controller
     {
         return view('admin.dashboard');
     }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function home()
+    {
+        return view('admin.welcome');
+    }
 }

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    {{__('users.employees.titles.index')}}
+    {{__('users.clients.titles.index')}}
 @endsection
 @section('head')
     <!-- Datatable -->
@@ -11,15 +11,15 @@
 
     <div class="page-header d-md-flex justify-content-between">
         <div>
-            <h3>{{__('users.employees.titles.index')}}</h3>
+            <h3>{{__('users.clients.titles.index')}}</h3>
             @include('admin.partials.breadcrumb',[
                 'parent' => [
-                    'name' => __("users.employees.titles.index"),
+                    'name' => __("users.clients.titles.index"),
                 ]
             ])
         </div>
         <div class="mt-2 mt-md-0">
-            <a href="{{route('employees.create')}}" class="btn btn-primary">{{__('users.employees.titles.subcreate')}}</a>
+            <a href="#" class="btn btn-primary">{{__('users.clients.titles.subcreate')}}</a>
         </div>
     </div>
 
@@ -44,22 +44,17 @@
                             <thead>
                             <tr>
                                 <th>{{__('app.tables.num')}}</th>
-                                <th>{{__('users.employees.name')}}</th>
-                                <th>{{__('users.employees.phone')}}</th>
-                                <th>{{__('users.employees.types_employees')}}</th>
-                                <th>{{__('users.employees.status')}}</th>
+                                <th>{{__('users.clients.name')}}</th>
+                                <th>{{__('users.clients.price')}}</th>
                                 <th class="text-right">{{__('app.tables.control')}}</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($employees as $employee)
-
+                            @foreach($clients as $client)
                                 <tr>
-                                    <td>{{$employee->id}}</td>
-                                    <td>{{$employee->user->name}}</td>
-                                    <td>{{$employee->user->getNumbersPhones($employee->user)}}</td>
-                                    <td>{{$employee->typee}}</td>
-                                    <td><span class="{{$employee->statuss == 'مفعل' ? 'badge badge-success':'badge badge-danger'}}">{{$employee->statuss}}</span></td>
+                                    <td>{{$client->id}}</td>
+                                    <td>{{$client->name}}</td>
+                                    <td>{{$client->price}}</td>
                                     <td class="text-right">
                                         <div class="dropdown">
                                             <a href="#" data-toggle="dropdown"
@@ -68,8 +63,8 @@
                                                 <i class="ti-more-alt"></i>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right">
-                                                <a href="{{route('employees.edit',['employee'=>$employee->id])}}" class="dropdown-item">{{__('app.tables.btn.edit')}}</a>
-                                                <form method="POST" action="{{route('employees.destroy',['employee'=>$employee->id])}}"  >
+                                                <a href="{{route('clients.edit',['client'=>$client->id])}}" class="dropdown-item">{{__('app.tables.btn.edit')}}</a>
+                                                <form method="POST" action="{{route('clients.destroy',['client'=>$client->id])}}"  >
                                                     @CSRF
                                                     <input type="hidden" name="_method" value="DELETE" >
                                                     <button class="dropdown-item text-danger" >

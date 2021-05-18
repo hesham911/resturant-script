@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
@@ -13,7 +16,9 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //
+        $roles = Role::with('permissions:name,id')->get();
+
+        return view('admin.roles.index',['roles'=>$roles]);
     }
 
     /**
@@ -54,9 +59,11 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Role $role)
     {
-        //
+        $rolePermissions = $role->getAllPermissions();
+        $permissions = Permission::all();
+        return view('admin.roles.edit',['permissions' => $permissions,'role'=>$role,'rolePermissions'=>$rolePermissions]);
     }
 
     /**
@@ -66,9 +73,14 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+
+       $role = Role::findByName($request->name);
+       $role->syncPermissions($request->permission);
+       $request->session()->flash('message',__('users.employees.massages.update_successfully'));
+       return redirect(route('roles.index'));
+
     }
 
     /**

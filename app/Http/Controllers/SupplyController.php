@@ -9,6 +9,7 @@ use App\MaterialMeasuring;
 use App\WarehouseStock;
 use Illuminate\Http\Request;
 use App\Http\Requests\SupplyRequest;
+use Illuminate\Support\Facades\Auth;
 
 
 class SupplyController extends Controller
@@ -40,7 +41,7 @@ class SupplyController extends Controller
         return view('admin.supplies.create',[
             'materials' => $materials,
             'bill_number' => $bill_number,
-            ]);
+        ]);
     }
 
     /**

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Setting;
 use Illuminate\Http\Request;
 use App\Http\Requests\SettingRequest;
+use Illuminate\Support\Facades\Auth;
 
 class SettingController extends Controller
 {
@@ -26,7 +27,11 @@ class SettingController extends Controller
      */
     public function create()
     {
-        return view('admin.settings.create');
+        if (Auth::user()->hasPermissionTo('add-setting')) {
+            return view('admin.settings.create');
+        }else {
+            abort(503);
+        }
     }
 
     /**

@@ -6,6 +6,7 @@ use App\Subcategory;
 use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\SubcategoryRequest;
+use Illuminate\Support\Facades\Auth;
 
 class SubcategoryController extends Controller
 {

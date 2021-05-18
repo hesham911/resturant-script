@@ -13,27 +13,127 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth')->group(function(){
+
+ROute::group([
+    'prefix' =>'dashbord',
+    'middleware'=>'is_admin'
+],function (){
     Route::get('/', function () {return view('admin.dashboard');})->name('dashboard');
-    Route::prefix('zones')->group(function()
-    {
-        Route::get('/','ZoneController@index')->name('zones');
-        Route::get('/create','ZoneController@create')->name('zones.create');
-    });
-
-
     Route::resource('/zones','ZoneController');
-    Route::resource('/categories','CategoryController');
-    Route::resource('/subcategories','SubcategoryController');
-    Route::resource('/settings','SettingController');
-    Route::resource('/materials','MaterialController');
-    Route::resource('/supplies','SupplyController');
-    Route::resource('/productmanufactures','ProductManufactureController');
-    Route::post('/productmanufactures/materialselectto/{product_id?}','ProductManufactureController@material_select2_ajax')->name('productmanufactures.selectto');
-    Route::resource('/kitchenrequests','KitchenRequestController');
-    Route::get('/warehousestock','WarehouseStockController@index')
-    ->name('warehousestock.index');
+    Route::resource('/roles','RoleController');
+    Route::resource('/products','ProductController');
     Route::resource('/employees','EmployeeController');
+    Route::resource('/clients','ClientController');
+    Route::group(['prefix' =>'categories'],function(){
+        Route::group(['middleware' => ['can:add-category']], function () {
+            Route::get('/create','CategoryController@create')->name('categories.create');
+            Route::post('/store','CategoryController@store')->name('categories.store');
+        });
+        Route::group(['middleware' => ['can:edit-category']], function () {
+            Route::get('/edit/{category}','CategoryController@edit')->name('categories.edit');
+            Route::put('/update/{category}','CategoryController@update')->name('categories.update');
+        });
+        Route::group(['middleware' => ['can:delete-category']], function () {
+            Route::delete('/destroy/{category}','CategoryController@destroy')->name('categories.destroy');
+        });
+        Route::get('/','CategoryController@index')->name('categories.index');
+        Route::get('/show/{category}','CategoryController@show')->name('categories.show');
+    });
+    Route::group(['prefix' =>'subcategories'],function(){
+        Route::group(['middleware' => ['can:add-category']], function () {
+            Route::get('/create','SubcategoryController@create')->name('subcategories.create');
+            Route::post('/store','SubcategoryController@store')->name('subcategories.store');
+        });
+        Route::group(['middleware' => ['can:edit-category']], function () {
+            Route::get('/edit/{subcategory}','SubcategoryController@edit')->name('subcategories.edit');
+            Route::put('/update/{subcategory}','SubcategoryController@update')->name('subcategories.update');
+        });
+        Route::group(['middleware' => ['can:delete-category']], function () {
+            Route::delete('/destroy/{subcategory}','SubcategoryController@destroy')->name('subcategories.destroy');
+        });
+        Route::get('/','SubcategoryController@index')->name('subcategories.index');
+        Route::get('/show/{subcategory}','SubcategoryController@show')->name('subcategories.show');
+    });
+    Route::group(['prefix' =>'settings'],function(){
+        Route::group(['middleware' => ['can:add-setting']], function () {
+            Route::get('/create','SettingController@create')->name('settings.create');
+            Route::post('/store','SettingController@store')->name('settings.store');
+        });
+        Route::group(['middleware' => ['can:edit-setting']], function () {
+            Route::get('/edit/{setting}','SettingController@edit')->name('settings.edit');
+            Route::put('/update/{setting}','SettingController@update')->name('settings.update');
+        });
+        Route::group(['middleware' => ['can:delete-setting']], function () {
+            Route::delete('/destroy/{setting}','SettingController@destroy')->name('settings.destroy');
+        });
+        Route::get('/','SettingController@index')->name('settings.index');
+        Route::get('/show/{setting}','SettingController@show')->name('settings.show');
+    });
+    Route::group(['prefix' =>'materials'],function(){
+        Route::group(['middleware' => ['can:add-material']], function () {
+            Route::get('/create','MaterialController@create')->name('materials.create');
+            Route::post('/store','MaterialController@store')->name('materials.store');
+        });
+        Route::group(['middleware' => ['can:edit-material']], function () {
+            Route::get('/edit/{material}','MaterialController@edit')->name('materials.edit');
+            Route::put('/update/{material}','MaterialController@update')->name('materials.update');
+        });
+        Route::group(['middleware' => ['can:delete-material']], function () {
+            Route::delete('/destroy/{material}','MaterialController@destroy')->name('materials.destroy');
+        });
+        Route::get('/','MaterialController@index')->name('materials.index');
+        Route::get('/show/{material}','MaterialController@show')->name('materials.show');
+    });
+    Route::group(['prefix' =>'supplies'],function(){
+        Route::group(['middleware' => ['can:add-supply']], function () {
+            Route::get('/create','SupplyController@create')->name('supplies.create');
+            Route::post('/store','SupplyController@store')->name('supplies.store');
+        });
+        Route::group(['middleware' => ['can:edit-supply']], function () {
+            Route::get('/edit/{supply}','SupplyController@edit')->name('supplies.edit');
+            Route::put('/update/{supply}','SupplyController@update')->name('supplies.update');
+        });
+        Route::group(['middleware' => ['can:delete-supply']], function () {
+            Route::delete('/destroy/{supply}','SupplyController@destroy')->name('supplies.destroy');
+        });
+        Route::get('/','SupplyController@index')->name('supplies.index');
+        Route::get('/show/{supply}','SupplyController@show')->name('supplies.show');
+    });
+    Route::group(['prefix' =>'productmanufactures'],function(){
+        Route::group(['middleware' => ['can:add-product-manufacture']], function () {
+            Route::get('/create','ProductManufactureController@create')->name('productmanufactures.create');
+            Route::post('/store','ProductManufactureController@store')->name('productmanufactures.store');
+        });
+        Route::group(['middleware' => ['can:edit-product-manufacture']], function () {
+            Route::get('/edit/{productmanufacture}','ProductManufactureController@edit')->name('productmanufactures.edit');
+            Route::put('/update/{productmanufacture}','ProductManufactureController@update')->name('productmanufactures.update');
+        });
+        Route::group(['middleware' => ['can:delete-product-manufacture']], function () {
+            Route::delete('/destroy/{productmanufacture}','ProductManufactureController@destroy')->name('productmanufactures.destroy');
+        });
+        Route::get('/','ProductManufactureController@index')->name('productmanufactures.index');
+        Route::get('/show/{productmanufacture}','ProductManufactureController@show')->name('productmanufactures.show');
+        Route::post('/materialselectto/{product_id?}','ProductManufactureController@material_select2_ajax')->name('productmanufactures.selectto');
+    });
+    Route::group(['prefix' =>'kitchenrequests'],function(){
+        Route::group(['middleware' => ['can:add-request-kitchen']], function () {
+            Route::get('/create','KitchenRequestController@create')->name('kitchenrequests.create');
+            Route::post('/store','KitchenRequestController@store')->name('kitchenrequests.store');
+        });
+        Route::group(['middleware' => ['can:edit-request-kitchen']], function () {
+            Route::get('/edit/{kitchenrequest}','KitchenRequestController@edit')->name('kitchenrequests.edit');
+            Route::put('/update/{kitchenrequest}','KitchenRequestController@update')->name('kitchenrequests.update');
+        });
+        Route::group(['middleware' => ['can:delete-request-kitchen']], function () {
+            Route::delete('/destroy/{kitchenrequest}','KitchenRequestController@destroy')->name('kitchenrequests.destroy');
+        });
+        Route::get('/','KitchenRequestController@index')->name('kitchenrequests.index');
+        Route::get('/show/{kitchenrequest}','KitchenRequestController@show')->name('kitchenrequests.show');
+    });
+    Route::group(['middleware' => ['can:show-warehouse-stock']], function () {
+        Route::get('/warehousestock','WarehouseStockController@index')->name('warehousestock.index');
+    });
+    // Route::resource('/employees','EmployeeController');
 
     // orders
     Route::resource('/orders','OrderController');
@@ -59,10 +159,10 @@ Route::middleware('auth')->group(function(){
     Route::get('blank-page', function () {
         return view('admin.blank-page');
     })->name('blank-page');
-    /*****/
-    // not found page
-    //Route::any('{catchall}',function(){return view('admin.partials.404');})->where('catchall', '.*');
-    /****/
-    Route::get('/home', 'HomeController@index')->name('home');
 });
-Auth::routes();
+
+Auth::routes([
+    'register' => false,
+]);
+Route::get('/','HomeController@home');
+

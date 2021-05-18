@@ -9,6 +9,7 @@ use App\WarehouseStock;
 use Illuminate\Http\Request;
 use App\Http\Requests\KitchenRequest as KitchenRequestRequest;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 
 class KitchenRequestController extends Controller
 {
@@ -30,10 +31,14 @@ class KitchenRequestController extends Controller
      */
     public function create()
     {
-        $materials = Material::has('warehousestock')->get();
-        return view('admin.kitchenrequests.create',[
-            'materials'=>$materials,
-        ]);
+        if (Auth::user()->hasPermissionTo('add-request-kitchen')) {
+            $materials = Material::has('warehousestock')->get();
+            return view('admin.kitchenrequests.create',[
+                'materials'=>$materials,
+            ]);
+        }else {
+            abort(503);
+        }
     }
 
     /**
@@ -94,6 +99,7 @@ class KitchenRequestController extends Controller
         }
         $request->session()->flash('message',__('kitchenrequests.massages.created_succesfully'));
         return redirect(route('kitchenrequests.index'));
+        
     }
 
     /**
@@ -119,7 +125,7 @@ class KitchenRequestController extends Controller
         return view('admin.kitchenrequests.edit',[
             'kitchenrequest'=>$kitchenrequest,
             'materials'=>$materials,
-            ]);
+        ]);
     }
 
     /**
@@ -194,6 +200,7 @@ class KitchenRequestController extends Controller
         }
         $request->session()->flash('message',__('kitchenrequests.massages.updated_succesfully'));
         return redirect(route('kitchenrequests.index'));
+        
     }
 
     /**

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\ProductManufactureRequest;
 use App\Product;
 use App\Material;
+use Illuminate\Support\Facades\Auth;
+
 
 class ProductManufactureController extends Controller
 {
@@ -28,11 +30,11 @@ class ProductManufactureController extends Controller
      */
     public function create()
     {
-         
         $products = Product::get();
         return view('admin.productmanufactures.create',[
             'products'=>$products,
-            ]);
+        ]);
+        
     }
 
     /**
@@ -54,6 +56,7 @@ class ProductManufactureController extends Controller
         }
         $request->session()->flash('message',__('productmanufactures.massages.created_succesfully'));
         return redirect(route('productmanufactures.index'));
+        
     }
 
     /**
@@ -82,6 +85,7 @@ class ProductManufactureController extends Controller
             'materials'=>$materials,
             'products'=>$products,
         ]);
+        
     }
 
     /**
@@ -121,9 +125,9 @@ class ProductManufactureController extends Controller
      */
     public function destroy(Request $request,ProductManufacture $productmanufacture)
     {
-        $productmanufacture->delete();
-        $request->session()->flash('message',__('productmanufactures.massages.deleted_succesfully'));
-        return redirect(route('productmanufactures.index'));
+            $productmanufacture->delete();
+            $request->session()->flash('message',__('productmanufactures.massages.deleted_succesfully'));
+            return redirect(route('productmanufactures.index'));
     }
 
     public function material_select2_ajax (Request $request){
