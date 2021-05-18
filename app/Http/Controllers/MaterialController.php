@@ -78,7 +78,7 @@ class MaterialController extends Controller
             return view('admin.materials.edit',[
                 'material'=>$material,
                 'measurings'=>$measurings,
-            );
+            ]);
         }else {
             abort(503);
         }

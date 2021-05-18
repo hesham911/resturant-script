@@ -20,10 +20,24 @@ ROute::group([
 ],function (){
     Route::get('/', function () {return view('admin.dashboard');})->name('dashboard');
     Route::resource('/zones','ZoneController');
+    Route::resource('/roles','RoleController');
     Route::resource('/products','ProductController');
     Route::resource('/employees','EmployeeController');
     Route::resource('/clients','ClientController');
-    Route::resource('/categories','CategoryController');
+    // Route::resource('/categories','CategoryController');
+    Route::group(['prefix' =>'categories'],function(){
+        Route::group(['middleware' => ['can:add-category']], function () {
+            Route::get('/create','CategoryController@create')->name('categories.create');
+            Route::post('/store','CategoryController@store')->name('categories.store');
+        });
+        Route::group(['middleware' => ['can:add-category']], function () {
+            Route::get('/edit','CategoryController@edit')->name('categories.edit');
+            Route::put('/update/{category?}','CategoryController@update')->name('categories.update');
+        });
+        Route::get('/','CategoryController@index')->name('categories.index');
+        Route::get('/show/{category?}','CategoryController@show')->name('categories.show');
+        Route::delete('/destroy/{category?}','CategoryController@destroy')->name('categories.destroy');
+    });
     Route::resource('/subcategories','SubcategoryController');
     Route::resource('/settings','SettingController');
     Route::resource('/materials','MaterialController');
