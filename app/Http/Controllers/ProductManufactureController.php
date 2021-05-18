@@ -127,21 +127,17 @@ class ProductManufactureController extends Controller
     }
 
     public function material_select2_ajax (Request $request){
-        $product_id = $request->product_id;
-        $search = $request->search;
-        // dd($search);   
-        $materials = Material::get();
-        if (isset($product_id)) {
-            $relatedMaterials= Material::whereHas('ProductManufacture',function($query)use($product_id){
-                $query->where('product_id',$product_id);
-            })->get();
-            $materials = $materials->diff($relatedMaterials); 
+        $product = Product::find($request->product_id);
+        $search = $request->search; 
+        $materials = Material::orderBy('id');
+        if (isset( $product)) {
+            $relatedMaterials = $product->ProductManufactures->pluck('material_id');
+            $materials = $materials->notRelatedMaterials($relatedMaterials); 
             if($search != null){
-                $materials = $materials->where('name','LiKE',$search);
+                $materials = $materials->materialSearch($search,$relatedMaterials);
             }
         }
+        $materials = $materials->get();
         return $materials;
-
-        
     }
 }

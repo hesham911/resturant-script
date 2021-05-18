@@ -26,4 +26,13 @@ class Material extends Model
     public function warehousestock(){
         return $this->hasOne(WarehouseStock::class);
     }
+
+    public function scopeNotRelatedMaterials($query , $relatedMaterials)
+    {
+        return $query->whereNotIn('id',$relatedMaterials);
+    }
+
+    public function scopeMaterialSearch($query , $search,$relatedMaterials){
+        return $query->notRelatedMaterials($relatedMaterials)->where('name','LIKE','%'.$search.'%');
+    }
 }
