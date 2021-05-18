@@ -1,7 +1,7 @@
 <nav aria-label="breadcrumb" class="d-flex align-items-start">
     <ol class="breadcrumb">
         <!-- settings::first()->name -->
-        <li class="breadcrumb-item"><a href="{{url('/')}}">الرئيسية</a></li>
+        <li class="breadcrumb-item"><a href="{{url('/dashbord')}}">الرئيسية</a></li>
         @if(isset($upParent))
             {{-- <li class="breadcrumb-item"><a href="{{url('/'.$upParent['url'])}}">{{$upParent['name']}}</a></li> --}}
             <li class="breadcrumb-item"><a href="{{route($upParent['url'])}}">{{$upParent['name']}}</a></li>

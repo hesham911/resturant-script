@@ -6,7 +6,7 @@ return [
         'titles'            => [
             'index'                 => ' الموظفين ',
             'create'                => ' إضافة الموظف ',
-            'subcreate'             => 'إضافة موظف جديدة',
+            'subcreate'             => 'إضافة موظف جديد',
             'edit'                  => 'تعديل  الموظف  ',
             'show'                  => ' عرض  الموظف  ',
         ],
@@ -16,6 +16,8 @@ return [
             'password'                   => ' كلمة السر ',
             'confirm_password'           => ' تأكيد كلمة السر ',
             'types_employees'            => ' طبيعة عمل الموظف ',
+            'roles_employees'            => ' صلاحية الموظف في السيستم ',
+            'phone'                      => ' إضافة رقم هاتف جديد ',
         ],
         'massages'          => [
             'created_successfully'   => 'تم  تسجيل  الموظف   بنجاح',
@@ -29,6 +31,8 @@ return [
         'password'                   => ' كلمة السر ',
         'confirm_password'           => ' تأكيد كلمة السر ',
         'types_employees'            => ' الوظيفة ',
+        'roles_employees'            => ' الصلاحية ',
         'status'                     => ' حالة الموظف ',
+        'phone'                      => '  رقم الهاتف ',
     ],
 ];

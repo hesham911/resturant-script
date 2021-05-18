@@ -13,17 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth')->group(function(){
+
+ROute::group([
+    'prefix' =>'dashbord',
+    'middleware'=>'is_admin'
+],function (){
     Route::get('/', function () {return view('admin.dashboard');})->name('dashboard');
-    Route::prefix('zones')->group(function()
-    {
-        Route::get('/','ZoneController@index')->name('zones');
-        Route::get('/create','ZoneController@create')->name('zones.create');
-    });
-
-
     Route::resource('/zones','ZoneController');
-    Route::resource('/products','ProductController');
+    Route::resource('/employees','EmployeeController');
+    Route::resource('/clients','ClientController');
     Route::resource('/categories','CategoryController');
     Route::resource('/subcategories','SubcategoryController');
     Route::resource('/settings','SettingController');
@@ -34,7 +32,7 @@ Route::middleware('auth')->group(function(){
     Route::resource('/kitchenrequests','KitchenRequestController');
     Route::get('/warehousestock','WarehouseStockController@index')
     ->name('warehousestock.index');
-    Route::resource('/employees','EmployeeController');
+    // Route::resource('/employees','EmployeeController');
 
     // orders
     Route::resource('/orders','OrderController');
@@ -60,10 +58,10 @@ Route::middleware('auth')->group(function(){
     Route::get('blank-page', function () {
         return view('admin.blank-page');
     })->name('blank-page');
-    /*****/
-    // not found page
-    //Route::any('{catchall}',function(){return view('admin.partials.404');})->where('catchall', '.*');
-    /****/
-    Route::get('/home', 'HomeController@index')->name('home');
 });
-Auth::routes();
+
+Auth::routes([
+    'register' => false,
+]);
+Route::get('/','HomeController@home');
+
