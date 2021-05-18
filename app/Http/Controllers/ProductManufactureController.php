@@ -31,7 +31,6 @@ class ProductManufactureController extends Controller
          
         $products = Product::get();
         return view('admin.productmanufactures.create',[
-            'materials'=>$materials,
             'products'=>$products,
             ]);
     }
@@ -50,7 +49,7 @@ class ProductManufactureController extends Controller
             $productmanufacture->product_id = $validated['product_id'];
             $productmanufacture->material_id = $material['material_id'];
             $productmanufacture->required_quantity = $material['required_quantity'];
-            $productmanufacture->waste_percentage = $material['waste_percentage'];
+            $productmanufacture->waste_percentage = $material['waste_percentage'] / 100;
             $productmanufacture->save();
         }
         $request->session()->flash('message',__('productmanufactures.massages.created_succesfully'));
@@ -127,19 +126,18 @@ class ProductManufactureController extends Controller
         return redirect(route('productmanufactures.index'));
     }
 
-    public function material_select2_ajax ($product_id){
-        // $product_id = 1;
-        if ($product_id) {
-            $relatedMaterials= Material::whereHas('ProductManufacture',function($query)use($product_id){
-                $query->where('product_id',$product_id);
-            })->get();
-            $materials = Material::get();
-            $materials = $materials->diff($relatedMaterials); 
-            return $materials;
-        }else{
-            $materials = Material::get();
-            return $materials;
+    public function material_select2_ajax (Request $request){
+        $product = Product::find($request->product_id);
+        $search = $request->search; 
+        $materials = Material::orderBy('id');
+        if (isset( $product)) {
+            $relatedMaterials = $product->ProductManufactures->pluck('material_id');
+            $materials = $materials->notRelatedMaterials($relatedMaterials); 
+            if($search != null){
+                $materials = $materials->materialSearch($search,$relatedMaterials);
+            }
         }
-        
+        $materials = $materials->get();
+        return $materials;
     }
 }
