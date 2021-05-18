@@ -13,7 +13,7 @@ class ClientRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,22 @@ class ClientRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name'               =>   'required|string|min:2',
+            'group_a'            =>   'array',
+            'group_b'            =>   'array',
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            'name'              =>  __('users.clients.name'),
+            'group_a'           =>  __('users.clients.phone'),
+            'group_b'           =>  __('users.clients.address'),
+
         ];
     }
 }
