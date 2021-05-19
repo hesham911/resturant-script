@@ -63,7 +63,7 @@
                                     </label>
                                     <div class="custom-control custom-switch custom-checkbox-success col-sm-10">
                                         <input type="hidden" value="0"  name="active">
-                                        <input type="checkbox" name="active" class="custom-control-input" value="1"  id="active" {{ old('active',$setting->status) ? 'checked="checked"' : '' }}>
+                                        <input type="checkbox" name="active" class="custom-control-input" value="1"  id="active" {{ old('active',$setting->active) ? 'checked="checked"' : '' }}>
                                         <label for="active" class="custom-control-label"></label>
                                     </div>
                                 </div>

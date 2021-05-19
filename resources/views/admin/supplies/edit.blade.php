@@ -85,10 +85,17 @@
                                         {{__('supplies.expiry_date')}}
                                     </label>
                                     <div class="col-sm-10">
-                                    <input type="date" class="form-control" id="inputPassword" placeholder="{{__('supplies.expiry_date')}}" name="expiry_date" value="{{old('expiry_date',$supply->expiry_date)}}">
+                                        <input type="date" class="form-control" id="inputPassword" placeholder="{{__('supplies.expiry_date')}}" name="expiry_date" value="{{old('expiry_date',$supply->expiry_date)}}">
                                     </div>
                               </div>
                               <input type="hidden" value="{{$supply->employee_id}}" name="employee_id">
+                                <div class="form-group row">
+                                    <label  class="col-sm-2 col-form-label">{{__('supplies.bill_number')}}</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="bill_number" placeholder="{{__('supplies.bill_number')}}" value="{{old('bill_number',$supply->bill_number)}}" name="bill_number" disabled>
+                                        <input type="hidden"  value="{{old('bill_number',$supply->bill_number)}}" name="bill_number" >
+                                    </div>
+                                </div>
                                 <div class="d-flex flex-row-reverse" >
                                     <button class="btn btn-primary " type="submit">
                                        {{__('app.forms.btn.FormSubmit')}}

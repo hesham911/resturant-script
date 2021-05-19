@@ -9,10 +9,10 @@
 @endsection
 
 @section('content')
-    <div class="h-100 d-flex align-items-center">
-        <div class=" text-center ">
-            <h3 class=" text-center">Welcome back, Bony</h3>
-            <p class="text-muted">This page shows an overview for your account summary.</p>
+    <div class="h-100 d-flex align-items-center justify-content-center">
+        <div class=" ">
+            <h2 class=" text-center">أهلا بك {{Auth::user()->name}}</h2>
+            <p class="text-muted">كيف حالك اليوم ؟ </p>
         </div>
         {{-- <div class="mt-3 mt-md-0">
             <div id="dashboard-daterangepicker" class="btn btn-outline-light">
