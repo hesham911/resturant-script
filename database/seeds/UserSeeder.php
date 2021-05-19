@@ -21,49 +21,49 @@ class UserSeeder extends Seeder
             'name' => 'الكاشير',
             'email' => 'cashier@system.com',
             'password' => bcrypt("cashier"),
-            'type' => 3,
+            'type' => 1,
             'is_admin' => 1,
             'created_at' => \Carbon\Carbon::now()
         ],[
             'name' => 'المحاسب',
             'email' => 'accountant@system.com',
             'password' => bcrypt("accountant"),
-            'type' => 3,
+            'type' => 1,
             'is_admin' => 1,
             'created_at' => \Carbon\Carbon::now()
         ],[
             'name' => 'صالة مان',
             'email' => 'waiter@system.com',
             'password' => bcrypt("waiter"),
-            'type' => 3,
+            'type' => 1,
             'is_admin' => 1,
             'created_at' => \Carbon\Carbon::now()
         ],[
             'name' => 'مدير مخازن',
             'email' => 'stockmanager@system.com',
             'password' => bcrypt("stockmanager"),
-            'type' => 3,
+            'type' => 1,
             'is_admin' => 1,
             'created_at' => \Carbon\Carbon::now()
         ],[
             'name' => 'شيف',
             'email' => 'chef@system.com',
             'password' => bcrypt("chef"),
-            'type' => 3,
+            'type' => 1,
             'is_admin' => 1,
             'created_at' => \Carbon\Carbon::now()
         ],[
             'name' => 'ديليفري مان',
             'email' => 'deliveryman@system.com',
             'password' => bcrypt("deliveryman"),
-            'type' => 3,
+            'type' => 1,
             'is_admin' => 1,
             'created_at' => \Carbon\Carbon::now()
         ],[
             'name' => 'أدمن',
             'email' => 'admin@system.com',
             'password' => bcrypt("admin"),
-            'type' => 3,
+            'type' => 1,
             'is_admin' => 1,
             'created_at' => \Carbon\Carbon::now()
         ]]);
@@ -77,11 +77,11 @@ class UserSeeder extends Seeder
             'created_at' => \Carbon\Carbon::now()
         ],[
             'user_id' => 3,
-            'number' => '01122345234',
+            'number' => '01122345334',
             'created_at' => \Carbon\Carbon::now()
         ],[
             'user_id' => 4,
-            'number' => '01202324245',
+            'number' => '01212324245',
             'created_at' => \Carbon\Carbon::now()
         ],[
             'user_id' => 5,
@@ -89,7 +89,7 @@ class UserSeeder extends Seeder
             'created_at' => \Carbon\Carbon::now()
         ],[
             'user_id' => 6,
-            'number' => '01202452357',
+            'number' => '01222452357',
             'created_at' => \Carbon\Carbon::now()
         ],[
             'user_id' => 7,
@@ -97,32 +97,32 @@ class UserSeeder extends Seeder
             'created_at' => \Carbon\Carbon::now()
         ]]);
         DB::table('employees')->insert([[
-            'type' => 1,
+            'type' => 0,
             'user_id' => 1,
             'status' => 1,
             'created_at' => \Carbon\Carbon::now()
         ],[
-            'type' => 2,
+            'type' => 1,
             'user_id' => 2,
             'status' => 1,
             'created_at' => \Carbon\Carbon::now()
         ],[
-            'type' => 3,
+            'type' => 2,
             'user_id' => 3,
             'status' => 1,
             'created_at' => \Carbon\Carbon::now()
         ],[
-            'type' => 4,
+            'type' => 3,
             'user_id' => 4,
             'status' => 1,
             'created_at' => \Carbon\Carbon::now()
         ],[
-            'type' => 5,
+            'type' => 4,
             'user_id' => 5,
             'status' => 1,
             'created_at' => \Carbon\Carbon::now()
         ],[
-            'type' => 6,
+            'type' => 5,
             'user_id' => 6,
             'status' => 1,
             'created_at' => \Carbon\Carbon::now()

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Client;
 use App\Http\Requests\ClientRequest;
+use App\User;
+use App\Zone;
 
 class ClientController extends Controller
 {
@@ -14,8 +16,8 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = Client::orderBy('id','DESC')->get();
-        return view('admin.clients.index',['clients'=>$clients]);
+        $clients = Client::orderBy('id','DESC')->with(['user:name,id'])->get();
+        return view('admin.users.clients.index',['clients'=>$clients]);
     }
 
     /**
@@ -25,7 +27,10 @@ class ClientController extends Controller
      */
     public function create()
     {
-        return view('admin.clients.create');
+
+        $zones = Zone::get(['name','id']);
+
+        return view('admin.users.clients.create',['zones'=>$zones]);
     }
 
     /**
@@ -37,9 +42,29 @@ class ClientController extends Controller
     public function store(ClientRequest $request)
     {
         $validated = $request->validated();
-        Client::create($validated);
+        //dd($addresses);
+        $validated['type'] = 0;
+        $validated['is_admin'] = 0;
+        $user = User::create($validated);
+        $client = $user->client()->create([
+            'user_id'   =>$user->id,
+        ]);
+
+        if ($client){
+            $user->phones()->createMany($request->group_a);
+
+            $addresses = $request->group_b;
+            foreach ($addresses as $key => $address){
+                unset ($addresses[$key]);
+                $new_key = $address['zone'];
+                $addresses[$new_key] = [
+                    'address' =>$address['address']
+                ];
+            }
+            $client->zones()->sync($addresses);
+        }
         $request->session()->flash('success',__('clients.massages.created_successfully'));
-        return redirect(route('admin.clients.index'));
+        return redirect(route('clients.index'));
     }
 
     /**
@@ -51,7 +76,7 @@ class ClientController extends Controller
      */
     public function show(Client $client)
     {
-        return view('admin.clients.view',['client'   => $client]);
+        return view('admin.users.clients.view',['client'   => $client]);
     }
 
     /**
@@ -63,7 +88,15 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {
-        return view('admin.clients.edit',['client'   => $client]);
+        $zones        = Zone::all();
+        $clientZones  = $client->zones;
+        $phones = $client->user->phones->pluck('number');
+        return view('admin.users.clients.edit',[
+            'client'   => $client,
+            'clientZones'=>$clientZones,
+            'zones'=>$zones,
+            'phones'=>$phones
+        ]);
     }
 
     /**
@@ -76,9 +109,14 @@ class ClientController extends Controller
     public function update(ClientRequest $request, Client $client)
     {
         $validated = $request->validated();
+        $validated['type'] = 1;
+        $validated['is_admin'] = 1;
+        dd($validated);
+        $client->user->update($validated);
+
         $client->update($validated);
         $request->session()->flash('success',__('clients.massages.update_successfully'));
-        return redirect(route('admin.clients.index'));
+        return redirect(route('admin.users.clients.index'));
     }
 
     /**
@@ -91,6 +129,6 @@ class ClientController extends Controller
     {
         $client->delete();
         $request->session()->flash('message',__('clients.massages.deleted_successfully'));
-        return redirect(route('admin.clients.index'));
+        return redirect(route('admin.users.clients.index'));
     }
 }

@@ -18,8 +18,9 @@ class CreatePhonesTable extends Migration
                 $table->id();
                 $table->bigInteger('user_id')->unsigned();
                     $table->foreign('user_id')->references('id')->on('users');
-                $table->integer('number');
+                $table->bigInteger('number')->unique();
                 $table->timestamps();
+                $table->softDeletes();
             });
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }

@@ -20,7 +20,7 @@ class CreateClientZoneTable extends Migration
                 $table->foreign('client_id')->references('id')->on('clients');
             $table->bigInteger('zone_id')->unsigned();
                 $table->foreign('zone_id')->references('id')->on('zones');
-            $table->string('address');
+            $table->text('address');
             $table->timestamps();
             $table->softDeletes();
         });

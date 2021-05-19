@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\ProductManufactureRequest;
 use App\Product;
 use App\Material;
+use Illuminate\Support\Facades\Auth;
+
 
 class ProductManufactureController extends Controller
 {
@@ -28,12 +30,11 @@ class ProductManufactureController extends Controller
      */
     public function create()
     {
-        $materials = Material::get();
         $products = Product::get();
         return view('admin.productmanufactures.create',[
-            'materials'=>$materials,
             'products'=>$products,
-            ]);
+        ]);
+        
     }
 
     /**
@@ -50,11 +51,12 @@ class ProductManufactureController extends Controller
             $productmanufacture->product_id = $validated['product_id'];
             $productmanufacture->material_id = $material['material_id'];
             $productmanufacture->required_quantity = $material['required_quantity'];
-            $productmanufacture->waste_percentage = $material['waste_percentage'];
+            $productmanufacture->waste_percentage = $material['waste_percentage'] / 100;
             $productmanufacture->save();
         }
         $request->session()->flash('message',__('productmanufactures.massages.created_succesfully'));
         return redirect(route('productmanufactures.index'));
+        
     }
 
     /**
@@ -83,6 +85,7 @@ class ProductManufactureController extends Controller
             'materials'=>$materials,
             'products'=>$products,
         ]);
+        
     }
 
     /**
@@ -122,8 +125,23 @@ class ProductManufactureController extends Controller
      */
     public function destroy(Request $request,ProductManufacture $productmanufacture)
     {
-        $productmanufacture->delete();
-        $request->session()->flash('message',__('productmanufactures.massages.deleted_succesfully'));
-        return redirect(route('productmanufactures.index'));
+            $productmanufacture->delete();
+            $request->session()->flash('message',__('productmanufactures.massages.deleted_succesfully'));
+            return redirect(route('productmanufactures.index'));
+    }
+
+    public function material_select2_ajax (Request $request){
+        $product = Product::find($request->product_id);
+        $search = $request->search; 
+        $materials = Material::orderBy('id');
+        if (isset( $product)) {
+            $relatedMaterials = $product->ProductManufactures->pluck('material_id');
+            $materials = $materials->notRelatedMaterials($relatedMaterials); 
+            if($search != null){
+                $materials = $materials->materialSearch($search,$relatedMaterials);
+            }
+        }
+        $materials = $materials->get();
+        return $materials;
     }
 }

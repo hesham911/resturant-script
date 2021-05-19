@@ -17,13 +17,13 @@ class RoleSeeder extends Seeder
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         // create roles and
-        Role::create(['name' => 'accountant']);
-        Role::create(['name' => 'cashier']);
-        Role::create(['name' => 'waiter']);
-        Role::create(['name' => 'warehouse-manager']);
-        Role::create(['name' => 'chef']);
-        Role::create(['name' => 'client']);
-        Role::create(['name' => 'owner']);
-        Role::create(['name' => 'delivery']);
+        Role::create(['name' => 'محاسب']);
+        Role::create(['name' => 'كاشير']);
+        Role::create(['name' => 'صاله مان']);
+        Role::create(['name' => 'مدير المخزن']);
+        Role::create(['name' => 'الشيف']);
+        Role::create(['name' => 'العميل']);
+        Role::create(['name' => 'صاحب الموقع']);
+        Role::create(['name' => 'ديليفري مان']);
     }
 }

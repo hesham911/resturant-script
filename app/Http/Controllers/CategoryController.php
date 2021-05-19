@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\CategoryRequest;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -15,6 +16,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        
         $categories = Category::get();
         return view('admin.categories.index',['categories'=>$categories]);
     }
@@ -27,6 +29,7 @@ class CategoryController extends Controller
     public function create()
     {
         return view('admin.categories.create');
+        
     }
 
     /**
@@ -41,6 +44,7 @@ class CategoryController extends Controller
         Category::create($validated);
         $request->session()->flash('message',__('categories.massages.created_succesfully'));
         return redirect(route('categories.index'));
+        
     }
 
     /**
@@ -63,6 +67,7 @@ class CategoryController extends Controller
     public function edit(Category $category)
     {
         return view('admin.categories.edit',['category'=>$category,]);
+       
     }
 
     /**
