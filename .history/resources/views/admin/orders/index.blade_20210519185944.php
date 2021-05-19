@@ -23,13 +23,17 @@
         </div>
         <div class="mt-2 mt-md-0">
             <form method="get" action="{{route('orders.index')}}">
-                <select name="status" class="btn btn-success" id="order_status">
-                    @foreach(\App\Order::status() as $key=>$item)
-                        <option value="{{$key}}" {{($key == app('request')->input('status'))? 'selected':''}}>{{$item}}</option>
-                    @endforeach
-                </select>
-                <a href="{{route('orders.create')}}" class="btn btn-primary">{{__('orders.titles.create')}}</a>
-            </form>
+                        <select name="job_name" class="btn btn-primary" id="job_search">
+                            @foreach(\App\Order::status() as $key=>$item)
+                            @if($key == app('request')->input('job_name'))
+                            <option selected value="{{$key}}">{{$item}}</option>
+											  @else
+										<option value="{{$key}}">{{$item}}</option>
+									@endif
+                            @endforeach
+                        </select>
+                        </form>
+            
         </div>
     </div>
 
@@ -173,13 +177,11 @@
             $('#examplePostModal').addClass('examplePostModal'+comment_id);
             //$('#examplePostModal h3').text('Send Notice ( Comment )');
         });
-        // filter
-        $(document).ready(function()
-        {
-            $("#order_status").change( function()
-            {
-                this.form.submit();
-            });
-        });
+        $(document).ready(function(){
+	$("#job_search").change( function(){
+    this.form.submit();
+});
+
+});
     </script>
 @endsection

@@ -24,11 +24,14 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->status == null)
+        if($request->job_name != null)
         {
-            $request->status=0;
+            $orders = Order::latest()->get();
+           // $query->where('name','like','%'.$input['job_name'].'%');
         }
-        $orders = Order::where('status',$request->status)->latest()->get();
+        else
+        {}
+
         return view('admin.orders.index',['orders'=>$orders]);
     }
 

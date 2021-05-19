@@ -19,20 +19,20 @@
             ])
         </div>
         <div class="mt-2 mt-md-0">
-
-        </div>
-        <div class="mt-2 mt-md-0">
             <form method="get" action="{{route('orders.index')}}">
-                <select name="status" class="btn btn-success" id="order_status">
+                <select name="job_name" class="btn btn-w" id="job_search">
                     @foreach(\App\Order::status() as $key=>$item)
-                        <option value="{{$key}}" {{($key == app('request')->input('status'))? 'selected':''}}>{{$item}}</option>
+                    @if($key == app('request')->input('job_name'))
+                    <option selected value="{{$key}}">{{$item}}</option>
+                                        @else
+                                <option value="{{$key}}">{{$item}}</option>
+                            @endif
                     @endforeach
                 </select>
-                <a href="{{route('orders.create')}}" class="btn btn-primary">{{__('orders.titles.create')}}</a>
             </form>
+            <a href="{{route('orders.create')}}" class="btn btn-primary">{{__('orders.titles.create')}}</a>
         </div>
     </div>
-
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -173,13 +173,11 @@
             $('#examplePostModal').addClass('examplePostModal'+comment_id);
             //$('#examplePostModal h3').text('Send Notice ( Comment )');
         });
-        // filter
-        $(document).ready(function()
-        {
-            $("#order_status").change( function()
-            {
-                this.form.submit();
-            });
-        });
+        $(document).ready(function(){
+	$("#job_search").change( function(){
+    this.form.submit();
+});
+
+});
     </script>
 @endsection

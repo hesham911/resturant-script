@@ -19,17 +19,34 @@
             ])
         </div>
         <div class="mt-2 mt-md-0">
-
+            <a href="{{route('orders.create')}}" class="btn btn-primary">{{__('orders.titles.create')}}</a>
         </div>
         <div class="mt-2 mt-md-0">
-            <form method="get" action="{{route('orders.index')}}">
-                <select name="status" class="btn btn-success" id="order_status">
-                    @foreach(\App\Order::status() as $key=>$item)
-                        <option value="{{$key}}" {{($key == app('request')->input('status'))? 'selected':''}}>{{$item}}</option>
-                    @endforeach
-                </select>
-                <a href="{{route('orders.create')}}" class="btn btn-primary">{{__('orders.titles.create')}}</a>
-            </form>
+            <div class="dropdown">
+                <a href="#" class="btn btn-success dropdown-toggle" title="Filter" data-toggle="dropdown">Filters</a>
+                <div class="dropdown-menu dropdown-menu-big p-4 dropdown-menu-right">
+                    <form class="registration-form" method="get"
+                     action="{{route('/jobs/get_jobs')}}">
+                        <select name="job_name" class="nice-select rounded" id="job_search">
+                            @foreach(\App\Order::status() as $key=>$item)
+                              @if($item->name == app('request')->input('job_name'))
+                                  <option selected>{{$item->name}}</option>
+                                  @else
+                            <option>{{$item}}</option>
+                        @endif
+                            @endforeach
+                        </select>
+                        </form>
+                </div>
+            </div>
+            <div class="dropdown ml-2">
+                <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Actions</a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a href="#" class="dropdown-item">Edit</a>
+                    <a href="#" class="dropdown-item">Change Status</a>
+                    <a href="#" class="dropdown-item text-danger">Delete</a>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -172,14 +189,6 @@
             $('#formModalPost').attr('action',url);
             $('#examplePostModal').addClass('examplePostModal'+comment_id);
             //$('#examplePostModal h3').text('Send Notice ( Comment )');
-        });
-        // filter
-        $(document).ready(function()
-        {
-            $("#order_status").change( function()
-            {
-                this.form.submit();
-            });
         });
     </script>
 @endsection

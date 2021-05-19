@@ -19,17 +19,17 @@
             ])
         </div>
         <div class="mt-2 mt-md-0">
-
-        </div>
-        <div class="mt-2 mt-md-0">
-            <form method="get" action="{{route('orders.index')}}">
-                <select name="status" class="btn btn-success" id="order_status">
-                    @foreach(\App\Order::status() as $key=>$item)
-                        <option value="{{$key}}" {{($key == app('request')->input('status'))? 'selected':''}}>{{$item}}</option>
-                    @endforeach
-                </select>
+            <div class="dropdown">
                 <a href="{{route('orders.create')}}" class="btn btn-primary">{{__('orders.titles.create')}}</a>
-            </form>
+            </div>
+            <div class="dropdown ml-2">
+                <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Actions</a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a href="#" class="dropdown-item">Edit</a>
+                    <a href="#" class="dropdown-item">Change Status</a>
+                    <a href="#" class="dropdown-item text-danger">Delete</a>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -172,14 +172,6 @@
             $('#formModalPost').attr('action',url);
             $('#examplePostModal').addClass('examplePostModal'+comment_id);
             //$('#examplePostModal h3').text('Send Notice ( Comment )');
-        });
-        // filter
-        $(document).ready(function()
-        {
-            $("#order_status").change( function()
-            {
-                this.form.submit();
-            });
         });
     </script>
 @endsection

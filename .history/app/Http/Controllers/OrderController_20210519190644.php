@@ -26,7 +26,8 @@ class OrderController extends Controller
     {
         if($request->status == null)
         {
-            $request->status=0;
+            $orders = Order::where('status',0)->latest()->get();
+           // $query->where('name','like','%'.$input['job_name'].'%');
         }
         $orders = Order::where('status',$request->status)->latest()->get();
         return view('admin.orders.index',['orders'=>$orders]);

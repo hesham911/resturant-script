@@ -25,6 +25,11 @@
             <form method="get" action="{{route('orders.index')}}">
                 <select name="status" class="btn btn-success" id="order_status">
                     @foreach(\App\Order::status() as $key=>$item)
+                        @if()
+                            <option  value="{{$key}}">{{$item}}</option>
+                        @else
+
+                        @endif
                         <option value="{{$key}}" {{($key == app('request')->input('status'))? 'selected':''}}>{{$item}}</option>
                     @endforeach
                 </select>

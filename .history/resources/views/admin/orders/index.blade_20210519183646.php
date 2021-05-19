@@ -19,17 +19,41 @@
             ])
         </div>
         <div class="mt-2 mt-md-0">
-
-        </div>
-        <div class="mt-2 mt-md-0">
-            <form method="get" action="{{route('orders.index')}}">
-                <select name="status" class="btn btn-success" id="order_status">
-                    @foreach(\App\Order::status() as $key=>$item)
-                        <option value="{{$key}}" {{($key == app('request')->input('status'))? 'selected':''}}>{{$item}}</option>
-                    @endforeach
-                </select>
-                <a href="{{route('orders.create')}}" class="btn btn-primary">{{__('orders.titles.create')}}</a>
-            </form>
+            <div class="dropdown">
+                <a href="#" class="btn btn-success dropdown-toggle" title="Filter" data-toggle="dropdown">Filters</a>
+                <div class="dropdown-menu dropdown-menu-big p-4 dropdown-menu-right">
+                    <form>
+                        <div class="form-group">
+                            <label>Role</label>
+                            <select class="form-control">
+                                <option value="">Select</option>
+                                <option value="">User</option>
+                                <option value="">Staff</option>
+                                <option value="">Admin</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Status</label>
+                            <select class="form-control">
+                                <option value="">Select</option>
+                                <option value="">Active</option>
+                                <option value="">Blocked</option>
+                                <option value="">Admin</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary">Get Results</button>
+                        <button class="btn btn-link ml-2">Save Filter</button>
+                    </form>
+                </div>
+            </div>
+            <div class="dropdown ml-2">
+                <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Actions</a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a href="#" class="dropdown-item">Edit</a>
+                    <a href="#" class="dropdown-item">Change Status</a>
+                    <a href="#" class="dropdown-item text-danger">Delete</a>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -172,14 +196,6 @@
             $('#formModalPost').attr('action',url);
             $('#examplePostModal').addClass('examplePostModal'+comment_id);
             //$('#examplePostModal h3').text('Send Notice ( Comment )');
-        });
-        // filter
-        $(document).ready(function()
-        {
-            $("#order_status").change( function()
-            {
-                this.form.submit();
-            });
         });
     </script>
 @endsection
