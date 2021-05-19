@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RoleRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Permission;
@@ -28,7 +29,8 @@ class RoleController extends Controller
      */
     public function create()
     {
-        //
+       $permissions = $permissions = Permission::all();
+       return view('admin.roles.create',['permissions' => $permissions]);
     }
 
     /**
@@ -37,20 +39,14 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RoleRequest $request)
     {
-        //
-    }
+        $validated = $request->validated();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        $role = Role::create(['name' => $validated['name']]);
+        $role->syncPermissions($validated['permission']);
+        $request->session()->flash('message',__('roles.massages.updated_successfully'));
+        return redirect(route('roles.index'));
     }
 
     /**

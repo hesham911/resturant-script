@@ -116,7 +116,7 @@
                                             <div data-repeater-item>
                                                 <div class="row">
                                                     <div class="col-md-10 col-sm-12 form-group">
-                                                        <input type="text" value="{{$phone}}" class="form-control" name="number" id="number"
+                                                        <input type="text" value="0{{$phone}}" class="form-control" name="number" id="number"
                                                                placeholder="{{__('users.employees.placeholder.phone')}}">
                                                     </div>
                                                     <div class="col-md-2 col-sm-12 form-group">

@@ -2,12 +2,11 @@
 
 namespace App\Http\Requests;
 
-use App\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 
-class EmployeeRequest extends FormRequest
+class UpdateEmployeeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,12 +25,11 @@ class EmployeeRequest extends FormRequest
      */
     public function rules()
     {
-        //dd($this);
         return [
             'name'               =>   'required|string|min:2',
             'email'              =>   [
                 'email',
-                 Rule::unique('users','email')
+                 Rule::unique('users','email')->ignore($this->employee->user)
             ],
             'type_employees'     =>   'required|numeric|',
             'status_employees'   =>   'numeric|',
@@ -39,9 +37,11 @@ class EmployeeRequest extends FormRequest
             'group_a.*.*'        =>   [
                 'numeric',
                 'digits:11',
-
-            ],
+//                Rule::unique('phones','number')->ignore($this->employee->user->phone)
+            ]
         ];
+
+
     }
 
     /**
