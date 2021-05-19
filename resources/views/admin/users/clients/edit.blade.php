@@ -44,33 +44,35 @@
                                 </div>
                             @endif
                             <h6 class="card-title">{{__('users.clients.titles.subcreate')}}</h6>
-                            <form method="post" action="{{route('clients.store')}}" multiple>
+                            <form method="post" action="{{route('clients.update',['client'=>$client->id])}}" multiple>
                                 @csrf
+                                <input type="hidden" name="_method" value="PUT" >
                                 <div class="form-group row">
                                     <label for="name" class="col-sm-2 col-form-label">{{__('users.clients.name')}}</label>
                                     <div class="col-sm-10">
-                                        <input type="text" name="name" value="{{old('name')}}" class="form-control" id="name" placeholder="{{__('users.clients.placeholder.name')}}">
+                                        <input type="text" name="name" value="{{old('name',$client->user->name)}}" class="form-control" id="name" placeholder="{{__('users.clients.placeholder.name')}}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-2">{{__('users.clients.phone')}}</label>
                                     <div class="basic-repeater col-sm-4">
                                         <div data-repeater-list="group_a">
-                                            <div data-repeater-item>
-                                                <div class="row">
-                                                    <div class="col-md-10 col-sm-12 form-group">
-                                                        <input type="text" class="form-control" name="number" id="number"
-                                                               placeholder="{{__('users.clients.placeholder.phone')}}">
-                                                    </div>
-                                                    <div class="col-md-2 col-sm-12 form-group">
-                                                        <button type="button" class="btn btn-danger" data-repeater-delete>
-                                                            <i class="ti-close font-size-10 mr-2"></i> {{__('app.forms.btn.delete')}}
-                                                        </button>
-                                                    </div>
+                                            @foreach($phones as $phone)
+                                                <div data-repeater-item>
+                                                    <div class="row">
+                                                        <div class="col-md-10 col-sm-12 form-group">
+                                                            <input type="text" value="{{$phone}}" class="form-control" name="number" id="number"
+                                                                   placeholder="{{__('users.clients.placeholder.phone')}}">
+                                                        </div>
+                                                        <div class="col-md-2 col-sm-12 form-group">
+                                                            <button type="button" class="btn btn-danger" data-repeater-delete>
+                                                                <i class="ti-close font-size-10 mr-2"></i> {{__('app.forms.btn.delete')}}
+                                                            </button>
+                                                        </div>
 
+                                                    </div>
                                                 </div>
-                                            </div>
-
+                                            @endforeach
                                         </div>
                                         <button type="button" class="btn btn-primary" data-repeater-create>
                                             <i class="ti-plus font-size-10 mr-2"></i> {{__('app.forms.btn.add')}}
@@ -81,22 +83,20 @@
                                     <label class="col-sm-2">{{__('users.clients.address')}}</label>
                                     <div class="basic-repeater col-sm-10">
                                         <div data-repeater-list="group_b">
+                                            @foreach($clientZones as $key => $zone)
                                             <div data-repeater-item >
                                                 <div class="row">
                                                     <div class="col-md-5 col-sm-12 form-group">
                                                         <label  for="zone">{{__('users.clients.zone')}}</label>
                                                         <select name="zone" id="zone" class="zone">
-                                                            <option disabled >{{__('users.clients.placeholder.zone')}}</option>
-                                                            @if(count($zones) > 0)
-                                                                @foreach($zones as $key => $zone)
-                                                                    <option value="{{$zone->id}}" {{(old('zone')==$zone->id)? 'selected':''}}>{{$zone->name}}</option>
-                                                                @endforeach
-                                                            @endif
+                                                            @foreach($zones as $k => $v)
+                                                            <option value="{{$v->id}}" {{(old('zone',$zone->id) == $v->id)? 'selected':''}}>{{$v->name}}</option>
+                                                            @endforeach
                                                         </select>
                                                     </div>
                                                     <div class="col-md-5 col-sm-12 form-group">
                                                         <label for="address">{{__('users.clients.address_details')}}</label>
-                                                        <input class="form-control" name="address" id="address" placeholder="{{__('users.clients.placeholder.address')}}"/>
+                                                        <input class="form-control" name="address" value="{{$zone->pivot->address}}" id="address" placeholder="{{__('users.clients.placeholder.address')}}"/>
                                                     </div>
                                                     <div class="col-md-2 col-sm-12 form-group">
                                                         <div><label>&nbsp;</label></div>
@@ -107,7 +107,7 @@
 
                                                 </div>
                                             </div>
-
+                                            @endforeach
                                         </div>
                                         <button type="button" class="btn btn-primary" data-repeater-create>
                                             <i class="ti-plus font-size-10 mr-2"></i> {{__('app.forms.btn.add')}}
@@ -144,9 +144,8 @@
     <script>
         $(document).ready(function () {
             $('.zone').select2({
-                placeholder: "المنطقة"
+                placeholder: "المنطقة",
             });
-
             $('.basic-repeater').repeater({
                 show: function () {
                     $(this).slideDown();

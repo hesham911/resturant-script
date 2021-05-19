@@ -19,7 +19,7 @@
             ])
         </div>
         <div class="mt-2 mt-md-0">
-            <a href="#" class="btn btn-primary">{{__('roles.titles.subcreate')}}</a>
+            <a href="{{route('roles.create')}}" class="btn btn-primary">{{__('roles.titles.subcreate')}}</a>
         </div>
     </div>
 

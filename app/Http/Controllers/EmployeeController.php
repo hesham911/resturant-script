@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Employee;
 use App\Http\Requests\EmployeeRequest;
+use App\Http\Requests\UpdateEmployeeRequest;
 use App\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
@@ -44,7 +45,6 @@ class EmployeeController extends Controller
      */
     public function store(EmployeeRequest $request)
     {
-
         $validated = $request->validated();
         $validated['password'] = bcrypt($request->password);
         $validated['type'] = 1;
@@ -108,16 +108,17 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(EmployeeRequest $request, Employee $employee)
+    public function update(UpdateEmployeeRequest $request, Employee $employee)
     {
 
         $validated = $request->validated();
         $validated['password'] = bcrypt($request->password);
         $validated['type'] = 1;
         $validated['is_admin'] = 1;
-       // dd($request->all(),$validated);
+        dd($validated['group_a']);
         $employee->user->update($validated);
         //dd($request->all());
+
         $updated = $employee->update([
             'type'      =>  $request->type_employees,
             'status'    =>  $request->status_employees,
@@ -128,7 +129,7 @@ class EmployeeController extends Controller
             $employee->user->phones()->createMany($request->group_a);
             $employee->user->syncRoles($request->roles);
         }
-        $request->session()->flash('message',__('users.employees.massages.update_successfully'));
+        $request->session()->flash('message',__('users.employees.massages.updated_successfully'));
         return redirect(route('employees.index'));
     }
 

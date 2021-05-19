@@ -77,11 +77,11 @@ class UserSeeder extends Seeder
             'created_at' => \Carbon\Carbon::now()
         ],[
             'user_id' => 3,
-            'number' => '01122345234',
+            'number' => '01122345334',
             'created_at' => \Carbon\Carbon::now()
         ],[
             'user_id' => 4,
-            'number' => '01202324245',
+            'number' => '01212324245',
             'created_at' => \Carbon\Carbon::now()
         ],[
             'user_id' => 5,
@@ -89,7 +89,7 @@ class UserSeeder extends Seeder
             'created_at' => \Carbon\Carbon::now()
         ],[
             'user_id' => 6,
-            'number' => '01202452357',
+            'number' => '01222452357',
             'created_at' => \Carbon\Carbon::now()
         ],[
             'user_id' => 7,
