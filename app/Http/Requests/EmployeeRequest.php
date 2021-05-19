@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
 
 class EmployeeRequest extends FormRequest
 {
@@ -23,12 +26,21 @@ class EmployeeRequest extends FormRequest
      */
     public function rules()
     {
+        //dd($this);
         return [
             'name'               =>   'required|string|min:2',
-            'email'              =>   'email',
+            'email'              =>   [
+                'email',
+                 Rule::unique('users','email')
+            ],
             'type_employees'     =>   'required|numeric|',
             'status_employees'   =>   'numeric|',
             'group_a'            =>   'array',
+            'group_a.*.*'        =>   [
+                'numeric',
+                'digits:11',
+
+            ],
         ];
     }
 
@@ -42,7 +54,8 @@ class EmployeeRequest extends FormRequest
             'email'             =>     __('users.employees.email'),
             'type_employees'    =>     __('users.employees.types_employees'),
             'status_employees'  =>     __('users.employees.status'),
-            'group_a'            =>     __('users.employees.phone'),
+            'group_a'           =>     __('users.employees.phone'),
+            'group_a.*.*'       =>     __('users.employees.phone'),
         ];
     }
 }
