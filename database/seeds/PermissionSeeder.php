@@ -50,8 +50,13 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'تعديل طاولة']);
         Permission::create(['name' => 'حذف طاولة']);
 
+
         Permission::create(['name' => 'إضافة إعدادات']);
         Permission::create(['name' => 'تعديل إعدادات']);
+        Permission::create(['name' => 'حذف إعدادات']);
+
+        Permission::create(['name' => 'عرض مخزون المخزن']);
+
 
         //>>>>>>>Create system Accounting operations
         Permission::create(['name' => 'عرض التقارير']);

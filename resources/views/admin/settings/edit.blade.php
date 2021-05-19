@@ -14,17 +14,11 @@
     <div class="page-header">
         <div>
             <h3> {{__('settings.titles.edit')}} </h3>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                        <a href="#">Home</a>
-                    </li>
-                    <li class="breadcrumb-item">
-                        <a href="#">Forms</a>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">Form Validation</li>
-                </ol>
-            </nav>
+            @include('admin.partials.breadcrumb',[
+                'parent' => [
+                    'name' => __("settings.titles.edit"),
+                ]
+            ])
         </div>
     </div>
     <div class="row">
@@ -63,14 +57,14 @@
                                       <input type="text" class="form-control" id="inputPassword" value="{{old('value',$setting->value)}}" name="value">
                                     </div>
                                 </div>
-                                <div class="col-sm-10 d-flex justify-content-around">
-                                    <div>
-                                        <label for=""> فعال </label>
-                                        <input type="radio" class="form-control" id="inputPassword" value="1" name="active" @if ($setting->active == 1) checked @endif >
-                                    </div>
-                                    <div>
-                                        <label for=""> غير فعال </label>
-                                        <input type="radio" class="form-control" id="inputPassword" value="0" name="active"  @if ($setting->active == 0) checked @endif  >
+                                <div class="form-group row ">
+                                    <label for="inputPassword" class="col-sm-2 col-form-label">
+                                        {{__('settings.active')}}
+                                    </label>
+                                    <div class="custom-control custom-switch custom-checkbox-success col-sm-10">
+                                        <input type="hidden" value="0"  name="active">
+                                        <input type="checkbox" name="active" class="custom-control-input" value="1"  id="active" {{ old('active',$setting->status) ? 'checked="checked"' : '' }}>
+                                        <label for="active" class="custom-control-label"></label>
                                     </div>
                                 </div>
                                 <div class="d-flex flex-row-reverse" >

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductRequest;
 use App\Product;
+use App\Subcategory;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -14,7 +16,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::get();
+        return view('admin.products.index',['products'=>$products]);
     }
 
     /**
@@ -24,7 +27,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $subcategories = Subcategory::all();
+        $types = Product::type();
+        return view('admin.products.create',['subcategories'=>$subcategories,'types'=>$types]);
     }
 
     /**
@@ -33,9 +38,12 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        //
+        $validated = $request->validated();
+        Product::create($validated);
+        $request->session()->flash('message',__('products.massages.created_successfully'));
+        return redirect(route('products.index'));
     }
 
     /**
@@ -57,7 +65,10 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        $subcategories = Subcategory::all();
+        $types = Product::type();
+        return view('admin.products.edit',['product'=>$product,
+            'subcategories'=>$subcategories,'types'=>$types]);
     }
 
     /**
@@ -67,9 +78,12 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(ProductRequest $request, Product $product)
     {
-        //
+        $validated = $request->validated();
+        $product->update($validated);
+        $request->session()->flash('message',__('products.massages.updated_successfully'));
+        return redirect(route('products.index'));
     }
 
     /**
@@ -78,8 +92,10 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy(Request $request,Product $product)
     {
-        //
+        $product->delete();
+        $request->session()->flash('message',__('products.massages.deleted_successfully'));
+        return redirect(route('products.index'));
     }
 }

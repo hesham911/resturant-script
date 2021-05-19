@@ -17,7 +17,7 @@
             <ul class="navbar-nav">
                 <li class="nav-item mr-3">
                     <div class="header-search-form">
-                        <form>
+                        {{-- <form>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <button class="btn">
@@ -31,7 +31,7 @@
                                     </button>
                                 </div>
                             </div>
-                        </form>
+                        </form> --}}
                     </div>
                 </li>
             </ul>
@@ -52,7 +52,7 @@
                     </a>
                 </li>
 
-                <li class="nav-item dropdown">
+                {{-- <li class="nav-item dropdown">
                     <a href="#" class="nav-link nav-link-notify" title="Notifications" data-toggle="dropdown">
                         <i data-feather="bell"></i>
                     </a>
@@ -175,11 +175,11 @@
                     </div>
                 </li>
                 
-                <li class="nav-item dropdown">
+               <li class="nav-item dropdown">
                     <a href="#" class="nav-link" title="Settings" data-sidebar-target="#settings">
                         <i data-feather="settings"></i>
                     </a>
-                </li>
+                </li> 
 
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" title="User menu" data-toggle="dropdown">
@@ -225,7 +225,7 @@
                             </p>
                         </div>
                     </div>
-                </li>
+                </li> --}}
             </ul>
         </div>
     </div>
