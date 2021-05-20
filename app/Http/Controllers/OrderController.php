@@ -23,9 +23,13 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::get();
+        if($request->status == null)
+        {
+            $request->status=0;
+        }
+        $orders = Order::where('status',$request->status)->latest()->get();
         return view('admin.orders.index',['orders'=>$orders]);
     }
 
@@ -186,8 +190,10 @@ class OrderController extends Controller
         $tables = Table::all();
         $types = Order::type();
         $products = Product::all();
+        $ordProducts=$order->products;
         return view('admin.orders.edit',['order'=>$order,'categories'=>$categories,
-            'tables'=>$tables,'types'=>$types,'products'=>$products]);
+            'tables'=>$tables,'types'=>$types,'products'=>$products,
+            'ordProducts'=>$ordProducts]);
     }
 
     /**
