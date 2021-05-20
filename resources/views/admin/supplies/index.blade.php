@@ -83,10 +83,10 @@
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right">
                                                     <a href="{{route('supplies.edit',$supply->id)}}" class="dropdown-item">{{__('app.forms.btn.edit')}}</a>
-                                                    <form method="POST" action="{{route('supplies.destroy',$supply->id)}}" class="dropdown-item text-danger" >
+                                                    <form method="POST" action="{{route('supplies.destroy',$supply->id)}}" >
                                                         @csrf
                                                         <input type="hidden" name="_method" value="DELETE" >
-                                                        <button class="btn btn-link" >
+                                                        <button class="dropdown-item text-danger" >
                                                             {{__('app.forms.btn.delete')}}
                                                         </button>
                                                     </form>
@@ -115,8 +115,8 @@
     <script>
         $('#myTable').DataTable({
             language: {
-            url: "{{ url('vendors/dataTable/arabic.json') }}"
-        }
+                url: "{{ url('vendors/dataTable/arabic.json') }}"
+            }
         });
     </script>
 @endsection

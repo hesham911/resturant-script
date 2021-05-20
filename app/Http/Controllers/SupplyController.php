@@ -113,13 +113,7 @@ class SupplyController extends Controller
         $warehouse_stock = WarehouseStock::findOrFail($supply->material_id);
         $warehouse_stock->quantity = $warehouse_stock->quantity - $supply->quantity ;
         $warehouse_stock->save();
-        $supply->material_id =  $validated['material_id'];
-        $supply->quantity =  $validated['quantity'];
-        $supply->price =  $validated['price'];
-        $supply->Supplier_name =  $validated['Supplier_name'];
-        $supply->expiry_date =  $validated['expiry_date'];
-        $supply->employee_id =  $request->employee_id;
-        $supply->save();
+        $supply->update($validated);
         $warehouse_stock = WarehouseStock::firstOrNew(['material_id'=>$validated['material_id']]);
         $warehouse_stock->quantity = $warehouse_stock->quantity + $supply->quantity ;
         $warehouse_stock->save();
