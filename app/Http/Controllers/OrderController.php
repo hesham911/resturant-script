@@ -60,7 +60,7 @@ class OrderController extends Controller
         //$request->employee_id=Auth::user()->id;
         $validated = $request->validated();
         $order=Order::create($validated);
-        $order->products()->attach($request->group_a);
+        $order->products()->sync($request->group_a);
         $requests = [];
         foreach ( $order->products as $product ) {
             for ($i=0; $i < $product->pivot->quantity ; $i++) { 
@@ -206,11 +206,12 @@ class OrderController extends Controller
     public function update(OrderRequest $request, Order $order)
     {
         $validated = $request->validated();
+        dd($validated);
         foreach ( $order->products as $product ) {
             for ($i=0; $i < $product->pivot->quantity ; $i++) { 
                 if ($product->ProductManufactures->count() > 0) {                
                     foreach ($product->ProductManufactures as $ProductManufacture) {
-                        $kitchenrequests = $order->requests->where('material_id',$ProductManufacture->material_id)->first();
+                        $kitchenrequests = $order->requests->where('material_id',$ProductManufacture->material_id);
                         $productmanufacturequantity = $ProductManufacture->required_quantity;
                         if ($productmanufacturequantity > 0) {
                             foreach ($kitchenrequests as $kitchenrequest) {
@@ -224,7 +225,7 @@ class OrderController extends Controller
             }
         }
         $order->update($validated);
-        $order->products()->attach($request->group_a);
+        $order->products()->sync($request->group_a);
         $requests = [];
         foreach ( $order->products as $product ) {
             for ($i=0; $i < $product->pivot->quantity ; $i++) { 

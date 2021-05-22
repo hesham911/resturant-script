@@ -99,8 +99,8 @@
     <script>
         $('#myTable').DataTable({
             language: {
-            url: "{{ url('vendors/dataTable/arabic.json') }}"
-        }
+                url: "{{ url('vendors/dataTable/arabic.json') }}"
+            }
         });
     </script>
 @endsection
