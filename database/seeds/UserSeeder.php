@@ -136,5 +136,6 @@ class UserSeeder extends Seeder
         Employee::where('type',2)->get()->first()->user->assignRole('صاله مان');
         Employee::where('type',1)->get()->first()->user->assignRole('محاسب');
         Employee::where('type',0)->get()->first()->user->assignRole('كاشير');
+        User::where('id',7)->get()->first()->assignRole('صاحب الموقع');
     }
 }

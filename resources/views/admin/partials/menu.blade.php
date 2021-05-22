@@ -7,8 +7,20 @@
             <span>Dashboard</span>
         </a>
     </li> --}}
+    <li>
+        @if (Auth::user()->hasPermissionTo('البحث عن عملاء'))
+            <a @if(request()->segment(1) == 'users') class="active"
+            @endif href="{{ route('users') }}">
+                <span class="nav-link-icon">
+                    <i class="fa fa-address-book-o" aria-hidden="true"></i>
+                </span>
+                <span>البحث في العملاء</span>
+            </a>
+        @endif
+    </li>
 
     <li>
+        
     <!-- Orders -->
     <li>
         @if (Auth::user()->hasPermissionTo('عرض طلب'))
@@ -63,17 +75,7 @@
     </li>
 
 
-    <li>
-        @if (Auth::user()->hasPermissionTo('البحث عن عملاء'))
-            <a @if(request()->segment(1) == 'users') class="active"
-            @endif href="{{ route('users') }}">
-                <span class="nav-link-icon">
-                    <i class="fa fa-address-book-o" aria-hidden="true"></i>
-                </span>
-                <span>البحث في العملاء</span>
-            </a>
-        @endif
-    </li>
+    
     <li>
         {{-- <a href="#">
             <span class="nav-link-icon">
@@ -189,7 +191,7 @@
         @if (Auth::user()->hasAnyPermission(['إضافة قسم','عرض قسم']))
             <a href="#">
                 <span class="nav-link-icon">
-                    <i class="fa fa-clipboard" ></i>
+                    <i data-feather='layers' ></i>
                 </span>
                 <span> الأقسام</span>
             </a>
@@ -211,7 +213,7 @@
         @if (Auth::user()->hasAnyPermission(['إضافة قسم','عرض قسم']))
             <a href="#">
                 <span class="nav-link-icon">
-                    <i class="fa fa-clipboard" ></i>
+                    <i data-feather='layers' ></i>
                 </span>
                 <span> {{__('subcategories.titles.index')}}</span>
             </a>
@@ -233,7 +235,7 @@
         @if (Auth::user()->hasAnyPermission(['إضافة إعدادات','عرض إعدادات']))
             <a href="#">
                 <span class="nav-link-icon">
-                    <i class="fa fa-clipboard" ></i>
+                    <i data-feather='settings' ></i>
                 </span>
                 <span> {{__('settings.titles.index')}}</span>
             </a>
