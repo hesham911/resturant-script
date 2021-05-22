@@ -30,6 +30,6 @@ class CreateRequestsupplyTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('requestsupply');
+        Schema::dropIfExists('request_supply');
     }
 }
