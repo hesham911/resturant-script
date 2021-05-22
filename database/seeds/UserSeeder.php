@@ -2,6 +2,9 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Employee;
+use App\User;
+
 
 class UserSeeder extends Seeder
 {
@@ -127,5 +130,11 @@ class UserSeeder extends Seeder
             'status' => 1,
             'created_at' => \Carbon\Carbon::now()
         ]]);
+        Employee::where('type',5)->get()->first()->user->assignRole('ديليفري مان');
+        Employee::where('type',4)->get()->first()->user->assignRole('الشيف');
+        Employee::where('type',3)->get()->first()->user->assignRole('مدير المخزن');
+        Employee::where('type',2)->get()->first()->user->assignRole('صاله مان');
+        Employee::where('type',1)->get()->first()->user->assignRole('محاسب');
+        Employee::where('type',0)->get()->first()->user->assignRole('كاشير');
     }
 }
