@@ -118,7 +118,10 @@
             dom: 'Bfrtip',
             buttons: [
                 'print','excel', 'pdf'
-            ]
+            ],
+            language: {
+                url: "{{ url('vendors/dataTable/arabic.json') }}"
+            }
         } );
     </script>
 @endsection

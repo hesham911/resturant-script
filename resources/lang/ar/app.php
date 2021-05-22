@@ -24,4 +24,5 @@ return [
     'settings'  =>[
         'currency'     => 'جنيه',
     ],
+    'logout'=> 'تسجيل الخروج',
 ];

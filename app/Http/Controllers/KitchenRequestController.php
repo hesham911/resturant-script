@@ -31,14 +31,12 @@ class KitchenRequestController extends Controller
      */
     public function create()
     {
-        if (Auth::user()->hasPermissionTo('add-request-kitchen')) {
-            $materials = Material::has('warehousestock')->get();
-            return view('admin.kitchenrequests.create',[
-                'materials'=>$materials,
-            ]);
-        }else {
-            abort(503);
-        }
+        $materials = Material::whereHas('warehousestock',function($query){
+            $query->where('quantity','>', 0);
+        })->get();
+        return view('admin.kitchenrequests.create',[
+            'materials'=>$materials,
+        ]);
     }
 
     /**

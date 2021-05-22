@@ -34,7 +34,7 @@ class Order extends Model
         $array=
             [
                 0 => __('orders.status.orderd'), // تم الطلب
-                1 => __('orders.status.prepared'), // تم التجهيز
+               // 1 => __('orders.status.prepared'), // تم التجهيز
                 2 => __('orders.status.closed'), //  تم إغلاق الطلب
                 3 => __('orders.status.payment'), //  تم الدفع
                 4 => __('orders.status.canceled'), //  تم الإلغاء

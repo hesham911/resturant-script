@@ -179,19 +179,14 @@
                     <a href="#" class="nav-link" title="Settings" data-sidebar-target="#settings">
                         <i data-feather="settings"></i>
                     </a>
-                </li> 
-
+                </li>  --}}
+                
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" title="User menu" data-toggle="dropdown">
-                        <figure class="avatar avatar-sm">
-                            <img src="{{ url('assets/media/image/user/man_avatar3.jpg') }}"
-                                class="rounded-circle"
-                                alt="avatar">
-                        </figure>
-                        <span class="ml-2 d-sm-inline d-none">Bony Gidden</span>
+                        <span class="ml-2 d-sm-inline d-none">{{Auth::user()->name}}</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-big">
-                        <div class="text-center py-4">
+                        {{-- <div class="text-center py-4">
                             <figure class="avatar avatar-lg mb-3 border-0">
                                 <img src="{{ url('assets/media/image/user/man_avatar3.jpg') }}"
                                     class="rounded-circle" alt="image">
@@ -199,16 +194,16 @@
                             <h5 class="text-center">Bony Gidden</h5>
                             <div class="mb-3 small text-center text-muted">@bonygidden</div>
                             <a href="#" class="btn btn-outline-light btn-rounded">Manage Your Account</a>
-                        </div>
+                        </div> --}}
                         <div class="list-group">
-                            <a href="{{ route('profile') }}" class="list-group-item">View Profile</a>
+                            {{-- <a href="{{ route('profile') }}" class="list-group-item">View Profile</a> --}}
                             <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                                     document.getElementById('logout-form').submit();" class="list-group-item text-danger">{{ __('Logout') }}</a>
+                                     document.getElementById('logout-form').submit();" class="list-group-item text-danger">{{ __('app.logout') }}</a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
                             </form>
                         </div>
-                        <div class="p-4">
+                        {{-- <div class="p-4">
                             <div class="mb-4">
                                 <h6 class="d-flex justify-content-between">
                                     Storage
@@ -223,9 +218,9 @@
                             <p class="small mb-0">
                                 <a href="#">Privacy policy</a>
                             </p>
-                        </div>
+                        </div> --}}
                     </div>
-                </li> --}}
+                </li> 
             </ul>
         </div>
     </div>
