@@ -130,7 +130,7 @@ ROute::group([
         Route::get('/','KitchenRequestController@index')->name('kitchenrequests.index');
         Route::get('/show/{kitchenrequest}','KitchenRequestController@show')->name('kitchenrequests.show');
     });
-    Route::group(['middleware' => ['can:عرض مخزون المخزن']], function () {
+    Route::group(['middleware' => ['can:عرض رصيد المخزن']], function () {
         Route::get('/warehousestock','WarehouseStockController@index')->name('warehousestock.index');
     });
     // Route::resource('/employees','EmployeeController');

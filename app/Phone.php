@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Phone extends Model
 {
-    use SoftDeletes;
+    // use SoftDeletes;
 
     protected $fillable=['number'];
 

@@ -25,7 +25,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row"> 
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
@@ -42,15 +42,9 @@
                         </div>
                     @endif
                     <div class="table-responsive">
-                        <table id="user-list" class="table table-lg">
+                        <table id="myTable" class="table table-sm table-responsive">
                             <thead>
                             <tr>
-                                <th>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="user-list-select-all">
-                                        <label class="custom-control-label" for="user-list-select-all"></label>
-                                    </div>
-                                </th>
                                 <th>#</th>
                                 <th> {{__('supplies.employee_id')}}</th>
                                 <th> {{__('supplies.material_id')}}</th>
@@ -69,7 +63,6 @@
                                 @if($supplies->count() > 0)
                                     @foreach($supplies as $supply )
                                     <tr>
-                                        <td></td>
                                         <td>{{ $supply->id }}</td>
                                         <td>{{ $supply->employee->user->name }}</td>
                                         <td>{{ $supply->material->name }}</td>
@@ -90,10 +83,10 @@
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right">
                                                     <a href="{{route('supplies.edit',$supply->id)}}" class="dropdown-item">{{__('app.forms.btn.edit')}}</a>
-                                                    <form method="POST" action="{{route('supplies.destroy',$supply->id)}}" class="dropdown-item text-danger" >
+                                                    <form method="POST" action="{{route('supplies.destroy',$supply->id)}}" >
                                                         @csrf
                                                         <input type="hidden" name="_method" value="DELETE" >
-                                                        <button class="btn btn-link" >
+                                                        <button class="dropdown-item text-danger" >
                                                             {{__('app.forms.btn.delete')}}
                                                         </button>
                                                     </form>
@@ -116,6 +109,14 @@
 @section('script')
     <!-- Datatable -->
     <script src="{{ url('vendors/dataTable/datatables.min.js') }}"></script>
+    <script src="{{ url('vendors/dataTable/Buttons-1.6.1/js/dataTables.buttons.min.js') }}"></script>
 
     <script src="{{ url('assets/js/examples/pages/user-list.js') }}"></script>
+    <script>
+        $('#myTable').DataTable({
+            language: {
+                url: "{{ url('vendors/dataTable/arabic.json') }}"
+            }
+        });
+    </script>
 @endsection
