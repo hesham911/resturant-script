@@ -46,6 +46,12 @@
                                 @CSRF
                                 <!-- current Emplyee -->
                                 <input hidden name="employee_id" value="{{Auth::user()->id}}">
+                                    <div class="form-group row">
+                                        <label for="name" class="col-sm-2 col-form-label">{{__('geo.zones.name')}}</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" name="client_id" value="{{old('client_id')}}" class="form-control" id="client_id" placeholder="{{__('geo.zones.placeholder.name')}}" readonly>
+                                        </div>
+                                    </div>
                                 {{-- <div class="form-group row">
                                     <label for="inputPassword" class="col-sm-2 col-form-label">{{__('orders.client_id')}}</label>
                                     <div class="col-sm-10">
