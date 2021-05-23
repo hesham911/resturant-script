@@ -123,5 +123,10 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'تعديل قياس المواد الخام']);
         Permission::create(['name' => 'حذف قياس المواد الخام']);
 
+        Permission::create(['name' => 'عرض تلفيات']);
+        Permission::create(['name' => 'إضافة تلفيات']);
+        Permission::create(['name' => 'تعديل تلفيات']);
+        Permission::create(['name' => 'إلغاء تلفيات']);
+
     }
 }

@@ -97,7 +97,6 @@ class KitchenRequestController extends Controller
         }
         $request->session()->flash('message',__('kitchenrequests.massages.created_succesfully'));
         return redirect(route('kitchenrequests.index'));
-        
     }
 
     /**

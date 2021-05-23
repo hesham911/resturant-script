@@ -257,7 +257,7 @@
         @if (Auth::user()->hasAnyPermission(['إضافة مواد خام','عرض مواد خام']))
             <a href="#">
                 <span class="nav-link-icon">
-                    <i class="fa fa-clipboard" ></i>
+                    <i class="fa fa-cube" ></i>
                 </span>
                 <span> {{__('materials.titles.index')}}</span>
             </a>
@@ -276,7 +276,7 @@
         </ul>
     </li>
     <li>
-        @if (Auth::user()->hasAnyPermission(['إضافة  توريد للمخزن','عرض  توريد للمخزن']))
+        @if (Auth::user()->hasAnyPermission(['إضافة توريد للمخزن','عرض توريد للمخزن']))
             <a href="#">
                 <span class="nav-link-icon">
                     <i class="fa fa-clipboard" ></i>
@@ -285,12 +285,12 @@
             </a>
         @endif
         <ul>
-            @if (Auth::user()->hasAnyPermission(['عرض  توريد للمخزن']))
+            @if (Auth::user()->hasAnyPermission(['عرض توريد للمخزن']))
                 <li>
                     <a class="{{(request()->is('supplies'))? 'active' : '' }}" href="{{route('supplies.index')}}">عرض الكل</a>
                 </li>
             @endif
-            @if (Auth::user()->hasAnyPermission(['إضافة  توريد للمخزن']))
+            @if (Auth::user()->hasAnyPermission(['إضافة توريد للمخزن']))
                 <li>
                     <a class="{{(request()->is('supplies/create'))? 'active' : '' }}" href="{{ route('supplies.create') }}">إضافة جديد</a>
                 </li>
@@ -298,10 +298,10 @@
         </ul>
     </li>
     <li>
-        @if (Auth::user()->hasAnyPermission(['عرض رصيد المخزن ']))
+        @if (Auth::user()->hasAnyPermission(['عرض رصيد المخزن']))
             <a href="#">
                 <span class="nav-link-icon">
-                    <i class="fa fa-clipboard" ></i>
+                    <i class="fa fa-archive"></i>
                 </span>
                 <span> {{__('stocks.warehousestock')}}</span>
             </a>
@@ -313,21 +313,21 @@
         @endif
     </li>
     <li>
-        @if (Auth::user()->hasAnyPermission(['إضافة   تصنيع منتج','عرض   تصنيع منتج']))
+        @if (Auth::user()->hasAnyPermission(['إضافة تصنيع منتج','عرض تصنيع منتج']))
             <a href="#">
                 <span class="nav-link-icon">
-                    <i class="fa fa-clipboard" ></i>
+                    <i class="fa fa-cubes" ></i>
                 </span>
                 <span> {{__('productmanufactures.titles.index')}}</span>
             </a>
         @endif
         <ul>
-            @if (Auth::user()->hasAnyPermission(['عرض   تصنيع منتج']))
+            @if (Auth::user()->hasAnyPermission(['عرض تصنيع منتج']))
                 <li>
                     <a class="{{(request()->is('productmanufactures'))? 'active' : '' }}" href="{{route('productmanufactures.index')}}">عرض الكل</a>
                 </li>
             @endif
-            @if (Auth::user()->hasAnyPermission(['إضافة   تصنيع منتج']))
+            @if (Auth::user()->hasAnyPermission(['إضافة تصنيع منتج']))
                 <li>
                     <a class="{{(request()->is('productmanufactures/create'))? 'active' : '' }}" href="{{ route('productmanufactures.create') }}">إضافة جديد</a>
                 </li>
@@ -335,10 +335,10 @@
         </ul>
     </li>
     <li>
-        @if (Auth::user()->hasAnyPermission(['إضافة  طلبية من المطبخ','عرض  طلبية من المطبخ']))
+        @if (Auth::user()->hasAnyPermission(['إضافة طلبية من المطبخ','عرض طلبية من المطبخ']))
             <a href="#">
                 <span class="nav-link-icon">
-                    <i class="fa fa-clipboard" ></i>
+                    <i class="fa fa-tasks" ></i>
                 </span>
                 <span> {{__('kitchenrequests.titles.index')}}</span>
             </a>
