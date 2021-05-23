@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
- {{__('kitchenrequests.titles.create')}}
+ {{__('damagedmaterials.titles.create')}}
 @endsection
 @section('head')
     <!-- Prism -->
@@ -13,10 +13,10 @@
 
     <div class="page-header">
         <div>
-            <h3> {{__('kitchenrequests.titles.create')}} </h3>
+            <h3> {{__('damagedmaterials.titles.create')}} </h3>
             @include('admin.partials.breadcrumb',[
                 'parent' => [
-                    'name' => __("kitchenrequests.titles.create"),
+                    'name' => __("damagedmaterials.titles.create"),
                 ]
             ])
         </div>
@@ -39,21 +39,21 @@
                                     </ul>
                                 </div>
                             @endif
-                            <h6 class="card-title">{{__('kitchenrequests.titles.create')}}</h6>
-                            <form  method="POST"  action="{{route('kitchenrequests.store') }}"  class="repeater">
+                            <h6 class="card-title">{{__('damagedmaterials.titles.create')}}</h6>
+                            <form  method="POST"  action="{{route('damagedmaterials.store') }}"  class="repeater">
                                 @CSRF
                                 <div >
                                     <div data-repeater-list="group">
                                         <div data-repeater-item class="d-flex my-2 justify-content-around">
                                             <select class="select2  mx-3" name="material_id" required=''>
-                                                <option disabled  selected> اختر {{__('kitchenrequests.material_id')}}</option>
+                                                <option disabled  selected> اختر {{__('damagedmaterials.material_id')}}</option>
                                                 @if ($materials->count() > 0)
                                                     @foreach ($materials as $material)
                                                         <option  value="{{$material->id}}"> {{$material->name}} ({{$material->measuring->name}}) </option>
                                                     @endforeach
                                                 @endif
                                             </select>
-                                            <input type="text" class="form-control mx-3" id="inputPassword" placeholder="{{__('kitchenrequests.quantity')}}" value="{{old('quantity')}}" name="quantity" required>
+                                            <input type="text" class="form-control mx-3" id="inputPassword" placeholder="{{__('damagedmaterials.quantity')}}" value="{{old('quantity')}}" name="quantity" required>
                                             <input data-repeater-delete type="button" value="Delete" class="btn btn-danger w-25"/>
                                         </div>
                                     </div> 

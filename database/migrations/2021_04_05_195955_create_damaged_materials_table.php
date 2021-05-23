@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMaterialDamagesTable extends Migration
+class CreateDamagedMaterialsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,11 +14,14 @@ class CreateMaterialDamagesTable extends Migration
     public function up()
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        Schema::create('material_damages', function (Blueprint $table) {
+        Schema::create('damaged_materials', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('supply_id')->unsigned();
-                $table->foreign('supply_id')->references('id')->on('supplies');
+            $table->bigInteger('material_id')->unsigned();
+                $table->foreign('material_id')->references('id')->on('materials');
+            $table->bigInteger('user_id')->unsigned();
+                $table->foreign('user_id')->references('id')->on('users');
             $table->string('quantity');
+            $table->decimal('price');
             $table->timestamps();
             $table->softDeletes();
         });

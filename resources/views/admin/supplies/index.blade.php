@@ -64,7 +64,7 @@
                                     @foreach($supplies as $supply )
                                     <tr>
                                         <td>{{ $supply->id }}</td>
-                                        <td>{{ $supply->employee->user->name }}</td>
+                                        <td>{{ $supply->user->name }}</td>
                                         <td>{{ $supply->material->name }}</td>
                                         <td>{{ $supply->quantity }}</td>
                                         <td>{{ $supply->material->measuring->name }}</td>

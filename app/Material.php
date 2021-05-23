@@ -35,4 +35,8 @@ class Material extends Model
     public function scopeMaterialSearch($query , $search,$relatedMaterials){
         return $query->notRelatedMaterials($relatedMaterials)->where('name','LIKE','%'.$search.'%');
     }
+
+    public function damagedMaterials (){
+        return $this->hasMany(DamagedMaterial::class);
+    }
 }
