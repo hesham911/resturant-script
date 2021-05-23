@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RoleRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
@@ -13,7 +17,9 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //
+        $roles = Role::with('permissions:name,id')->get();
+
+        return view('admin.roles.index',['roles'=>$roles]);
     }
 
     /**
@@ -23,7 +29,8 @@ class RoleController extends Controller
      */
     public function create()
     {
-        //
+       $permissions = $permissions = Permission::all();
+       return view('admin.roles.create',['permissions' => $permissions]);
     }
 
     /**
@@ -32,20 +39,14 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RoleRequest $request)
     {
-        //
-    }
+        $validated = $request->validated();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        $role = Role::create(['name' => $validated['name']]);
+        $role->syncPermissions($validated['permission']);
+        $request->session()->flash('message',__('roles.massages.updated_successfully'));
+        return redirect(route('roles.index'));
     }
 
     /**
@@ -54,9 +55,11 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Role $role)
     {
-        //
+        $rolePermissions = $role->getAllPermissions();
+        $permissions = Permission::all();
+        return view('admin.roles.edit',['permissions' => $permissions,'role'=>$role,'rolePermissions'=>$rolePermissions]);
     }
 
     /**
@@ -66,9 +69,14 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+
+       $role = Role::findByName($request->name);
+       $role->syncPermissions($request->permission);
+       $request->session()->flash('message',__('users.employees.massages.update_successfully'));
+       return redirect(route('roles.index'));
+
     }
 
     /**

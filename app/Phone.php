@@ -3,13 +3,18 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Phone extends Model
 {
-   protected $fillable=['number'];
+    // use SoftDeletes;
 
-   public function user()
-   {
+    protected $fillable=['number'];
+
+    protected $dates = ['deleted_at'];
+
+    public function user()
+    {
        return $this->belongsTo(User::class,'user_id');
-   }
+    }
 }

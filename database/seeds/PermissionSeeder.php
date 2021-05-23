@@ -18,83 +18,115 @@ class PermissionSeeder extends Seeder
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         //>>>>>>>Create system super operations
-        Permission::create(['name' => 'add-user']);
-        Permission::create(['name' => 'edit-user']);
-        Permission::create(['name' => 'delete-user']);
+        Permission::create(['name' => 'عرض مستخدم']);
+        Permission::create(['name' => 'إضافة مستخدم']);
+        Permission::create(['name' => 'تعديل مستخدم']);
+        Permission::create(['name' => 'حذف مستخدم']);
 
-        Permission::create(['name' => 'add-role']);
-        Permission::create(['name' => 'edit-role']);
-        Permission::create(['name' => 'delete-role']);
+        Permission::create(['name' => 'عرض عميل']);
+        Permission::create(['name' => 'إضافة عميل']);
+        Permission::create(['name' => 'تعديل عميل']);
+        Permission::create(['name' => 'حذف عميل']);
 
-        Permission::create(['name' => 'add-category']);
-        Permission::create(['name' => 'edit-category']);
-        Permission::create(['name' => 'delete-category']);
+        Permission::create(['name' => 'عرض صلاحية']);
+        Permission::create(['name' => 'إضافة صلاحية']);
+        Permission::create(['name' => 'تعديل صلاحية']);
+        Permission::create(['name' => 'حذف الصلاحية']);
 
-        Permission::create(['name' => 'add-product']);
-        Permission::create(['name' => 'edit-product']);
-        Permission::create(['name' => 'delete-product']);
+        Permission::create(['name' => 'عرض قسم']);
+        Permission::create(['name' => 'أضافة قسم']);
+        Permission::create(['name' => 'تعديل قسم']);
+        Permission::create(['name' => 'حذف القسم']);
 
-        Permission::create(['name' => 'add-zone']);
-        Permission::create(['name' => 'edit-zone']);
-        Permission::create(['name' => 'delete-zone']);
+        Permission::create(['name' => 'عرض منتج']);
+        Permission::create(['name' => 'إضافة منتج']);
+        Permission::create(['name' => 'تعديل منتج']);
+        Permission::create(['name' => 'حذف المنتج']);
 
-        Permission::create(['name' => 'add-area']);
-        Permission::create(['name' => 'edit-area']);
-        Permission::create(['name' => 'delete-area']);
+        Permission::create(['name' => 'عرض منطقة']);
+        Permission::create(['name' => 'إضافة منطقة']);
+        Permission::create(['name' => 'تعديل المنطقة']);
+        Permission::create(['name' => 'حذف المنطقة']);
 
-        Permission::create(['name' => 'add-floor']);
-        Permission::create(['name' => 'edit-floor']);
-        Permission::create(['name' => 'delete-floor']);
+//        Permission::create(['name' => 'add-area']);
+//        Permission::create(['name' => 'edit-area']);
+//        Permission::create(['name' => 'delete-area']);
 
-        Permission::create(['name' => 'add-table']);
-        Permission::create(['name' => 'edit-table']);
-        Permission::create(['name' => 'delete-table']);
+        Permission::create(['name' => 'عرض طابق']);
+        Permission::create(['name' => 'إضافة طابق']);
+        Permission::create(['name' => 'تعديل طابق']);
+        Permission::create(['name' => 'حذف الطابق']);
 
-        Permission::create(['name' => 'add-setting']);
-        Permission::create(['name' => 'edit-setting']);
+        Permission::create(['name' => 'عرض طاولة']);
+        Permission::create(['name' => 'إضافة طاولة']);
+        Permission::create(['name' => 'تعديل طاولة']);
+        Permission::create(['name' => 'حذف طاولة']);
+
+
+        Permission::create(['name' => 'عرض إعدادات']);
+        Permission::create(['name' => 'إضافة إعدادات']);
+        Permission::create(['name' => 'تعديل إعدادات']);
+        Permission::create(['name' => 'حذف إعدادات']);
+
+        Permission::create(['name' => 'عرض رصيد المخزن']);
+
 
         //>>>>>>>Create system Accounting operations
-        Permission::create(['name' => 'view-report']);
-        Permission::create(['name' => 'print-report']);
+        Permission::create(['name' => 'عرض التقارير']);
+        Permission::create(['name' => 'طباعة التقرير']);
 
-        Permission::create(['name' => 'add-indirect-cost']);
-        Permission::create(['name' => 'edit-indirect-cost']);
-        Permission::create(['name' => 'delete-indirect-cost']);
+        Permission::create(['name' => 'عرض تكاليف غير مباشرة']);
+        Permission::create(['name' => 'إضافة تكاليف غير مباشرة']);
+        Permission::create(['name' => 'تعديل تكاليف غير مباشرة']);
+        Permission::create(['name' => 'حذف تكاليف غير مباشرة']);
 
-        Permission::create(['name' => 'add-indirect-expenses']);
-        Permission::create(['name' => 'edit-indirect-expenses']);
+        Permission::create(['name' => 'عرض مصروفات غير مباشرة']);
+        Permission::create(['name' => 'إضافة مصروفات غير مباشرة']);
+        Permission::create(['name' => 'تعديل مصروفات غير مباشرة']);
        // Permission::create(['name' => 'delete-indirect-expenses']);
 
 
         //>>>>>>>Create system cashier operations
-        Permission::create(['name' => 'add-order']);
-        Permission::create(['name' => 'edit-order']);
-        Permission::create(['name' => 'cancel-order']);
+        Permission::create(['name' => 'عرض طلب']);
+        Permission::create(['name' => 'إضافة طلب']);
+        Permission::create(['name' => 'تعديل طلب']);
+        Permission::create(['name' => 'إلغاء طلب']);
 
-        Permission::create(['name' => 'approve-payment']);
+        Permission::create(['name' => 'تأكيد الدفع']);
+        Permission::create(['name' => 'البحث عن عملاء']);
 
 
         //>>>>>>>Create system kitchen operations
-        Permission::create(['name' => 'add-product-manufacture']);
-        Permission::create(['name' => 'edit-product-manufacture']);
-        Permission::create(['name' => 'delete-product-manufacture']);
+        Permission::create(['name' => 'عرض تصنيع منتج']);
+        Permission::create(['name' => 'إضافة تصنيع منتج']);
+        Permission::create(['name' => 'تعديل تصنيع منتج']);
+        Permission::create(['name' => 'حذف تصنيع المنتج']);
 
-        Permission::create(['name' => 'add-request-kitchen']);
-        Permission::create(['name' => 'edit-request-kitchen']);
-        Permission::create(['name' => 'delete-request-kitchen']);
+        Permission::create(['name' => 'عرض طلبية من المطبخ']);
+        Permission::create(['name' => 'إضافة طلبية من المطبخ']);
+        Permission::create(['name' => 'تعديل طلبية من المطبخ']);
+        Permission::create(['name' => 'حذف طلبية من المطبخ']);
 
         //>>>>>>>Create system stock operations
-        Permission::create(['name' => 'add-material']);
-        Permission::create(['name' => 'edit-material']);
-        Permission::create(['name' => 'delete-material']);
+        Permission::create(['name' => 'عرض مواد خام']);
+        Permission::create(['name' => 'إضافة مواد خام']);
+        Permission::create(['name' => 'تعديل مواد خام']);
+        Permission::create(['name' => 'حذف مواد خام']);
 
-        Permission::create(['name' => 'add-supply']);
-        Permission::create(['name' => 'edit-supply']);
-        Permission::create(['name' => 'delete-supply']);
+        Permission::create(['name' => 'عرض توريد للمخزن']);
+        Permission::create(['name' => 'إضافة توريد للمخزن']);
+        Permission::create(['name' => 'تعديل توريد للمخزن']);
+        Permission::create(['name' => 'حذف توريد للمخزن']);
 
-        Permission::create(['name' => 'add-material-measuring']);
-        Permission::create(['name' => 'edit-material-measuring']);
-        Permission::create(['name' => 'delete-material-measuring']);
+        Permission::create(['name' => 'عرض قياس المواد الخام']);
+        Permission::create(['name' => 'إضافة قياس المواد الخام']);
+        Permission::create(['name' => 'تعديل قياس المواد الخام']);
+        Permission::create(['name' => 'حذف قياس المواد الخام']);
+
+        Permission::create(['name' => 'عرض تلفيات']);
+        Permission::create(['name' => 'إضافة تلفيات']);
+        Permission::create(['name' => 'تعديل تلفيات']);
+        Permission::create(['name' => 'إلغاء تلفيات']);
 
     }
 }

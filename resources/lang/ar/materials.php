@@ -7,12 +7,13 @@ return [
             'edit'      => 'تعديل  المادة الخام  ',
             'show'      => ' عرض  المادة الخام  ',
         ],
-        'notifications' => [
+        'massages' => [
             'created_succesfully' => 'تم  تسجيل  مادة خام   بنجاح',
             'updated_succesfully' => 'تم تعديل  المادة الخام بنجاح',
             'deleted_succesfully' => 'تم حذف  المادة الخام بنجاح',
-            'error_occured' => 'حدث خطأ من فضلك راجع البيانات المطلوبة',
+            'error_occured'       => 'حدث خطأ من فضلك راجع البيانات المطلوبة',
         ],
         'name'                    => ' الاسم ',
-        'expiry_date'            => ' تاريخ الصلاحية ',
+        'expiry_date'             => ' تاريخ الصلاحية ',
+        'measuring_id'            => ' وحدة القياس',
 ];

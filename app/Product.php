@@ -4,10 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Material;
 
 class Product extends Model
 {
     use SoftDeletes;
+
+
+    
     protected $fillable= ['name','subcategory_id','type','price'];
     // type
     static function type()
@@ -34,4 +38,10 @@ class Product extends Model
     {
     	return $this->belongsToMany(Order::class);
     }
+
+    public function ProductManufactures()
+    {
+    	return $this->hasMany(ProductManufacture::class);
+    }
+    
 }

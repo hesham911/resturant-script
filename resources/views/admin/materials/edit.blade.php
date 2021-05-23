@@ -14,17 +14,11 @@
     <div class="page-header">
         <div>
             <h3> {{__('materials.titles.edit')}} </h3>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                        <a href="#">Home</a>
-                    </li>
-                    <li class="breadcrumb-item">
-                        <a href="#">Forms</a>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">Form Validation</li>
-                </ol>
-            </nav>
+            @include('admin.partials.breadcrumb',[
+                'parent' => [
+                    'name' => __("materials.titles.edit"),
+                ]
+            ])
         </div>
     </div>
     <div class="row">
@@ -56,10 +50,17 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="inputPassword" class="col-sm-2 col-form-label">{{__('materials.expiry_date')}}</label>
-                                    <div class="col-sm-10">
-                                      <input type="date" class="form-control" id="inputPassword" placeholder="{{__('materials.expiry_date')}}" name="expiry_date"  value="{{old('expiry_date',$material->expiry_date)}}">
-                                    </div>
+                                        <label for="inputPassword" class="col-sm-2 col-form-label">{{__('materials.measuring_id')}}</label>
+                                        <div class="col-sm-10">
+                                        <select class="select2 " name="measuring_id">
+                                            <option disabled  selected> اختر الوحدة</option>
+                                            @if ($measurings->count() >0)
+                                                @foreach ($measurings as $measuring)
+                                                    <option value="{{$measuring->id}}" @if ($measuring->id == old('measuring_id',$material->measuring_id)) selected @endif >{{$measuring->name}}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                        </div>
                                 </div>
                                 <div class="d-flex flex-row-reverse" >
                                     <button class="btn btn-primary " type="submit">{{__('app.forms.btn.edit')}}</button>

@@ -6,6 +6,7 @@ use App\Subcategory;
 use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\SubcategoryRequest;
+use Illuminate\Support\Facades\Auth;
 
 class SubcategoryController extends Controller
 {
@@ -41,7 +42,7 @@ class SubcategoryController extends Controller
     {
         $validated = $request->validated();
         Subcategory::create($validated);
-        $request->session()->flash('message',__('subcategories.notifications.created_succesfully'));
+        $request->session()->flash('message',__('subcategories.massages.created_succesfully'));
         return redirect(route('subcategories.index'));
     }
 
@@ -82,7 +83,7 @@ class SubcategoryController extends Controller
     {
         $validated = $request->validated();
         $subcategory->update ($validated);
-        $request->session()->flash('message',__('subcategories.notifications.updated_succesfully'));
+        $request->session()->flash('message',__('subcategories.massages.updated_succesfully'));
         return redirect(route('subcategories.index'));
     }
 
@@ -95,7 +96,7 @@ class SubcategoryController extends Controller
     public function destroy(Request $request,Subcategory $subcategory)
     {
         $subcategory->delete();
-        $request->session()->flash('message',__('subcategories.notifications.deleted_succesfully'));
+        $request->session()->flash('message',__('subcategories.massages.deleted_succesfully'));
         return redirect(route('subcategories.index'));
     }
 }

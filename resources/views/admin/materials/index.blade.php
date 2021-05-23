@@ -12,60 +12,15 @@
     <div class="page-header d-md-flex justify-content-between">
         <div>
             <h3> {{__('materials.titles.index')}} </h3>
-            {{-- @include('admin.partials.breadcrumbs',[
-                        'name' => 'الأقسام',
-                        'parent' => [
-                            'name' => 'Blog',
-                            'url' =>'articles/'
-                            ]
-                        ]) --}}
-            <nav aria-label="breadcrumb" class="d-flex align-items-start">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                        <a href="{{ url('/') }}">Home</a>
-                    </li>
-                    <li class="breadcrumb-item">
-                        <a href="#">Pages</a>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">Users</li>
-                </ol>
-            </nav>
+            @include('admin.partials.breadcrumb',[
+                'parent' => [
+                    'name' => __("materials.titles.index"),
+                ]
+            ])
         </div>
         <div class="mt-2 mt-md-0">
-            <div class="dropdown">
-                <a href="#" class="btn btn-success dropdown-toggle" title="Filter" data-toggle="dropdown">Filters</a>
-                <div class="dropdown-menu dropdown-menu-big p-4 dropdown-menu-right">
-                    <form>
-                        <div class="form-group">
-                            <label>Role</label>
-                            <select class="form-control">
-                                <option value="">Select</option>
-                                <option value="">User</option>
-                                <option value="">Staff</option>
-                                <option value="">Admin</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Status</label>
-                            <select class="form-control">
-                                <option value="">Select</option>
-                                <option value="">Active</option>
-                                <option value="">Blocked</option>
-                                <option value="">Admin</option>
-                            </select>
-                        </div>
-                        <button class="btn btn-primary">Get Results</button>
-                        <button class="btn btn-link ml-2">Save Filter</button>
-                    </form>
-                </div>
-            </div>
             <div class="dropdown ml-2">
-                <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Actions</a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a href="#" class="dropdown-item">Edit</a>
-                    <a href="#" class="dropdown-item">Change Status</a>
-                    <a href="#" class="dropdown-item text-danger">Delete</a>
-                </div>
+                <a href="{{route('materials.create')}}" class="btn btn-primary " >{{__('materials.titles.create')}}</a>
             </div>
         </div>
     </div>
@@ -87,18 +42,12 @@
                         </div>
                     @endif
                     <div class="table-responsive">
-                        <table id="user-list" class="table table-lg">
+                        <table id="myTable" class="table table-lg">
                             <thead>
-                            <tr>''
-                                <th>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="user-list-select-all">
-                                        <label class="custom-control-label" for="user-list-select-all"></label>
-                                    </div>
-                                </th>
+                            <tr>
                                 <th>{{__('app.tables.num')}}</th>
                                 <th> {{__('materials.name')}}</th>
-                                <th> {{__('materials.expiry_date')}}</th>
+                                <th> {{__('materials.measuring_id')}}</th>
                                 <th class="text-right"> {{__('app.tables.control')}}</th>
                             </tr>
                             </thead>
@@ -106,10 +55,9 @@
                                 @if($materials->count() > 0)
                                     @foreach($materials as $material )
                                     <tr>
-                                        <td></td>
                                         <td>{{ $material->id }}</td>
                                         <td>{{ $material->name }}</td>
-                                        <td>{{ $material->expiry_date }}</td>
+                                        <td>{{ $material->measuring->name }}</td>
                                         <td class="text-right">
                                             <div class="dropdown">
                                                 <a href="#" data-toggle="dropdown"
@@ -145,6 +93,14 @@
 @section('script')
     <!-- Datatable -->
     <script src="{{ url('vendors/dataTable/datatables.min.js') }}"></script>
+    <script src="{{ url('vendors/dataTable/Buttons-1.6.1/js/dataTables.buttons.min.js') }}"></script>
 
     <script src="{{ url('assets/js/examples/pages/user-list.js') }}"></script>
+    <script>
+        $('#myTable').DataTable({
+            language: {
+            url: "{{ url('vendors/dataTable/arabic.json') }}"
+        }
+        });
+    </script>
 @endsection

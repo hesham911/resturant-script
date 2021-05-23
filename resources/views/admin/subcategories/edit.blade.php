@@ -14,17 +14,11 @@
     <div class="page-header">
         <div>
             <h3> {{__('subcategories.titles.edit')}} </h3>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                        <a href="#">Home</a>
-                    </li>
-                    <li class="breadcrumb-item">
-                        <a href="#">Forms</a>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">Form Validation</li>
-                </ol>
-            </nav>
+            @include('admin.partials.breadcrumb',[
+                'parent' => [
+                    'name' => __("subcategories.titles.edit"),
+                ]
+            ])
         </div>
     </div>
     <div class="row">
@@ -69,7 +63,7 @@
                                     </div>
                                 </div>
                                 <div class="d-flex flex-row-reverse" >
-                                    <button class="btn btn-primary " type="submit">{{__('app.forms.bnt.edit')}}</button>
+                                    <button class="btn btn-primary " type="submit">{{__('app.forms.btn.edit')}}</button>
                                 </div>
                             </form>
                         </div>

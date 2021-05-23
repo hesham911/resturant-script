@@ -4,11 +4,12 @@ namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable,HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -16,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','type','status','is_admin'
     ];
 
     /**
@@ -37,13 +38,44 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $dates = ['deleted_at'];
+
+
+
+    static function type()
+    {
+        $array=
+            [
+                0         => 'عميل',
+                1         => 'موظف',
+                2         => 'أدمن',
+            ];
+        return $array;
+    }
+    // get type
+    public function getTypeeAttribute()
+    {
+        return self::type()[$this->type];
+    }
+
     public function employee()
     {
         return $this->hasOne(Employee::class,'user_id');
     }
 
-    public function phone()
+    public function client()
+    {
+        return $this->hasOne(Client::class,'user_id');
+    }
+    public function phones()
     {
         return $this->hasMany(Phone::class,'user_id');
+    }
+
+    public function ScopeGetNumbersPhones($query,$user)
+    {
+        $phones = $user->phones->pluck('number');
+         return $phones->implode(' - ','number');
+
     }
 }

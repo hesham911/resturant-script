@@ -10,7 +10,7 @@ use function PHPSTORM_META\type;
 class Order extends Model
 {
     use SoftDeletes;
-    protected $fillable= ['client_id','employee_id','category_id','table_id','type','status',
+    protected $fillable= ['client_id','user_id','category_id','table_id','type','status',
     'cancel_reason'];
     // type
     static function type()
@@ -59,6 +59,11 @@ class Order extends Model
         return $total;
         //return $this->products->sum('price');
     }
+
+    public function user (){
+        return $this->belongsTo(User::class);
+    }
+    
     // category
     public function category()
     {
@@ -73,5 +78,10 @@ class Order extends Model
     public function payment()
     {
         return $this->hasOne(Payment::class);
+    }
+
+    public function requests()
+    {
+    	return $this->belongsToMany(KitchenRequest::class , 'order_request' , 'order_id' ,'request_id' );
     }
 }

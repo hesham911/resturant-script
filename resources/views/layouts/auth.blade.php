@@ -7,13 +7,13 @@
     <title>Gogi - Admin and Dashboard Template</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ url('assets/media/image/favicon.png') }}"/>
+    <link rel="shortcut icon" href="{{asset('assets/media/image/favicon.png')}}"/>
 
     <!-- Plugin styles -->
-    <link rel="stylesheet" href="{{ url('vendors/bundle.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{asset('vendors/bundle.css')}}" type="text/css">
 
     <!-- App styles -->
-    <link rel="stylesheet" href="{{ url('assets/css/app.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{asset('assets/css/app.min.css')}}" type="text/css">
 </head>
 <body class="form-membership">
 
@@ -27,18 +27,21 @@
 
     <!-- logo -->
     <div id="logo">
-        <img src="{{ url('assets/media/image/dark-logo.png') }}" alt="image">
+        <img src="{{asset('assets/media/image/dark-logo.png')}}" alt="image">
     </div>
     <!-- ./ logo -->
 
+    <h5>Sign in</h5>
+
     @yield('content')
+    <!-- form -->
 
 </div>
 
 <!-- Plugin scripts -->
-<script src="{{ url('vendors/bundle.js') }}"></script>
+<script src="{{asset('vendors/bundle.js')}}"></script>
 
 <!-- App scripts -->
-<script src="{{ url('assets/js/app.min.js') }}"></script>
+<script src="{{asset('assets/js/app.min.js')}}"></script>
 </body>
 </html>

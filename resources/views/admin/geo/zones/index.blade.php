@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    المناطق
+    {{__('geo.zones.titles.index')}}
 @endsection
 @section('head')
     <!-- Datatable -->
@@ -19,7 +19,7 @@
             ])
         </div>
         <div class="mt-2 mt-md-0">
-            <a href="#" class="btn btn-primary">{{__('geo.zones.titles.subcreate')}}</a>
+            <a href="{{route('zones.create')}}" class="btn btn-primary">{{__('geo.zones.titles.subcreate')}}</a>
         </div>
     </div>
 

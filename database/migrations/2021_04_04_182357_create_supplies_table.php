@@ -18,9 +18,15 @@ class CreateSuppliesTable extends Migration
             $table->id();
             $table->bigInteger('material_id')->unsigned();
                 $table->foreign('material_id')->references('id')->on('materials');
+            $table->bigInteger('user_id')->unsigned();
+                $table->foreign('user_id')->references('id')->on('users');
             $table->decimal('quantity');
             $table->integer('price');
             $table->string('Supplier_name');
+            $table->date('expiry_date')->nullable();
+            $table->boolean('status')->default(false);
+            $table->decimal('used_amount')->default(0);
+            $table->bigInteger('bill_number')->unsigned();
             $table->timestamps();
             $table->softDeletes();
         });
