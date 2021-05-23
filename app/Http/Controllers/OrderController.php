@@ -40,13 +40,14 @@ class OrderController extends Controller
      */
     public function create(Request $request)
     {
+        $client = Client::findOrFail($request->client);
         /* $clients = Client::all(); */
         $categories = Category::all();
         $tables = Table::all();
         $types = Order::type();
         $products = Product::all();
         return view('admin.orders.create',['categories'=>$categories,
-            'tables'=>$tables,'types'=>$types,'products'=>$products]);
+            'tables'=>$tables,'types'=>$types,'products'=>$products,'client'=>$client]);
     }
 
     /**

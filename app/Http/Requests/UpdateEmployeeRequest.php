@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -25,11 +26,17 @@ class UpdateEmployeeRequest extends FormRequest
      */
     public function rules()
     {
+       $user = $this->employee->user ;
+       $unique_number = Rule::unique('phones','number');
+       $unique_number->where(function ($query)use ($user){
+           return $query->whereNotIn('id',$user->phones->pluck('id')->toArray());
+
+       });
         return [
             'name'               =>   'required|string|min:2',
             'email'              =>   [
                 'email',
-                 Rule::unique('users','email')->ignore($this->employee->user)
+                 Rule::unique('users','email')->ignore($user)
             ],
             'type_employees'     =>   'required|numeric|',
             'status_employees'   =>   'numeric|',
@@ -37,13 +44,11 @@ class UpdateEmployeeRequest extends FormRequest
             'group_a.*.*'        =>   [
                 'numeric',
                 'digits:11',
-//                Rule::unique('phones','number')->ignore($this->employee->user->phone)
+                $unique_number
             ]
+
         ];
-
-
     }
-
     /**
      * @return array
      */

@@ -10,7 +10,7 @@
     <li>
         @if (Auth::user()->hasPermissionTo('البحث عن عملاء'))
             <a @if(request()->segment(1) == 'users') class="active"
-            @endif href="{{ route('users') }}">
+            @endif href="{{ route('clients.view.search') }}">
                 <span class="nav-link-icon">
                     <i class="fa fa-address-book-o" aria-hidden="true"></i>
                 </span>
