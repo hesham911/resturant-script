@@ -58,7 +58,8 @@
                                             <td>{{$client->user->getNumbersPhones($client->user)}}</td>
                                             <td class="text-right">
                                                 <div>
-                                                    <a href="" class="btn btn-dark">طلب أوردر</a>
+                                                    <a href="{{route('orders.create',['client'=>$client->id])}}" class="btn btn-dark">طلب أوردر</a>
+                                                    <a href="{{route('clients.edit',['client'=>$client->id])}}" class="btn btn-warning">تعديل العميل</a>
                                                 </div>
                                             </td>
                                         </tr>
