@@ -44,7 +44,7 @@
                         </div>
                     @endif
                     <div class="table-responsive">
-                        <table id="user-list" class="table table-lg">
+                        <table id="myTable" class="table  table-lg">
                             <thead>
                             <tr>
                                 <th>{{__('app.tables.num')}}</th>
@@ -93,6 +93,14 @@
 @section('script')
     <!-- Datatable -->
     <script src="{{ url('vendors/dataTable/datatables.min.js') }}"></script>
+    <script src="{{ url('vendors/dataTable/Buttons-1.6.1/js/dataTables.buttons.min.js') }}"></script>
 
     <script src="{{ url('assets/js/examples/pages/user-list.js') }}"></script>
+    <script>
+        $('#myTable').DataTable({
+            language: {
+                url: "{{ url('vendors/dataTable/arabic.json') }}"
+            }
+        });
+    </script>
 @endsection

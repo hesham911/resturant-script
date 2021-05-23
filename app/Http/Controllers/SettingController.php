@@ -27,11 +27,7 @@ class SettingController extends Controller
      */
     public function create()
     {
-        if (Auth::user()->hasPermissionTo('add-setting')) {
-            return view('admin.settings.create');
-        }else {
-            abort(503);
-        }
+        return view('admin.settings.create');
     }
 
     /**

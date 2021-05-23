@@ -115,15 +115,11 @@ class EmployeeController extends Controller
         $validated['password'] = bcrypt($request->password);
         $validated['type'] = 1;
         $validated['is_admin'] = 1;
-        dd($validated['group_a']);
         $employee->user->update($validated);
-        //dd($request->all());
-
         $updated = $employee->update([
             'type'      =>  $request->type_employees,
             'status'    =>  $request->status_employees,
         ]);
-
         if ($updated){
             $employee->user->phones()->delete();
             $employee->user->phones()->createMany($request->group_a);

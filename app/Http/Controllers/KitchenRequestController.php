@@ -31,14 +31,12 @@ class KitchenRequestController extends Controller
      */
     public function create()
     {
-        if (Auth::user()->hasPermissionTo('add-request-kitchen')) {
-            $materials = Material::has('warehousestock')->get();
-            return view('admin.kitchenrequests.create',[
-                'materials'=>$materials,
-            ]);
-        }else {
-            abort(503);
-        }
+        $materials = Material::whereHas('warehousestock',function($query){
+            $query->where('quantity','>', 0);
+        })->get();
+        return view('admin.kitchenrequests.create',[
+            'materials'=>$materials,
+        ]);
     }
 
     /**
@@ -88,7 +86,7 @@ class KitchenRequestController extends Controller
                 $kitchenrequest = new KitchenRequest;
                 $kitchenrequest->material_id = $kitchen_request['material_id'];
                 $kitchenrequest->quantity = $kitchen_request['quantity'];
-                $kitchenrequest->employee_id = $request->employee_id;
+                $kitchenrequest->user_id = Auth::user()->id;
                 $kitchenrequest->total_cost = $request_total_price;
                 $kitchenrequest->save();
                 $kitchenrequest->supplies()->sync($supply_ids);
@@ -99,7 +97,6 @@ class KitchenRequestController extends Controller
         }
         $request->session()->flash('message',__('kitchenrequests.massages.created_succesfully'));
         return redirect(route('kitchenrequests.index'));
-        
     }
 
     /**

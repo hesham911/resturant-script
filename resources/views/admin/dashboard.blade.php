@@ -9,12 +9,12 @@
 @endsection
 
 @section('content')
-    <div class="page-header d-md-flex justify-content-between">
-        <div>
-            <h3>Welcome back, Bony</h3>
-            <p class="text-muted">This page shows an overview for your account summary.</p>
+    <div class="h-100 d-flex align-items-center justify-content-center">
+        <div class=" ">
+            <h2 class=" text-center">أهلا بك {{Auth::user()->name}}</h2>
+            <p class="text-muted">كيف حالك اليوم ؟ </p>
         </div>
-        <div class="mt-3 mt-md-0">
+        {{-- <div class="mt-3 mt-md-0">
             <div id="dashboard-daterangepicker" class="btn btn-outline-light">
                 <span></span>
             </div>
@@ -23,10 +23,10 @@
                 <a href="#" class="dropdown-item">Download</a>
                 <a href="#" class="dropdown-item">Print</a>
             </div>
-        </div>
+        </div> --}}
     </div>
 
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-lg-6">
             <div class="card">
                 <div class="card-body">
@@ -897,7 +897,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection
 
 @section('script')

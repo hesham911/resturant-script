@@ -71,16 +71,21 @@
 
 @section('script')
     <!-- Datatable -->
+
+
+    <!-- Datatable -->
     <script src="{{ url('vendors/dataTable/datatables.min.js') }}"></script>
     <script src="{{ url('vendors/dataTable/Buttons-1.6.1/js/dataTables.buttons.min.js') }}"></script>
-
     <script src="{{ url('assets/js/examples/pages/user-list.js') }}"></script>
     <script>
-        $('#myTable').DataTable( {
+        $('#myTable').DataTable({
+            language: {
+                url: "{{ url('vendors/dataTable/arabic.json') }}"
+            },
             dom: 'Bfrtip',
             buttons: [
                 'print','excel', 'pdf'
             ]
-        } );
+        });
     </script>
 @endsection 

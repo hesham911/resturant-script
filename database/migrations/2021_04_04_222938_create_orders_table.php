@@ -22,8 +22,8 @@ class CreateOrdersTable extends Migration
                 $table->foreign('category_id')->references('id')->on('categories');
             $table->bigInteger('table_id')->unsigned()->nullable();
                 $table->foreign('table_id')->references('id')->on('tables');
-            $table->bigInteger('employee_id')->unsigned();
-                $table->foreign('employee_id')->references('id')->on('employees');
+            $table->bigInteger('user_id')->unsigned();
+                $table->foreign('user_id')->references('id')->on('users');
             $table->tinyInteger('type')->default(1);
             $table->tinyInteger('status')->default(0);
             $table->text('cancel_reason')->nullable();

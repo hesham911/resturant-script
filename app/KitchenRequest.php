@@ -13,15 +13,15 @@ class KitchenRequest extends Model
         'material_id',
         'quantity',
         'status',
-        'employee_id',
+        'user_id',
     ];
 
     public function material(){
         return $this->belongsTo(Material::class);
     }
 
-    public function employee (){
-        return $this->belongsTo(Employee::class);
+    public function user (){
+        return $this->belongsTo(User::class);
     }
 
     public function status(){

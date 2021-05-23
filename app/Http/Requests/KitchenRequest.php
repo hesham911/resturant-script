@@ -26,7 +26,7 @@ class KitchenRequest extends FormRequest
         return [
             'group.*.material_id'=>'required',
             'group.*.quantity'=>'required|numeric|max:999999',
-            'employee_id'=>'required',
+            'user_id'=>'required',
         ];
     }
     public function attributes()
@@ -34,7 +34,7 @@ class KitchenRequest extends FormRequest
         return [
             'group.*.material_id'=>__('kitchenrequests.material_id'),
             'group.*.quantity'=>__('kitchenrequests.quantity'),
-            'employee_id'=>__('kitchenrequests.employee_id'),
+            'user_id'=>__('kitchenrequests.user_id'),
         ];
     }
 }

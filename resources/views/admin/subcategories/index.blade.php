@@ -42,15 +42,9 @@
                         </div>
                     @endif
                     <div class="table-responsive">
-                        <table id="user-list" class="table table-lg">
+                        <table id="myTable" class="table table-lg">
                             <thead>
                             <tr>
-                                <th>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="user-list-select-all">
-                                        <label class="custom-control-label" for="user-list-select-all"></label>
-                                    </div>
-                                </th>
                                 <th>{{__('app.tables.num')}}</th>
                                 <th> {{__('subcategories.name')}}</th>
                                 <th class="text-right"> {{__('app.tables.control')}}</th>
@@ -60,7 +54,6 @@
                                 @if($subcategories->count() > 0)
                                     @foreach($subcategories as $category )
                                     <tr>
-                                        <td></td>
                                         <td>{{ $category->id }}</td>
                                         <td>{{ $category->name }}</td>
                                         <td class="text-right">
@@ -98,6 +91,14 @@
 @section('script')
     <!-- Datatable -->
     <script src="{{ url('vendors/dataTable/datatables.min.js') }}"></script>
+    <script src="{{ url('vendors/dataTable/Buttons-1.6.1/js/dataTables.buttons.min.js') }}"></script>
 
     <script src="{{ url('assets/js/examples/pages/user-list.js') }}"></script>
+    <script>
+        $('#myTable').DataTable({
+            language: {
+            url: "{{ url('vendors/dataTable/arabic.json') }}"
+        }
+        });
+    </script>
 @endsection

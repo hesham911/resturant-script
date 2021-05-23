@@ -25,7 +25,7 @@ class OrderRequest extends FormRequest
     {
         return [
            // 'client_id'  =>   'required',
-            'employee_id' =>   'required',
+            'user_id' =>   'required',
             'category_id' =>   'required',
             'type' =>   'required|numeric',
             'group_a.*.quantity' =>   'required|numeric',

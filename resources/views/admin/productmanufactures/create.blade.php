@@ -42,10 +42,9 @@
                             <h6 class="card-title">{{__('productmanufactures.titles.create')}}</h6>
                             <form  method="POST"  action="{{route('productmanufactures.store') }}" class="repeater">
                               @CSRF
-                                
                                 <div class="form-group row">
                                     <label for="inputPassword" class="col-sm-2 col-form-label">{{__('productmanufactures.product_id')}}</label>
-                                    <div class="col-sm-10">
+                                    <div class="col-sm-12 col-md-10">
                                         <select class="productselect " name="product_id">
                                             <option disabled  selected> اختر {{__('productmanufactures.product_id')}}</option>
                                             @if ($products->count() > 0)
@@ -57,31 +56,25 @@
                                     </div>
                                 </div>
                                 <div data-repeater-list="group">
-                                    <div data-repeater-item class="d-flex row mb-5">
+                                    <div data-repeater-item class="form-group row mb-5">
                                         <label class="col-sm-2 col-form-label">مواد التصنيع </label>
                                         <div class="form-group  col-md-3 col-sm-12">
-                                            <div class="col-sm-10">
-                                                <select class="ajaxmaterial " name="material_id">
-                                                    <option disabled  selected> اختر {{__('productmanufactures.material_id')}}</option>
-                                                    @if(isset($materials))
-                                                    @if ($materials->count() > 0)
-                                                        @foreach ($materials as $material)
-                                                            <option  value="{{$material->id}}"> {{$material->name}} ({{$material->measuring->name}}) </option>
-                                                        @endforeach
-                                                    @endif
-                                                    @endif
-                                                </select>
-                                            </div>
+                                            <select class="ajaxmaterial form-control" name="material_id">
+                                                <option disabled  selected> اختر {{__('productmanufactures.material_id')}}</option>
+                                                @if(isset($materials))
+                                                @if ($materials->count() > 0)
+                                                    @foreach ($materials as $material)
+                                                        <option  value="{{$material->id}}"> {{$material->name}} ({{$material->measuring->name}}) </option>
+                                                    @endforeach
+                                                @endif
+                                                @endif
+                                            </select>
                                         </div>
-                                        <div class="form-group col-md-3 col-sm-12">
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="inputPassword" placeholder="{{__('productmanufactures.required_quantity')}}" value="{{old('required_quantity')}}" name="required_quantity" required>
-                                            </div>
+                                        <div class="form-group col-sm-10 col-md-3 col-sm-12">
+                                            <input type="text" class="form-control" id="inputPassword" placeholder="{{__('productmanufactures.required_quantity')}}" value="{{old('required_quantity')}}" name="required_quantity" required>
                                         </div>
-                                        <div class="form-group col-md-3 col-sm-12">
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="inputPassword" placeholder="{{__('productmanufactures.waste_percentage')}}" value="{{old('waste_percentage')}}" name="waste_percentage" required>
-                                            </div>
+                                        <div class="form-group col-sm-10 col-md-3 col-sm-12">
+                                            <input type="text" class="form-control" id="inputPassword" placeholder="{{__('productmanufactures.waste_percentage')}}" value="{{old('waste_percentage')}}" name="waste_percentage" required>
                                         </div>
                                         <input data-repeater-delete type="button" value="{{__('app.forms.btn.delete')}}" class="btn btn-danger "/>
                                     </div>
