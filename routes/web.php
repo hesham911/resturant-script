@@ -130,6 +130,21 @@ ROute::group([
         Route::get('/','KitchenRequestController@index')->name('kitchenrequests.index');
         Route::get('/show/{kitchenrequest}','KitchenRequestController@show')->name('kitchenrequests.show');
     });
+    Route::group(['prefix' =>'damagedmaterials'],function(){
+        Route::group(['middleware' => ['can:إضافة تلفيات']], function () {
+            Route::get('/create','DamagedMaterialController@create')->name('damagedmaterials.create');
+            Route::post('/store','DamagedMaterialController@store')->name('damagedmaterials.store');
+        });
+        Route::group(['middleware' => ['can:تعديل تلفيات']], function () {
+            Route::get('/edit/{damagedmaterial}','DamagedMaterialController@edit')->name('damagedmaterials.edit');
+            Route::put('/update/{damagedmaterial}','DamagedMaterialController@update')->name('damagedmaterials.update');
+        });
+        Route::group(['middleware' => ['can:حذف تلفيات']], function () {
+            Route::delete('/destroy/{damagedmaterial}','DamagedMaterialController@destroy')->name('damagedmaterials.destroy');
+        });
+        Route::get('/','DamagedMaterialController@index')->name('damagedmaterials.index');
+        Route::get('/show/{damagedmaterial}','DamagedMaterialController@show')->name('damagedmaterials.show');
+    });
     Route::group(['middleware' => ['can:عرض رصيد المخزن']], function () {
         Route::get('/warehousestock','WarehouseStockController@index')->name('warehousestock.index');
     });

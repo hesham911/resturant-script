@@ -61,7 +61,7 @@ class SupplyController extends Controller
             $supply->price =  $supply_data['price'];
             $supply->Supplier_name =  $supply_data['Supplier_name'];
             $supply->expiry_date =  $supply_data['expiry_date'];
-            $supply->employee_id =  $validated['employee_id'];
+            $supply->user_id =  $validated['user_id'];
             $supply->bill_number =  $validated['bill_number'];
             $supply->save();
             $stock = WarehouseStock::firstOrNew(['material_id'=>$supply_data['material_id']]);

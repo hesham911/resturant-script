@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-{{__('kitchenrequests.titles.index')}}
+{{__('damagedmaterials.titles.index')}}
 @endsection
 @section('head')
     <!-- Datatable -->
@@ -13,16 +13,16 @@
 
     <div class="page-header d-md-flex justify-content-between">
         <div>
-            <h3> {{__('kitchenrequests.titles.index')}} </h3>
+            <h3> {{__('damagedmaterials.titles.index')}} </h3>
             @include('admin.partials.breadcrumb',[
                 'parent' => [
-                    'name' => __("kitchenrequests.titles.index"),
+                    'name' => __("damagedmaterials.titles.index"),
                 ]
             ])
         </div>
         <div class="mt-2 mt-md-0">
             <div class="dropdown ml-2">
-                <a href="{{route('kitchenrequests.create')}}" class="btn btn-primary " >{{__('kitchenrequests.titles.create')}}</a>
+                <a href="{{route('damagedmaterials.create')}}" class="btn btn-primary " >{{__('damagedmaterials.titles.create')}}</a>
             </div>
         </div>
     </div>
@@ -47,35 +47,24 @@
                         <table id="myTable" class="table table-lg">
                             <thead>
                             <tr>
-                                <th>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="user-list-select-all">
-                                        <label class="custom-control-label" for="user-list-select-all"></label>
-                                    </div>
-                                </th>
                                 <th>#</th>
-                                <th> {{__('kitchenrequests.material_id')}}</th>
-                                <th> {{__('kitchenrequests.quantity')}}</th>
-                                <th> {{__('kitchenrequests.status')}}</th>
-                                <th> {{__('kitchenrequests.used_amount')}}</th>
-                                <th> {{__('kitchenrequests.employee_id')}}</th>
-                                <th> {{__('kitchenrequests.total_cost')}}</th>
-                                <th class="text-right"> خيارات</th>
+                                <th> {{__('damagedmaterials.material_id')}}</th>
+                                <th> {{__('damagedmaterials.quantity')}}</th>
+                                <th> {{__('damagedmaterials.price')}}</th>
+                                <th> {{__('damagedmaterials.employee_id')}}</th>
+                                {{-- <th class="text-right"> خيارات</th> --}}
                             </tr>
                             </thead>
                             <tbody>
-                                @if($kitchenrequests->count() > 0)
-                                    @foreach($kitchenrequests as $kitchenrequest )
+                                @if($damaged_materials->count() > 0)
+                                    @foreach($damaged_materials as $damaged_material )
                                     <tr>
-                                        <td></td>
-                                        <td>{{ $kitchenrequest->id }}</td>
-                                        <td>{{ $kitchenrequest->material->name }}</td>
-                                        <td>{{ $kitchenrequest->quantity }}</td>
-                                        <td>{{ $kitchenrequest->status() [$kitchenrequest->status]}}</td>
-                                        <td>{{ $kitchenrequest->used_amount }}</td>
-                                        <td>{{ $kitchenrequest->user->name }}</td>
-                                        <td>{{ $kitchenrequest->total_cost }}</td>
-                                        <td class="text-right">
+                                        <td>{{ $damaged_material->id }}</td>
+                                        <td>{{ $damaged_material->material->name }}</td>
+                                        <td>{{ $damaged_material->quantity }}</td>
+                                        <td>{{ $damaged_material->price }}</td>
+                                        <td>{{ $damaged_material->user->name }}</td>
+                                        {{-- <td class="text-right">
                                             <div class="dropdown">
                                                 <a href="#" data-toggle="dropdown"
                                                 class="btn btn-floating"
@@ -83,8 +72,8 @@
                                                     <i class="ti-more-alt"></i>
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                    <a href="{{route('kitchenrequests.edit',$kitchenrequest->id)}}" class="dropdown-item">{{__('app.forms.btn.edit')}}</a>
-                                                    <form method="POST" action="{{route('kitchenrequests.destroy',$kitchenrequest->id)}}" class="dropdown-item text-danger" >
+                                                    <a href="{{route('damagedmaterials.edit',$damaged_material->id)}}" class="dropdown-item">{{__('app.forms.btn.edit')}}</a>
+                                                    <form method="POST" action="{{route('damagedmaterials.destroy',$damaged_material->id)}}" class="dropdown-item text-danger" >
                                                         @csrf
                                                         <input type="hidden" name="_method" value="DELETE" >
                                                         <button class="btn btn-link" >
@@ -93,7 +82,7 @@
                                                     </form>
                                                 </div>
                                             </div>
-                                        </td>
+                                        </td> --}}
                                     </tr>
                                     @endforeach
                                 @endif
