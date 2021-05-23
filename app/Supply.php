@@ -13,13 +13,17 @@ class Supply extends Model
         'price',
         'Supplier_name',
         'expiry_date',
-        'employee_id',
+        'user_id',
         'material_id',
         'bill_number',
     ];
 
     public function material (){
         return $this->belongsTo(Material::class);
+    }
+
+    public function user (){
+        return $this->belongsTo(User::class);
     }
 
     public function employee (){

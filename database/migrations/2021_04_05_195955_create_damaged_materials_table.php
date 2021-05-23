@@ -18,8 +18,8 @@ class CreateDamagedMaterialsTable extends Migration
             $table->id();
             $table->bigInteger('material_id')->unsigned();
                 $table->foreign('material_id')->references('id')->on('materials');
-            $table->bigInteger('employee_id')->unsigned();
-                $table->foreign('employee_id')->references('id')->on('employees');
+            $table->bigInteger('user_id')->unsigned();
+                $table->foreign('user_id')->references('id')->on('users');
             $table->string('quantity');
             $table->decimal('price');
             $table->timestamps();

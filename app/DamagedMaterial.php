@@ -11,14 +11,14 @@ class DamagedMaterial extends Model
 {
     use SoftDeletes;
 
-    protected $fillable  = ['supply_id','price','quantity'];
+    protected $fillable  = ['supply_id','price','quantity','user_id'];
 
     public function material(){
         return $this->belongsTo(Material::class);
     }
 
-    public function employee (){
-        return $this->belongsTo(Employee::class);
+    public function user (){
+        return $this->belongsTo(User::class);
     }
 
     

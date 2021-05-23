@@ -63,7 +63,7 @@
                                         <td>{{ $damaged_material->material->name }}</td>
                                         <td>{{ $damaged_material->quantity }}</td>
                                         <td>{{ $damaged_material->price }}</td>
-                                        <td>{{ $damaged_material->employee->user->name }}</td>
+                                        <td>{{ $damaged_material->user->name }}</td>
                                         {{-- <td class="text-right">
                                             <div class="dropdown">
                                                 <a href="#" data-toggle="dropdown"

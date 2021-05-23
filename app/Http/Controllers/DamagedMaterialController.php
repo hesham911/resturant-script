@@ -50,7 +50,7 @@ class DamagedMaterialController extends Controller
             $calculation = Supply::calculation($item['material_id'] , $item['quantity']  );
             if ($calculation['status'] == 'success') {
                 $damaged_material = new DamagedMaterial;
-                $damaged_material->employee_id = $validated_data['employee_id'];
+                $damaged_material->user_id = $validated_data['user_id'];
                 $damaged_material->material_id = $item['material_id'];
                 $damaged_material->quantity = $item['quantity'];
                 $damaged_material->price = $calculation['request_total_price'];

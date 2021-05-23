@@ -356,4 +356,26 @@
             @endif
         </ul>
     </li>
+    <li>
+        @if (Auth::user()->hasAnyPermission(['إضافة تلفيات','عرض تلفيات']))
+            <a href="#">
+                <span class="nav-link-icon">
+                    <i class="fa fa-tasks" ></i>
+                </span>
+                <span> {{__('damagedmaterials.titles.index')}}</span>
+            </a>
+        @endif
+        <ul>
+            @if (Auth::user()->hasAnyPermission(['عرض تلفيات']))
+                <li>
+                    <a class="{{(request()->is('damagedmaterials'))? 'active' : '' }}" href="{{route('damagedmaterials.index')}}">عرض الكل</a>
+                </li>
+            @endif
+            @if (Auth::user()->hasAnyPermission(['إضافة تلفيات']))
+                <li>
+                    <a class="{{(request()->is('damagedmaterials/create'))? 'active' : '' }}" href="{{ route('damagedmaterials.create') }}">إضافة جديد</a>
+                </li>
+            @endif
+        </ul>
+    </li>
 </ul>
