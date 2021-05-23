@@ -23,7 +23,27 @@ ROute::group([
     Route::resource('/roles','RoleController');
     Route::resource('/products','ProductController');
     Route::resource('/employees','EmployeeController');
-    Route::resource('/clients','ClientController');
+    //Route::resource('/clients','ClientController');
+    Route::group(['prefix' =>'clients'],function (){
+        Route::group(['middleware' => ['can:إضافة عميل'],'web'],function (){
+            Route::get('/create','ClientController@create')->name('clients.create');
+            Route::post('/store','ClientController@store')->name('clients.store');
+            Route::post('/store/ajax','ClientController@ajaxStore')->name('clients.store.ajax');
+        });
+        Route::group(['middleware' => ['can:تعديل عميل']],function (){
+            Route::get('/edit/{client}','ClientController@edit')->name('clients.edit');
+            Route::post('/update/{client}','ClientController@update')->name('clients.update');
+        });
+        Route::group(['middleware' => ['can:حذف عميل']], function () {
+            Route::delete('/destroy/{client}','ClientController@destroy')->name('clients.destroy');
+        });
+        Route::get('/','ClientController@index')->name('clients.index');
+        Route::get('/show/{client}','ClientController@show')->name('clients.show');
+        Route::group(['middleware' => ['can:البحث عن عملاء']], function () {
+            Route::get('/search','ClientController@viewSearch')->name('clients.view.search');
+            Route::post('/search','ClientController@search')->name('clients.search');
+        });
+    });
     Route::group(['prefix' =>'categories'],function(){
         Route::group(['middleware' => ['can:أضافة قسم']], function () {
             Route::get('/create','CategoryController@create')->name('categories.create');
