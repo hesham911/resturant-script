@@ -9,6 +9,7 @@ use App\MaterialMeasuring;
 use App\WarehouseStock;
 use Illuminate\Http\Request;
 use App\Http\Requests\SupplyRequest;
+use App\Http\Requests\SupplyUpdateRequest;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -60,7 +61,7 @@ class SupplyController extends Controller
             $supply->price =  $supply_data['price'];
             $supply->Supplier_name =  $supply_data['Supplier_name'];
             $supply->expiry_date =  $supply_data['expiry_date'];
-            $supply->employee_id =  $validated['employee_id'];
+            $supply->user_id =  $validated['user_id'];
             $supply->bill_number =  $validated['bill_number'];
             $supply->save();
             $stock = WarehouseStock::firstOrNew(['material_id'=>$supply_data['material_id']]);
@@ -105,21 +106,15 @@ class SupplyController extends Controller
      * @param  \App\SubSupply  $supply
      * @return \Illuminate\Http\Response
      */
-    public function update(SupplyRequest $request,Supply $supply)
+    public function update(SupplyUpdateRequest $request,Supply $supply)
     {
         $validated = $request->validated();
         //to reset the last added quantity
         $warehouse_stock = WarehouseStock::findOrFail($supply->material_id);
         $warehouse_stock->quantity = $warehouse_stock->quantity - $supply->quantity ;
         $warehouse_stock->save();
-        $supply->material_id =  $validated['material_id'];
-        $supply->quantity =  $validated['quantity'];
-        $supply->price =  $validated['price'];
-        $supply->Supplier_name =  $validated['Supplier_name'];
-        $supply->expiry_date =  $validated['expiry_date'];
-        $supply->employee_id =  $request->employee_id;
-        $supply->save();
-        $warehouse_stock = WarehouseStock::findOrFail($validated['material_id']);
+        $supply->update($validated);
+        $warehouse_stock = WarehouseStock::firstOrNew(['material_id'=>$validated['material_id']]);
         $warehouse_stock->quantity = $warehouse_stock->quantity + $supply->quantity ;
         $warehouse_stock->save();
         $request->session()->flash('message',__('supplies.massages.updated_succesfully'));
@@ -134,6 +129,9 @@ class SupplyController extends Controller
      */
     public function destroy(Request $request,Supply $supply)
     {
+        $warehouse_stock = WarehouseStock::findOrFail($supply->material_id);
+        $warehouse_stock->quantity = $warehouse_stock->quantity - $supply->quantity ;
+        $warehouse_stock->save();
         $supply->delete();
         $request->session()->flash('message',__('supplies.massages.deleted_succesfully'));
         return redirect(route('supplies.index'));

@@ -23,7 +23,27 @@ ROute::group([
     Route::resource('/roles','RoleController');
     Route::resource('/products','ProductController');
     Route::resource('/employees','EmployeeController');
-    Route::resource('/clients','ClientController');
+    //Route::resource('/clients','ClientController');
+    Route::group(['prefix' =>'clients'],function (){
+        Route::group(['middleware' => ['can:إضافة عميل'],'web'],function (){
+            Route::get('/create','ClientController@create')->name('clients.create');
+            Route::post('/store','ClientController@store')->name('clients.store');
+            Route::post('/store/ajax','ClientController@ajaxStore')->name('clients.store.ajax');
+        });
+        Route::group(['middleware' => ['can:تعديل عميل']],function (){
+            Route::get('/edit/{client}','ClientController@edit')->name('clients.edit');
+            Route::post('/update/{client}','ClientController@update')->name('clients.update');
+        });
+        Route::group(['middleware' => ['can:حذف عميل']], function () {
+            Route::delete('/destroy/{client}','ClientController@destroy')->name('clients.destroy');
+        });
+        Route::get('/','ClientController@index')->name('clients.index');
+        Route::get('/show/{client}','ClientController@show')->name('clients.show');
+        Route::group(['middleware' => ['can:البحث عن عملاء']], function () {
+            Route::get('/search','ClientController@viewSearch')->name('clients.view.search');
+            Route::post('/search','ClientController@search')->name('clients.search');
+        });
+    });
     Route::group(['prefix' =>'categories'],function(){
         Route::group(['middleware' => ['can:أضافة قسم']], function () {
             Route::get('/create','CategoryController@create')->name('categories.create');
@@ -130,15 +150,45 @@ ROute::group([
         Route::get('/','KitchenRequestController@index')->name('kitchenrequests.index');
         Route::get('/show/{kitchenrequest}','KitchenRequestController@show')->name('kitchenrequests.show');
     });
-    Route::group(['middleware' => ['can:عرض مخزون المخزن']], function () {
+    Route::group(['prefix' =>'damagedmaterials'],function(){
+        Route::group(['middleware' => ['can:إضافة تلفيات']], function () {
+            Route::get('/create','DamagedMaterialController@create')->name('damagedmaterials.create');
+            Route::post('/store','DamagedMaterialController@store')->name('damagedmaterials.store');
+        });
+        Route::group(['middleware' => ['can:تعديل تلفيات']], function () {
+            Route::get('/edit/{damagedmaterial}','DamagedMaterialController@edit')->name('damagedmaterials.edit');
+            Route::put('/update/{damagedmaterial}','DamagedMaterialController@update')->name('damagedmaterials.update');
+        });
+        Route::group(['middleware' => ['can:حذف تلفيات']], function () {
+            Route::delete('/destroy/{damagedmaterial}','DamagedMaterialController@destroy')->name('damagedmaterials.destroy');
+        });
+        Route::get('/','DamagedMaterialController@index')->name('damagedmaterials.index');
+        Route::get('/show/{damagedmaterial}','DamagedMaterialController@show')->name('damagedmaterials.show');
+    });
+    Route::group(['middleware' => ['can:عرض رصيد المخزن']], function () {
         Route::get('/warehousestock','WarehouseStockController@index')->name('warehousestock.index');
     });
     // Route::resource('/employees','EmployeeController');
 
     // orders
-    Route::resource('/orders','OrderController');
-    Route::post('/orders/cancel/{order}','OrderController@cancel')->name('orders.cancel');
     Route::get('/orders/status/{order}/{state}','OrderController@status')->name('orders.status');
+    Route::delete('/destroy/{order}','OrderController@destroy')->name('orders.destroy');
+    Route::group(['prefix' =>'orders'],function(){
+        Route::group(['middleware' => ['can:إضافة طلب']], function () {
+            Route::get('/create/{client?}','OrderController@create')->name('orders.create');
+            Route::post('/store','OrderController@store')->name('orders.store');
+        });
+        Route::group(['middleware' => ['can:تعديل طلب']], function () {
+            Route::get('/edit/{order}','OrderController@edit')->name('orders.edit');
+            Route::put('/update/{order}','OrderController@update')->name('orders.update');
+        });
+        Route::group(['middleware' => ['can:إلغاء طلب']], function () {
+            Route::post('/orders/cancel/{order}','OrderController@cancel')->name('orders.cancel');
+
+        });
+        Route::get('/','OrderController@index')->name('orders.index');
+        Route::get('/show/{order}','OrderController@show')->name('orders.show');
+    });
 
     /* Route::get('orders', function () {
         return view('admin.orders');

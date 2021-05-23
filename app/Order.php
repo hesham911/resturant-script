@@ -10,7 +10,7 @@ use function PHPSTORM_META\type;
 class Order extends Model
 {
     use SoftDeletes;
-    protected $fillable= ['client_id','employee_id','category_id','table_id','type','status',
+    protected $fillable= ['client_id','user_id','category_id','table_id','type','status',
     'cancel_reason'];
     // type
     static function type()
@@ -34,7 +34,7 @@ class Order extends Model
         $array=
             [
                 0 => __('orders.status.orderd'), // تم الطلب
-                1 => __('orders.status.prepared'), // تم التجهيز
+               // 1 => __('orders.status.prepared'), // تم التجهيز
                 2 => __('orders.status.closed'), //  تم إغلاق الطلب
                 3 => __('orders.status.payment'), //  تم الدفع
                 4 => __('orders.status.canceled'), //  تم الإلغاء
@@ -59,6 +59,11 @@ class Order extends Model
         return $total;
         //return $this->products->sum('price');
     }
+
+    public function user (){
+        return $this->belongsTo(User::class);
+    }
+    
     // category
     public function category()
     {

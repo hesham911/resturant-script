@@ -73,7 +73,7 @@
                                         <td>{{ $kitchenrequest->quantity }}</td>
                                         <td>{{ $kitchenrequest->status() [$kitchenrequest->status]}}</td>
                                         <td>{{ $kitchenrequest->used_amount }}</td>
-                                        <td>{{ $kitchenrequest->employee->user->name }}</td>
+                                        <td>{{ $kitchenrequest->user->name }}</td>
                                         <td>{{ $kitchenrequest->total_cost }}</td>
                                         <td class="text-right">
                                             <div class="dropdown">
@@ -118,7 +118,10 @@
             dom: 'Bfrtip',
             buttons: [
                 'print','excel', 'pdf'
-            ]
+            ],
+            language: {
+                url: "{{ url('vendors/dataTable/arabic.json') }}"
+            }
         } );
     </script>
 @endsection

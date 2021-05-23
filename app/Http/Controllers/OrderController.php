@@ -23,9 +23,13 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::get();
+        if($request->status == null)
+        {
+            $request->status=0;
+        }
+        $orders = Order::where('status',$request->status)->latest()->get();
         return view('admin.orders.index',['orders'=>$orders]);
     }
 
@@ -36,13 +40,14 @@ class OrderController extends Controller
      */
     public function create(Request $request)
     {
+        $client = Client::findOrFail($request->client);
         /* $clients = Client::all(); */
         $categories = Category::all();
         $tables = Table::all();
         $types = Order::type();
         $products = Product::all();
         return view('admin.orders.create',['categories'=>$categories,
-            'tables'=>$tables,'types'=>$types,'products'=>$products]);
+            'tables'=>$tables,'types'=>$types,'products'=>$products,'client'=>$client]);
     }
 
     /**
@@ -56,7 +61,7 @@ class OrderController extends Controller
         //$request->employee_id=Auth::user()->id;
         $validated = $request->validated();
         $order=Order::create($validated);
-        $order->products()->attach($request->group_a);
+        $order->products()->sync($request->group_a);
         $requests = [];
         foreach ( $order->products as $product ) {
             for ($i=0; $i < $product->pivot->quantity ; $i++) { 
@@ -186,8 +191,10 @@ class OrderController extends Controller
         $tables = Table::all();
         $types = Order::type();
         $products = Product::all();
+        $ordProducts=$order->products;
         return view('admin.orders.edit',['order'=>$order,'categories'=>$categories,
-            'tables'=>$tables,'types'=>$types,'products'=>$products]);
+            'tables'=>$tables,'types'=>$types,'products'=>$products,
+            'ordProducts'=>$ordProducts]);
     }
 
     /**
@@ -200,11 +207,12 @@ class OrderController extends Controller
     public function update(OrderRequest $request, Order $order)
     {
         $validated = $request->validated();
+        dd($validated);
         foreach ( $order->products as $product ) {
             for ($i=0; $i < $product->pivot->quantity ; $i++) { 
                 if ($product->ProductManufactures->count() > 0) {                
                     foreach ($product->ProductManufactures as $ProductManufacture) {
-                        $kitchenrequests = $order->requests->where('material_id',$ProductManufacture->material_id)->first();
+                        $kitchenrequests = $order->requests->where('material_id',$ProductManufacture->material_id);
                         $productmanufacturequantity = $ProductManufacture->required_quantity;
                         if ($productmanufacturequantity > 0) {
                             foreach ($kitchenrequests as $kitchenrequest) {
@@ -218,7 +226,7 @@ class OrderController extends Controller
             }
         }
         $order->update($validated);
-        $order->products()->attach($request->group_a);
+        $order->products()->sync($request->group_a);
         $requests = [];
         foreach ( $order->products as $product ) {
             for ($i=0; $i < $product->pivot->quantity ; $i++) { 

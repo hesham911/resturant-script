@@ -26,7 +26,6 @@ class EmployeeRequest extends FormRequest
      */
     public function rules()
     {
-        //dd($this);
         return [
             'name'               =>   'required|string|min:2',
             'email'              =>   [
@@ -39,7 +38,7 @@ class EmployeeRequest extends FormRequest
             'group_a.*.*'        =>   [
                 'numeric',
                 'digits:11',
-
+                'unique_phone'
             ],
         ];
     }
