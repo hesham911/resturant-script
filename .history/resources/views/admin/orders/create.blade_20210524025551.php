@@ -70,7 +70,6 @@
                                         </select>
                                         </div>
                                     </div>
-                                    <input hidden name="client_id" value="{{$client->id}}">
                                @endif
                                 <input hidden name="user_id" value="{{Auth::user()->id}}">
 
