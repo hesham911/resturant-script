@@ -23,6 +23,6 @@ class ProductManufacture extends Model
     }
 
     public function material (){
-        return $this->belongsTo(material::class);
+        return $this->belongsTo(Material::class);
     }
 }
