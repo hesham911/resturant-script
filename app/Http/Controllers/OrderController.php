@@ -40,7 +40,11 @@ class OrderController extends Controller
      */
     public function create(Request $request)
     {
-        $client = Client::findOrFail($request->client);
+        $client=null;
+        if($request->client)
+        {
+            $client = Client::findOrFail($request->client);
+        }
         /* $clients = Client::all(); */
         $categories = Category::all();
         $tables = Table::all();
@@ -64,8 +68,8 @@ class OrderController extends Controller
         $order->products()->sync($request->group_a);
         $requests = [];
         foreach ( $order->products as $product ) {
-            for ($i=0; $i < $product->pivot->quantity ; $i++) { 
-                if ($product->ProductManufactures->count() > 0) {                
+            for ($i=0; $i < $product->pivot->quantity ; $i++) {
+                if ($product->ProductManufactures->count() > 0) {
                     foreach ($product->ProductManufactures as $ProductManufacture) {
                         $kitchenrequests = KitchenRequest::where('material_id',$ProductManufacture->material_id)->where('status',0)->get();
                         $productmanufacturequantity = $ProductManufacture->required_quantity + $ProductManufacture->waste_percentage;
@@ -76,7 +80,7 @@ class OrderController extends Controller
                                     if ($productmanufacturequantity < $quantitydifference) {
                                         $kitchenrequest->used_amount = $kitchenrequest->used_amount + $productmanufacturequantity;
                                         $kitchenrequest->save();
-                                        $productmanufacturequantity = 0 ; 
+                                        $productmanufacturequantity = 0 ;
                                         $requests[]=$kitchenrequest->id;
                                         break;
                                     }elseif ($productmanufacturequantity > $quantitydifference){
@@ -89,7 +93,7 @@ class OrderController extends Controller
                                         $kitchenrequest->used_amount = $kitchenrequest->used_amount + $ProductManufacture->required_quantity;
                                         $kitchenrequest->status =  1;
                                         $kitchenrequest->save();
-                                        $productmanufacturequantity = 0 ; 
+                                        $productmanufacturequantity = 0 ;
                                         $requests[]=$kitchenrequest->id;
                                         break;
                                     }
@@ -139,7 +143,7 @@ class OrderController extends Controller
         if($state == 3)
         {
             $payment = new Payment();
-            $payment->employee_id = Auth::user()->id;
+            $payment->user_id = Auth::user()->id;
             $payment->total_price = $order->total_price;
             $order->payment()->save($payment);
         }
@@ -156,8 +160,8 @@ class OrderController extends Controller
     public function cancel(Order $order,Request $request)
     {
         foreach ( $order->products as $product ) {
-            for ($i=0; $i < $product->pivot->quantity ; $i++) { 
-                if ($product->ProductManufactures->count() > 0) {                
+            for ($i=0; $i < $product->pivot->quantity ; $i++) {
+                if ($product->ProductManufactures->count() > 0) {
                     foreach ($product->ProductManufactures as $ProductManufacture) {
                         $kitchenrequests = $order->requests->where('material_id',$ProductManufacture->material_id)->first();
                         $productmanufacturequantity = $ProductManufacture->required_quantity;
@@ -209,8 +213,8 @@ class OrderController extends Controller
         $validated = $request->validated();
         dd($validated);
         foreach ( $order->products as $product ) {
-            for ($i=0; $i < $product->pivot->quantity ; $i++) { 
-                if ($product->ProductManufactures->count() > 0) {                
+            for ($i=0; $i < $product->pivot->quantity ; $i++) {
+                if ($product->ProductManufactures->count() > 0) {
                     foreach ($product->ProductManufactures as $ProductManufacture) {
                         $kitchenrequests = $order->requests->where('material_id',$ProductManufacture->material_id);
                         $productmanufacturequantity = $ProductManufacture->required_quantity;
@@ -229,8 +233,8 @@ class OrderController extends Controller
         $order->products()->sync($request->group_a);
         $requests = [];
         foreach ( $order->products as $product ) {
-            for ($i=0; $i < $product->pivot->quantity ; $i++) { 
-                if ($product->ProductManufactures->count() > 0) {                
+            for ($i=0; $i < $product->pivot->quantity ; $i++) {
+                if ($product->ProductManufactures->count() > 0) {
                     foreach ($product->ProductManufactures as $ProductManufacture) {
                         $kitchenrequests = KitchenRequest::where('material_id',$ProductManufacture->material_id)->where('status',0)->get();
                         $productmanufacturequantity = $ProductManufacture->required_quantity;
@@ -241,7 +245,7 @@ class OrderController extends Controller
                                     if ($productmanufacturequantity < $quantitydifference) {
                                         $kitchenrequest->used_amount = $kitchenrequest->used_amount + $productmanufacturequantity;
                                         $kitchenrequest->save();
-                                        $productmanufacturequantity = 0 ; 
+                                        $productmanufacturequantity = 0 ;
                                         $requests[]=$kitchenrequest->id;
                                         break;
                                     }elseif ($productmanufacturequantity > $quantitydifference){
@@ -254,7 +258,7 @@ class OrderController extends Controller
                                         $kitchenrequest->used_amount = $kitchenrequest->used_amount + $ProductManufacture->required_quantity;
                                         $kitchenrequest->status =  1;
                                         $kitchenrequest->save();
-                                        $productmanufacturequantity = 0 ; 
+                                        $productmanufacturequantity = 0 ;
                                         $requests[]=$kitchenrequest->id;
                                         break;
                                     }

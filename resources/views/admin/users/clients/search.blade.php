@@ -5,6 +5,8 @@
 @section('head')
     <!-- Datatable -->
     <link rel="stylesheet" href="{{ url('vendors/dataTable/datatables.min.css') }}" type="text/css">
+    <!-- selectto -->
+    <link rel="stylesheet" href="../../vendors/select2/css/select2.min.css" type="text/css">
 @endsection
 @section('content')
 
@@ -79,7 +81,7 @@
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">{{__('users.clients.titles.subcreate')}}</h5>
+                    <h5 class="">{{__('users.clients.titles.subcreate')}}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -95,7 +97,8 @@
                                 <input type="text" class="form-control" name="number"  placeholder="{{__('users.clients.placeholder.phone')}}">
                             </div>
                             <div class="col-3">
-                                <select id="inputState" name="zone" class="form-control">
+                                <select id="inputState" name="zone" class="form-control select2">
+                                    <option disabled selected> اختر المنطقة </option>
                                     @if(count($zones) > 0)
                                         @foreach($zones as $key => $zone)
                                             <option value="{{$zone->id}}" {{(old('zone')==$zone->id)? 'selected':''}}>{{$zone->name}}</option>
@@ -111,8 +114,8 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button onclick="handleSubmit()" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('app.forms.btn.close')}}</button>
+                    <button onclick="handleSubmit()" class="btn btn-primary">{{__('app.forms.btn.add')}}</button>
                 </div>
             </div>
         </div>
@@ -122,8 +125,14 @@
 @section('script')
     <!-- Datatable -->
     <script src="{{ url('vendors/dataTable/datatables.min.js') }}"></script>
+    <!-- selectto -->
+    <script src="../../vendors/select2/js/select2.min.js"></script>
+    <script src="../../vendors/select2/js/i18n/ar.js"></script>
+    
     <script>
-
+        $('.select2').select2({
+            language: "ar"
+        });
        var  otable = $('#user-list').DataTable({
            "language": {
                "zeroRecords": '<button type="button" id="new-record" class="btn btn-outline-secondary btn-uppercase" data-toggle="modal" data-target="#exampleModal"><i class="ti-plus mr-2"></i>{{__('users.clients.titles.subcreate')}}</button>'

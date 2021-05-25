@@ -147,12 +147,11 @@ class ClientController extends Controller
         $validated = $request->validated();
         $validated['type'] = 1;
         $validated['is_admin'] = 1;
-        dd($validated);
+        // dd($validated);
         $client->user->update($validated);
-
-        $client->update($validated);
+        // $client->update($validated);
         $request->session()->flash('success',__('clients.massages.update_successfully'));
-        return redirect(route('admin.users.clients.index'));
+        return redirect(route('clients.index'));
     }
 
     public function viewSearch()
