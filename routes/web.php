@@ -32,7 +32,7 @@ ROute::group([
         });
         Route::group(['middleware' => ['can:تعديل عميل']],function (){
             Route::get('/edit/{client}','ClientController@edit')->name('clients.edit');
-            Route::post('/update/{client}','ClientController@update')->name('clients.update');
+            Route::put('/update/{client}','ClientController@update')->name('clients.update');
         });
         Route::group(['middleware' => ['can:حذف عميل']], function () {
             Route::delete('/destroy/{client}','ClientController@destroy')->name('clients.destroy');

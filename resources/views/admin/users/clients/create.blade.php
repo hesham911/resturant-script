@@ -60,7 +60,7 @@
                                                 <div class="row">
                                                     <div class="col-md-10 col-sm-12 form-group">
                                                         <input type="text" class="form-control" name="number" id="number"
-                                                               placeholder="{{__('users.clients.placeholder.phone')}}">
+                                                               placeholder="{{__('users.clients.placeholder.phone')}}" required>
                                                     </div>
                                                     <div class="col-md-2 col-sm-12 form-group">
                                                         <button type="button" class="btn btn-danger" data-repeater-delete>
@@ -85,7 +85,7 @@
                                                 <div class="row">
                                                     <div class="col-md-5 col-sm-12 form-group">
                                                         <label  for="zone">{{__('users.clients.zone')}}</label>
-                                                        <select name="zone" id="zone" class="zone">
+                                                        <select name="zone" id="zone" class="zone" required>
                                                             <option disabled >{{__('users.clients.placeholder.zone')}}</option>
                                                             @if(count($zones) > 0)
                                                                 @foreach($zones as $key => $zone)
@@ -96,7 +96,7 @@
                                                     </div>
                                                     <div class="col-md-5 col-sm-12 form-group">
                                                         <label for="address">{{__('users.clients.address_details')}}</label>
-                                                        <input class="form-control" name="address" id="address" placeholder="{{__('users.clients.placeholder.address')}}"/>
+                                                        <input class="form-control" name="address" id="address" placeholder="{{__('users.clients.placeholder.address')}}" required/>
                                                     </div>
                                                     <div class="col-md-2 col-sm-12 form-group">
                                                         <div><label>&nbsp;</label></div>

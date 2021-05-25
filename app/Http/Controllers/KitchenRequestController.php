@@ -20,7 +20,7 @@ class KitchenRequestController extends Controller
      */
     public function index()
     {
-        $kitchenrequests = KitchenRequest::with('employee','material')->get();
+        $kitchenrequests = KitchenRequest::with('user','material')->get();
         return view('admin.kitchenrequests.index',['kitchenrequests'=>$kitchenrequests]);
     }
 
