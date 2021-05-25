@@ -114,7 +114,7 @@
                                                             <a href="{{route('orders.show',['order'=>$order->id])}}" class="dropdown-item">{{__('orders.actions.view')}}</a>
                                                         @else
                                                             <div class="p-3">
-                                                                <span class="text-danger">{{__('orders.cancel_reason')}}:</span><hr>
+                                                                <span class="text-danger">{{__('orders.cancel_reason')}}</span><hr>
                                                                 {{$order->cancel_reason}}
                                                             </div>
                                                         @endif

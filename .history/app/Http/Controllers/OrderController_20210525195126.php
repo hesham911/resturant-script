@@ -191,11 +191,7 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        $client=null;
-        if($order->client_id)
-        {
-            $client = Client::findOrFail($order->client_id);
-        }
+        
         $categories = Category::all();
         $tables = Table::all();
         $types = Order::type();
@@ -203,7 +199,7 @@ class OrderController extends Controller
         $ordProducts=$order->products;
         return view('admin.orders.edit',['order'=>$order,'categories'=>$categories,
             'tables'=>$tables,'types'=>$types,'products'=>$products,
-            'ordProducts'=>$ordProducts,'client'=>$client]);
+            'ordProducts'=>$ordProducts]);
     }
 
     /**
@@ -216,6 +212,7 @@ class OrderController extends Controller
     public function update(OrderRequest $request, Order $order)
     {
         $validated = $request->validated();
+        dd($validated);
         foreach ( $order->products as $product ) {
             for ($i=0; $i < $product->pivot->quantity ; $i++) {
                 if ($product->ProductManufactures->count() > 0) {

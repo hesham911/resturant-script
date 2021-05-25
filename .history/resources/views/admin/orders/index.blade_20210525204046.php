@@ -113,10 +113,7 @@
                                                         @if($order->status != 4)
                                                             <a href="{{route('orders.show',['order'=>$order->id])}}" class="dropdown-item">{{__('orders.actions.view')}}</a>
                                                         @else
-                                                            <div class="p-3">
-                                                                <span class="text-danger">{{__('orders.cancel_reason')}}:</span><hr>
-                                                                {{$order->cancel_reason}}
-                                                            </div>
+                                                        <a href="" class="dropdown-item">{{__('orders.actions.view')}}</a>
                                                         @endif
                                                         {{-- <form method="POST" action="{{route('orders.destroy',$order->id)}}"  >
                                                             @csrf

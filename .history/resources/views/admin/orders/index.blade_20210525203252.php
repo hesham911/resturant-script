@@ -109,15 +109,9 @@
                                                             </a>
                                                         @elseif($order->status == 2)
                                                             <a href="{{route('orders.status',['order'=>$order->id,'state'=>3])}}" class="dropdown-item">{{__('orders.actions.payed')}}</a>
+                                                        @elseif($order->status = 2)
                                                         @endif
-                                                        @if($order->status != 4)
-                                                            <a href="{{route('orders.show',['order'=>$order->id])}}" class="dropdown-item">{{__('orders.actions.view')}}</a>
-                                                        @else
-                                                            <div class="p-3">
-                                                                <span class="text-danger">{{__('orders.cancel_reason')}}:</span><hr>
-                                                                {{$order->cancel_reason}}
-                                                            </div>
-                                                        @endif
+                                                        <a href="{{route('orders.show',['order'=>$order->id])}}" class="dropdown-item">{{__('orders.actions.view')}}</a>
                                                         {{-- <form method="POST" action="{{route('orders.destroy',$order->id)}}"  >
                                                             @csrf
                                                             <input type="hidden" name="_method" value="DELETE" >

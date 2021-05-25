@@ -73,7 +73,7 @@
                                @endif
                                 <input type="hidden" name="_method" value="PUT" >
                                 <!-- current Emplyee -->
-                                <input hidden name="user_id" value="{{Auth::user()->id}}">
+                                <input hidden name="employee_id" value="{{Auth::user()->id}}">
                                 <div class="form-group row">
                                     <label for="inputPassword" class="col-sm-2 col-form-label">{{__('orders.category_id')}}</label>
                                     <div class="col-sm-10">

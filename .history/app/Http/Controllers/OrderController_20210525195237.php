@@ -216,6 +216,7 @@ class OrderController extends Controller
     public function update(OrderRequest $request, Order $order)
     {
         $validated = $request->validated();
+        dd($validated);
         foreach ( $order->products as $product ) {
             for ($i=0; $i < $product->pivot->quantity ; $i++) {
                 if ($product->ProductManufactures->count() > 0) {

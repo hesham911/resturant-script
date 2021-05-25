@@ -44,7 +44,7 @@
                             <h6 class="card-title">{{__('orders.titles.edit')}}</h6>
                             <form  method="post" action="{{route('orders.update',$order->id)}}">
                                 @CSRF
-                                @if($client)
+                                @if($order->client_id != null)
                                     <div class="form-group row">
                                         <label for="inputPassword" class="col-sm-2 col-form-label">{{__('users.clients.phone')}}</label>
                                         <div class="col-sm-10">
@@ -62,18 +62,20 @@
                                         <select class="select2" name="client_zone">
                                             @foreach ($client->zones as $zone)
                                                 <option  value="{{$zone->name}} - {{$zone->pivot->address}}"
-                                                    @if ($order->client_zone == $zone->name.' - '.$zone->pivot->address)
-                                                        selected
-                                                    @endif>
+                                                    @if ($order->client_zone )
+
+                                                    @endif
+                                                    {{($order->client_zone=='{{$zone->name}} - {{$zone->pivot->address}}')? 'selected':''}}>
                                                     {{$zone->name}}-{{$zone->pivot->address}} </option>
                                              @endforeach
                                         </select>
                                         </div>
                                     </div>
+                                    <input hidden name="client_id" value="{{$client->id}}">
                                @endif
                                 <input type="hidden" name="_method" value="PUT" >
                                 <!-- current Emplyee -->
-                                <input hidden name="user_id" value="{{Auth::user()->id}}">
+                                <input hidden name="employee_id" value="{{Auth::user()->id}}">
                                 <div class="form-group row">
                                     <label for="inputPassword" class="col-sm-2 col-form-label">{{__('orders.category_id')}}</label>
                                     <div class="col-sm-10">
@@ -89,40 +91,34 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="inputPassword" class="col-sm-2 col-form-label">{{__('orders.order_type')}}</label>
+                                    <label for="inputPassword" class="col-sm-2 col-form-label">{{__('orders.table_id')}}</label>
                                     <div class="col-sm-10">
-                                    <select class="select2" name="type" id="orderType">
-                                        <option disabled ></option>
-                                        @if (count($types) > 0)
-                                            @foreach ($types as $key=>$type)
-                                                @if($client && $key == 1)
-                                                     <option  value="{{$key}}" {{($key == old("type", $order->type))? 'selected':''}}>
-                                                         {{$type}} </option>
-                                                @elseif(!$client && $key !=1)
-                                                     <option  value="{{$key}}" {{($key == old("type", $order->type))? 'selected':''}}>
-                                                     {{$type}} </option>
-                                                @endif
+                                    <select class="select2" name="table_id">
+                                        @if ($tables->count() > 0)
+                                            @foreach ($tables as $table)
+                                                <option  value="{{$table->id}}" {{($table->id == old("table_id",
+                                                    $order->table_id))? 'selected':''}}>
+                                                     {{$table->name}} </option>
                                             @endforeach
                                         @endif
                                     </select>
                                     </div>
                                 </div>
-                                @if(!$client)
-                                    <div class="form-group row" id="tableHall">
-                                        <label for="inputPassword" class="col-sm-2 col-form-label">{{__('orders.table_id')}}</label>
-                                        <div class="col-sm-10">
-                                        <select class="select2" name="table_id" >
-                                            @if ($tables->count() > 0)
-                                                @foreach ($tables as $table)
-                                                    <option  value="{{$table->id}}" {{($table->id == old("table_id",
-                                                        $order->table_id))? 'selected':''}}>
-                                                        {{$table->name}} </option>
-                                                @endforeach
-                                            @endif
-                                        </select>
-                                        </div>
+                                <div class="form-group row">
+                                    <label for="inputPassword" class="col-sm-2 col-form-label">{{__('orders.order_type')}}</label>
+                                    <div class="col-sm-10">
+                                    <select class="select2" name="type">
+                                        <option disabled ></option>
+                                        @if (count($types) > 0)
+                                            @foreach ($types as $key=>$type)
+                                                <option  value="{{$key}}"
+                                                {{($key == old("type", $order->type))? 'selected':''}}>
+                                                     {{$type}} </option>
+                                            @endforeach
+                                        @endif
+                                    </select>
                                     </div>
-                                @endif
+                                </div>
                                 <div class="form-group row">
                                     <label class="col-sm-2">{{__('orders.products')}}</label>
                                     <div class="basic-repeater">
@@ -191,18 +187,6 @@
             placeholder: 'اختر المنتجات'
         });
         $('.basic-repeater').repeater();
-        ///////
-       $('#orderType').on('change',function()
-       {
-           if($(this).val() !=0)
-           {
-                $('#tableHall').hide();
-           }
-           else
-           {
-                $('#tableHall').show();
-           }
-       });
     });
   </script>
 @endsection
