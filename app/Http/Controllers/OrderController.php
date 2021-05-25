@@ -143,7 +143,7 @@ class OrderController extends Controller
         if($state == 3)
         {
             $payment = new Payment();
-            $payment->employee_id = Auth::user()->id;
+            $payment->user_id = Auth::user()->id;
             $payment->total_price = $order->total_price;
             $order->payment()->save($payment);
         }
