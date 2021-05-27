@@ -202,7 +202,7 @@
                     <a class="{{(request()->is('dashbord/categories'))? 'active' : '' }}" href="{{route('categories.index')}}">عرض الكل</a>
                 </li>
             @endif
-            @if (Auth::user()->hasAnyPermission(['إضافة قسم']))
+            @if (Auth::user()->hasAnyPermission(['أضافة قسم']))
                 <li>
                     <a class="{{(request()->is('dashbord/categories/create'))? 'active' : '' }}" href="{{ route('categories.create') }}">إضافة جديد</a>
                 </li>
@@ -210,7 +210,7 @@
         </ul>
     </li>
     <li>
-        @if (Auth::user()->hasAnyPermission(['إضافة قسم','عرض قسم']))
+        @if (Auth::user()->hasAnyPermission(['أضافة قسم','عرض قسم']))
             <a href="#">
                 <span class="nav-link-icon">
                     <i data-feather='layers' ></i>
@@ -224,7 +224,7 @@
                     <a class="{{(request()->is('dashbord/subcategories'))? 'active' : '' }}" href="{{route('subcategories.index')}}">عرض الكل</a>
                 </li>
             @endif
-            @if (Auth::user()->hasAnyPermission(['إضافة قسم']))
+            @if (Auth::user()->hasAnyPermission(['أضافة قسم']))
                 <li>
                     <a class="{{(request()->is('dashbord/subcategories/create'))? 'active' : '' }}" href="{{ route('subcategories.create') }}">إضافة جديد</a>
                 </li>
