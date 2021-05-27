@@ -24,6 +24,38 @@ ROute::group([
     Route::resource('/products','ProductController');
     Route::resource('/employees','EmployeeController');
     //Route::resource('/clients','ClientController');
+    Route::group(['prefix' =>'indirect-costs'],function (){
+        Route::get('/','IndirectCostController@index')->name('indirect.costs.index');
+
+        Route::group(['middleware' => ['can:إضافة تكاليف غير مباشرة']],function (){
+            Route::get('/create','IndirectCostController@create')->name('indirect.costs.create');
+            Route::post('/store','IndirectCostController@store')->name('indirect.costs.store');
+        });
+        Route::group(['middleware' => ['can:تعديل تكاليف غير مباشرة']],function (){
+            Route::get('/edit/{indirectCost}','IndirectCostController@edit')->name('indirect.costs.edit');
+            Route::put('/update/{indirectCost}','IndirectCostController@update')->name('indirect.costs.update');
+        });
+        Route::group(['middleware' => ['can:حذف تكاليف غير مباشرة']],function (){
+            Route::delete('/destroy/{indirectCost}','IndirectCostController@destroy')->name('indirect.costs.destroy');
+        });
+
+    });
+    Route::group(['prefix' =>'indirect-expenses'],function (){
+        Route::get('/','IndirectExpenseController@index')->name('indirect.expenses.index');
+
+        Route::group(['middleware' => ['can:إضافة مصروفات غير مباشرة']],function (){
+            Route::get('/create','IndirectExpenseController@create')->name('indirect.expenses.create');
+            Route::post('/store','IndirectExpenseController@store')->name('indirect.expenses.store');
+        });
+        Route::group(['middleware' => ['can:تعديل مصروفات غير مباشرة']],function (){
+            Route::get('/edit/{indirectExpense}','IndirectExpenseController@edit')->name('indirect.expenses.edit');
+            Route::put('/update/{indirectExpense}','IndirectExpenseController@update')->name('indirect.expenses.update');
+        });
+        Route::group([],function (){
+            Route::delete('/destroy/{indirectExpense}','IndirectExpenseController@destroy')->name('indirect.expenses.destroy');
+
+        });
+    });
     Route::group(['prefix' =>'clients'],function (){
         Route::group(['middleware' => ['can:إضافة عميل'],'web'],function (){
             Route::get('/create','ClientController@create')->name('clients.create');
