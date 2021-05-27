@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\IndirectCostRequest;
 use App\IndirectCost;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,8 @@ class IndirectCostController extends Controller
      */
     public function index()
     {
-        //
+        $IndirectCosts = IndirectCost::get();
+        return view('admin.accounting.indirect-costs.index',['IndirectCosts'=>$IndirectCosts]);
     }
 
     /**
@@ -24,7 +26,7 @@ class IndirectCostController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.accounting.indirect-costs.create');
     }
 
     /**
@@ -33,9 +35,13 @@ class IndirectCostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(IndirectCostRequest $request)
     {
-        //
+
+        $validated = $request->validated();
+        IndirectCost::create($validated);
+        $request->session()->flash('message',__('accounting.indirect-costs.massages.created_successfully'));
+        return redirect(route('indirect.costs.index'));
     }
 
     /**
@@ -57,7 +63,8 @@ class IndirectCostController extends Controller
      */
     public function edit(IndirectCost $indirectCost)
     {
-        //
+
+        return view('admin.accounting.indirect-costs.edit',['indirectCost'=>$indirectCost]);
     }
 
     /**
@@ -67,9 +74,12 @@ class IndirectCostController extends Controller
      * @param  \App\IndirectCost  $indirectCost
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, IndirectCost $indirectCost)
+    public function update(IndirectCostRequest $request, IndirectCost $indirectCost)
     {
-        //
+        $validated = $request->validated();
+        $indirectCost->update($validated);
+        $request->session()->flash('message',__('accounting.indirect-costs.massages.updated_successfully'));
+        return redirect(route('indirect.costs.index'));
     }
 
     /**
@@ -78,8 +88,10 @@ class IndirectCostController extends Controller
      * @param  \App\IndirectCost  $indirectCost
      * @return \Illuminate\Http\Response
      */
-    public function destroy(IndirectCost $indirectCost)
+    public function destroy(IndirectCost $indirectCost,Request $request)
     {
-        //
+        $indirectCost->delete();
+        $request->session()->flash('message',__('accounting.indirect-costs.massages.deleted_successfully'));
+        return redirect(route('indirect.costs.index'));
     }
 }
