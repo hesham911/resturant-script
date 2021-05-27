@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    {{__('geo.zones.titles.index')}}
+    {{__('accounting.indirect-expenses.titles.index')}}
 @endsection
 @section('head')
     <!-- Datatable -->
@@ -11,15 +11,15 @@
 
     <div class="page-header d-md-flex justify-content-between">
         <div>
-            <h3>{{__('geo.zones.titles.index')}}</h3>
+            <h3>{{__('accounting.indirect-expenses.titles.index')}}</h3>
             @include('admin.partials.breadcrumb',[
                 'parent' => [
-                    'name' => __("geo.zones.titles.index"),
+                    'name' => __("accounting.indirect-expenses.titles.index"),
                 ]
             ])
         </div>
         <div class="mt-2 mt-md-0">
-            <a href="{{route('zones.create')}}" class="btn btn-primary">{{__('geo.zones.titles.subcreate')}}</a>
+            <a href="{{route('indirect.expenses.create')}}" class="btn btn-primary">{{__('accounting.indirect-expenses.titles.subcreate')}}</a>
         </div>
     </div>
 
@@ -44,17 +44,21 @@
                             <thead>
                             <tr>
                                 <th>{{__('app.tables.num')}}</th>
-                                <th>{{__('geo.zones.name')}}</th>
-                                <th>{{__('geo.zones.price')}}</th>
+                                <th>{{__('accounting.indirect-expenses.cost')}}</th>
+                                <th>{{__('accounting.indirect-expenses.amount')}}</th>
+                                <th>{{__('accounting.indirect-expenses.date_from')}}</th>
+                                <th>{{__('accounting.indirect-expenses.date_to')}}</th>
                                 <th class="text-right">{{__('app.tables.control')}}</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($zones as $zone)
+                            @foreach($IndirectExpenses as $indirectExpense)
                                 <tr>
-                                <td>{{$zone->id}}</td>
-                                <td>{{$zone->name}}</td>
-                                <td>{{$zone->price}}</td>
+                                <td>{{$indirectExpense->id}}</td>
+                                <td>{{$indirectExpense->indirectcost->name}}</td>
+                                <td>{{$indirectExpense->amount}}</td>
+                                <td>{{$indirectExpense->date_from}}</td>
+                                <td>{{$indirectExpense->date_to}}</td>
                                 <td class="text-right">
                                     <div class="dropdown">
                                         <a href="#" data-toggle="dropdown"
@@ -63,8 +67,8 @@
                                             <i class="ti-more-alt"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <a href="{{route('zones.edit',['zone'=>$zone->id])}}" class="dropdown-item">{{__('app.tables.btn.edit')}}</a>
-                                            <form method="POST" action="{{route('zones.destroy',['zone'=>$zone->id])}}"  >
+                                            <a href="{{route('indirect.expenses.edit',['indirectExpense'=>$indirectExpense->id])}}" class="dropdown-item">{{__('app.tables.btn.edit')}}</a>
+                                            <form method="POST" action="{{route('indirect.expenses.destroy',['indirectExpense'=>$indirectExpense->id])}}"  >
                                                 @CSRF
                                                 <input type="hidden" name="_method" value="DELETE" >
                                                 <button class="dropdown-item text-danger" >

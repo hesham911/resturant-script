@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\IndirectExpenseRequest;
+use App\IndirectCost;
 use App\IndirectExpense;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class IndirectExpenseController extends Controller
@@ -14,7 +17,8 @@ class IndirectExpenseController extends Controller
      */
     public function index()
     {
-        //
+        $IndirectExpenses = IndirectExpense::get();
+        return view('admin.accounting.indirect-expenses.index',['IndirectExpenses'=>$IndirectExpenses]);
     }
 
     /**
@@ -24,7 +28,8 @@ class IndirectExpenseController extends Controller
      */
     public function create()
     {
-        //
+        $IndirectCosts = IndirectCost::get();
+        return view('admin.accounting.indirect-expenses.create',['IndirectCosts'=>$IndirectCosts]);
     }
 
     /**
@@ -33,9 +38,23 @@ class IndirectExpenseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(IndirectExpenseRequest $request)
     {
-        //
+       $validated = $request->validated();
+
+       $dates = explode(' - ', $validated['daterangepicker']);
+       $start = Carbon::parse($dates[0]);
+       $end   = Carbon::parse($dates[1]);
+       $cost= IndirectCost::FindOrFail($validated['costs']);
+       IndirectExpense::create([
+           'indirect_cost_id'   => $validated['costs'],
+           'date_from'          => $start,
+           'date_to'            => $end,
+           'amount'             => $validated['amount'],
+       ]);
+
+       $request->session()->flash('message',__('accounting.indirect-expenses.massages.created_successfully'));
+       return redirect(route('indirect.expenses.index'));
     }
 
     /**
@@ -57,7 +76,16 @@ class IndirectExpenseController extends Controller
      */
     public function edit(IndirectExpense $indirectExpense)
     {
-        //
+        $IndirectCosts = IndirectCost::get();
+        $start =  strtr(date("m-d-Y",strtotime($indirectExpense->date_from)),'-','/') ;
+        $end   =  strtr(date("m-d-Y",strtotime($indirectExpense->date_to)),'-','/') ;
+
+        return view('admin.accounting.indirect-expenses.edit',[
+            'indirectExpense'=>$indirectExpense,
+            'IndirectCosts'=>$IndirectCosts,
+            'start'=>$start,
+            'end'=>$end,
+            ]);
     }
 
     /**
@@ -67,9 +95,23 @@ class IndirectExpenseController extends Controller
      * @param  \App\IndirectExpense  $indirectExpense
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, IndirectExpense $indirectExpense)
+    public function update(IndirectExpenseRequest $request, IndirectExpense $indirectExpense)
     {
-        //
+
+        $validated = $request->validated();
+
+        $dates = explode(' - ', $validated['daterangepicker']);
+        $start = Carbon::parse($dates[0]);
+        $end   = Carbon::parse($dates[1]);
+        $indirectExpense->update([
+            'indirect_cost_id'   => $validated['costs'],
+            'date_from'          => $start,
+            'date_to'            => $end,
+            'amount'             => $validated['amount'],
+        ]);
+        $request->session()->flash('message',__('accounting.indirect-expenses.massages.updated_successfully'));
+        return redirect(route('indirect.expenses.index'));
+
     }
 
     /**
@@ -78,8 +120,10 @@ class IndirectExpenseController extends Controller
      * @param  \App\IndirectExpense  $indirectExpense
      * @return \Illuminate\Http\Response
      */
-    public function destroy(IndirectExpense $indirectExpense)
+    public function destroy(Request $request,IndirectExpense $indirectExpense)
     {
-        //
+        $indirectExpense->delete();
+        $request->session()->flash('message',__('accounting.indirect-expenses.massages.deleted_successfully'));
+        return redirect(route('indirect.expenses.index'));
     }
 }
