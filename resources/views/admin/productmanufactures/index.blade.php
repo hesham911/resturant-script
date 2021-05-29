@@ -49,7 +49,6 @@
                                 <th> {{__('productmanufactures.product_id')}}</th>
                                 <th> {{__('productmanufactures.material_id')}}</th>
                                 <th> {{__('productmanufactures.required_quantity')}}</th>
-                                <th> {{__('productmanufactures.waste_percentage')}}</th>
                                 <th class="text-right"> خيارات</th>
                             </tr>
                             </thead>
@@ -61,7 +60,6 @@
                                         <td>{{ $product_manufacture->product->name }}</td>
                                         <td>{{ $product_manufacture->material->name }}</td>
                                         <td>{{ $product_manufacture->required_quantity }}</td>
-                                        <td>{{ $product_manufacture->waste_percentage *100}} %</td>
                                         <td class="text-right">
                                             <div class="dropdown">
                                                 <a href="#" data-toggle="dropdown"

@@ -51,7 +51,6 @@ class ProductManufactureController extends Controller
             $productmanufacture->product_id = $validated['product_id'];
             $productmanufacture->material_id = $material['material_id'];
             $productmanufacture->required_quantity = $material['required_quantity'];
-            $productmanufacture->waste_percentage = $material['waste_percentage'] / 100;
             $productmanufacture->save();
         }
         $request->session()->flash('message',__('productmanufactures.massages.created_succesfully'));
@@ -101,17 +100,14 @@ class ProductManufactureController extends Controller
             'material_id'=>'required',
             'product_id'=>'required',
             'required_quantity'=>'required',
-            'waste_percentage'=>'required',
         ],[
             'material_id'=>__('productmanufactures.material_id'),
             'product_id'=>__('productmanufactures.product_id'),
             'required_quantity'=>__('productmanufactures.required_quantity'),
-            'waste_percentage'=>__('productmanufactures.waste_percentage'),
         ]);
         $productmanufacture->product_id = $validated['product_id'];
         $productmanufacture->material_id = $validated['material_id'];
         $productmanufacture->required_quantity = $validated['required_quantity'];
-        $productmanufacture->waste_percentage = $validated['waste_percentage'];
         $productmanufacture->save();
         $request->session()->flash('message',__('productmanufactures.massages.updated_succesfully'));
         return redirect(route('productmanufactures.index'));

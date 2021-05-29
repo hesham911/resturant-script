@@ -27,7 +27,6 @@ class ProductManufactureRequest extends FormRequest
             'group.*.material_id'=>'required',
             'product_id'=>'required',
             'group.*.required_quantity'=>'required|numeric|max:999999',
-            'group.*.waste_percentage'=>'required|numeric|max:999999',
         ];
     }
     public function attributes()
@@ -36,7 +35,6 @@ class ProductManufactureRequest extends FormRequest
             'group.*.material_id'=>__('productmanufactures.material_id'),
             'product_id'=>__('productmanufactures.product_id'),
             'group.*.required_quantity'=>__('productmanufactures.required_quantity'),
-            'group.*.waste_percentage'=>__('productmanufactures.waste_percentage'),
         ];
     }
 }

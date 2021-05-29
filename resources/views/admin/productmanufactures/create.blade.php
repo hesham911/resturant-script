@@ -73,9 +73,6 @@
                                         <div class="form-group col-sm-10 col-md-3 col-sm-12">
                                             <input type="text" class="form-control" id="inputPassword" placeholder="{{__('productmanufactures.required_quantity')}}" value="{{old('required_quantity')}}" name="required_quantity" required>
                                         </div>
-                                        <div class="form-group col-sm-10 col-md-3 col-sm-12">
-                                            <input type="text" class="form-control" id="inputPassword" placeholder="{{__('productmanufactures.waste_percentage')}}" value="{{old('waste_percentage')}}" name="waste_percentage" required>
-                                        </div>
                                         <input data-repeater-delete type="button" value="{{__('app.forms.btn.delete')}}" class="btn btn-danger "/>
                                     </div>
                                 </div>

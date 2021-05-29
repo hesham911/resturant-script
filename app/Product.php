@@ -12,22 +12,22 @@ class Product extends Model
 
 
     
-    protected $fillable= ['name','subcategory_id','type','price'];
+    protected $fillable= ['name','subcategory_id','price'];
     // type
-    static function type()
-    {
-        $array=
-            [
-                1 => __('products.typee.main'), // طبق رئيسي
-                2 => __('products.typee.add'), //  إضافات
-            ];
-        return $array;
-    }
+    // static function type()
+    // {
+    //     $array=
+    //         [
+    //             1 => __('products.typee.main'), // طبق رئيسي
+    //             2 => __('products.typee.add'), //  إضافات
+    //         ];
+    //     return $array;
+    // }
     // get type
-    public function getTypeeAttribute()
-    {
-        return self::type()[$this->type];
-    }
+    // public function getTypeeAttribute()
+    // {
+    //     return self::type()[$this->type];
+    // }
     // subcategory
     public function subcategory()
     {
