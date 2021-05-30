@@ -70,7 +70,7 @@
                                         <input type="text" name="price" value="{{old('price',$product->price)}}" class="form-control" id="price" placeholder="{{__('products.placeholder.price')}}">
                                     </div>
                                 </div>
-                                <div class="form-group row">
+                                {{-- <div class="form-group row">
                                     <label for="inputPassword" class="col-sm-2 col-form-label">{{__('products.type')}}</label>
                                     <div class="col-sm-10">
                                     <select class="select2" name="type">
@@ -82,7 +82,7 @@
                                         @endif
                                     </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="form-group row">
                                     <div class="col-sm-10">
                                         <button type="submit" class="btn btn-primary">{{__('app.forms.btn.edit')}}</button>

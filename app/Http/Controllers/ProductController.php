@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductRequest;
 use App\Product;
 use App\Subcategory;
+use App\Material;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -28,8 +29,12 @@ class ProductController extends Controller
     public function create()
     {
         $subcategories = Subcategory::all();
-        $types = Product::type();
-        return view('admin.products.create',['subcategories'=>$subcategories,'types'=>$types]);
+        // $types = Product::type();
+        $materials = Material::get();
+        return view('admin.products.create',[
+            'subcategories'=>$subcategories,
+            'materials'=>$materials,
+        ]);
     }
 
     /**
@@ -41,7 +46,8 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $validated = $request->validated();
-        Product::create($validated);
+        $product = Product::create($validated);
+        $product->ProductManufactures()->createMany($validated['group']);
         $request->session()->flash('message',__('products.massages.created_successfully'));
         return redirect(route('products.index'));
     }
@@ -66,9 +72,9 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $subcategories = Subcategory::all();
-        $types = Product::type();
+        // $types = Product::type();
         return view('admin.products.edit',['product'=>$product,
-            'subcategories'=>$subcategories,'types'=>$types]);
+            'subcategories'=>$subcategories]);
     }
 
     /**
