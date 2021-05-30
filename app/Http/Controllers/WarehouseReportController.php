@@ -20,6 +20,7 @@ class WarehouseReportController extends Controller
         $from = $request->from;
 
         if ($to or $from) {
+            // dd($from);
             $materials->whereHas('supplies',function($query)use($to , $from){
                 $query->whereBetween('supplies.created_at',[$from , $to]);
             });

@@ -62,7 +62,7 @@
                                     </select>
                                 </div>
                                 <div class="">
-                                    <button class="btn btn-primary">عرض </button>
+                                    <button class="btn btn-primary" id="view">عرض </button>
                                 </div>
                             </div>
                             <table id="myTable" class="table table-hover ">
@@ -95,9 +95,12 @@
     <script src="{{ url('vendors/dataTable/datatables.min.js') }}"></script>
     <script src="{{ url('vendors/dataTable/Buttons-1.6.1/js/dataTables.buttons.min.js') }}"></script>
     <script>
+    $(document).ready(function(){
         $('.select2').select2();
-
-        $('#myTable').DataTable({
+        $('#view').click(function(){
+            table.ajax.reload();
+        });
+        var table = $('#myTable').DataTable({
                 language: {
                     url: "{{ url('vendors/dataTable/arabic.json') }}"
                 },
@@ -108,10 +111,10 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     url:'{{route("reports.warehouse.index.data")}}',
-                    data: {
-                        to: $('#to').val(),
-                        from: $('#from').val(),
-                        material: $('#material').val(),
+                    data: function(d){
+                        d.to = $('#to').val();
+                        d.from = $('#from').val();
+                        d.material =  $('#material').val();
                     },
                     type:'POST',
                 },
@@ -145,8 +148,8 @@
                         name: 'price'
                     },
                 ],
-
-
         });
+        
+    });
     </script>
 @endsection
