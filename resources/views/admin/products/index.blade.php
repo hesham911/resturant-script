@@ -53,7 +53,7 @@
                                     <th>{{__('products.name')}}</th>
                                     <th>{{__('products.subcategory_id')}}</th>
                                     <th>{{__('products.price')}}</th>
-                                    <th>{{__('products.type')}}</th>
+                                    {{-- <th>{{__('products.type')}}</th> --}}
                                     <th class="text-right">{{__('app.tables.control')}}</th>
                                 </tr>
                             </thead>
@@ -66,11 +66,11 @@
                                             <td>{{ $product->name }}</td>
                                             <td>{{ $product->subcategory->name }}</td>
                                             <td>{{ $product->price }} {{__('app.settings.currency')}}</td>
-                                            <td>
+                                            {{-- <td>
                                                 <span class="badge bg-primary-bright text-primary">
                                                     {{ $product->typee }}
                                                 </span>
-                                            </td>
+                                            </td> --}}
                                             <td class="text-right">
                                                 <div class="dropdown">
                                                     <a href="#" data-toggle="dropdown"
