@@ -59,7 +59,7 @@ class SupplyController extends Controller
             $supply->material_id =  $supply_data['material_id'];
             $supply->quantity =  $supply_data['quantity'];
             $supply->price =  $supply_data['price'];
-            $supply->Supplier_name =  $supply_data['Supplier_name'];
+            $supply->Supplier_name =  $validated['Supplier_name'];
             $supply->expiry_date =  $supply_data['expiry_date'];
             $supply->user_id =  $validated['user_id'];
             $supply->bill_number =  $validated['bill_number'];
