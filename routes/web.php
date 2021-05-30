@@ -222,6 +222,11 @@ ROute::group([
         Route::get('/show/{order}','OrderController@show')->name('orders.show');
     });
 
+    Route::group(['prefix' =>'reports/warehouse'],function(){
+        Route::get('/','WarehouseReportController@index')->name('reports.warehouse.index');
+        Route::post('/data','WarehouseReportController@indexData')->name('reports.warehouse.index.data');
+    });
+
     /* Route::get('orders', function () {
         return view('admin.orders');
     })->name('orders'); */
