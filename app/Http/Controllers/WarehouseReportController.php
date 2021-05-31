@@ -15,17 +15,23 @@ class WarehouseReportController extends Controller
         return view('admin.reports.warehouse.index',['materials'=>$materials]);
     }
     public function indexData (Request $request){
-        $materials = Material::with('supplies','measuring');
-        $to = $request->to;
-        $from = $request->from;
+        $materials = Material::with('measuring');
+        $from =  date('Y-m-d h:i:s',strtotime($request->from.' 00:00:00'));
+        $to =  date('Y-m-d h:i:s',strtotime($request->to.' 00:00:00'));
+        $material_id = $request->material ; 
 
-        if ($to or $from) {
-            // dd($from);
-            $materials->whereHas('supplies',function($query)use($to , $from){
-                $query->whereBetween('supplies.created_at',[$from , $to]);
-            });
+        if ($request->from != null & $request->to != null ) {
+            $materials->with(['supplies'=>function ($query)use($from , $to){
+                $query->whereBetween('created_at' , [$from , $to]);
+            }]);
+        }else{
+            $materials->with('supplies');
         }
-        return Datatables::of($materials)->make(true);
 
+        if ($material_id) {
+            $materials->whereIn('id', $material_id);
+        }
+
+        return Datatables::of($materials)->make(true);
     }
 }

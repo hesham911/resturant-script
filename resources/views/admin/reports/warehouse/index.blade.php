@@ -132,7 +132,7 @@
                         data:function(data){
                             var quantity = 0;
                             $.each(data.supplies,function(index , value){
-                                quantity = quantity + value.quantity;
+                                quantity += +value.quantity;
                             });
                             return quantity;
                         },
@@ -141,7 +141,7 @@
                         data:function(data){
                             var price = 0;
                             $.each(data.supplies,function(index , value){
-                                price = price + value.price;
+                                price +=  + value.price;
                             });
                             return price;
                         },
