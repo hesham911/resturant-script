@@ -174,6 +174,8 @@ ROute::group([
     Route::get('/orders/status/{order}/{state}','OrderController@status')->name('orders.status');
     Route::delete('/destroy/{order}','OrderController@destroy')->name('orders.destroy');
     Route::group(['prefix' =>'orders'],function(){
+        Route::get('/filter','OrderController@filterData')->name('orders.filter');
+        Route::get('/clientinfo','OrderController@clientinfo')->name('orders.clientinfo');
         Route::group(['middleware' => ['can:إضافة طلب']], function () {
             Route::get('/create/{client?}','OrderController@create')->name('orders.create');
             Route::post('/store','OrderController@store')->name('orders.store');

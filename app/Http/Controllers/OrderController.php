@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Zone;
 use App\Order;
+use App\Phone;
 use App\Table;
 use App\Client;
 use App\Payment;
@@ -40,18 +42,59 @@ class OrderController extends Controller
      */
     public function create(Request $request)
     {
-        $client=null;
+        $categories = Category::all();
+        $subcategories = Subcategory::all();
+        $products = Product::all();
+        $types = Order::type();
+        $client = null;
+        $phones = Phone::all();
+        $tables = Table::all();
+        $zones   = Zone::all();
+        $clients = Client::orderBy('id','DESC')->with(['user:name,id'])->get();
+        return view('admin.orders.pos',['categories'=>$categories,'subcategories'=>$subcategories,
+        'types'=>$types,'products'=>$products,'phones'=>$phones,'tables'=>$tables,'client'=>$client,
+        'clients'=>$clients,'zones'=>$zones]);
+        /* $client=null;
         if($request->client)
         {
             $client = Client::findOrFail($request->client);
         }
-        /* $clients = Client::all(); */
         $categories = Category::all();
         $tables = Table::all();
         $types = Order::type();
         $products = Product::all();
         return view('admin.orders.create',['categories'=>$categories,
-            'tables'=>$tables,'types'=>$types,'products'=>$products,'client'=>$client]);
+            'tables'=>$tables,'types'=>$types,'products'=>$products,'client'=>$client]); */
+    }
+    public function filterData(Request $request)
+    {
+        if ($request->ajax())
+        {
+            if($request->subcategory_id != null)
+            {
+                $products = Product::where('subcategory_id',$request->subcategory_id)->get();
+            }
+            else
+            {
+                $products = Product::all();
+            }
+            return view('admin.orders.posContent',['products'=>$products]);
+        }
+
+    }
+    public function clientinfo(Request $request)
+    {
+        if ($request->ajax())
+        {
+            if($request->client_id != null)
+            {
+                $phone = Phone::findOrFail($request->client_id);
+                $cl=$phone->user->id;
+                $client = User::findOrFail($cl);
+            }
+            return view('admin.orders.clientInfo',['client'=>$client]);
+        }
+
     }
 
     /**
