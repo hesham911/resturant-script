@@ -79,8 +79,8 @@ class ClientController extends Controller
         $client = $user->client()->create(['user_id'=>$user->id]);
         //dd($validated);
         if ($client){
-            $user->phones()->create(["user_id"=>$user->id,"number"=>$validated['number']]);
 
+            $phone=$user->phones()->create(["user_id"=>$user->id,"number"=>$validated['number']]);
             //$addresses = $request->number;
 //            foreach ($addresses as $key => $address){
 //                unset ($addresses[$key]);
@@ -95,8 +95,10 @@ class ClientController extends Controller
                 ]
             ]);
         }
+
         return response()->json([
-            'data' => $client
+            'data' => $client,
+            'phone' => $phone,
         ],200);
 //        $request->session()->flash('success',__('clients.massages.created_successfully'));
 //        return redirect(route('clients.index'));

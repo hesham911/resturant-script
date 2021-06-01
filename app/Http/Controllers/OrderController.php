@@ -51,9 +51,10 @@ class OrderController extends Controller
         $tables = Table::all();
         $zones   = Zone::all();
         $clients = Client::orderBy('id','DESC')->with(['user:name,id'])->get();
+        $orders = Order::where('status',0)->latest()->get();
         return view('admin.orders.pos',['categories'=>$categories,'subcategories'=>$subcategories,
         'types'=>$types,'products'=>$products,'phones'=>$phones,'tables'=>$tables,'client'=>$client,
-        'clients'=>$clients,'zones'=>$zones]);
+        'clients'=>$clients,'zones'=>$zones,'orders'=>$orders,]);
         /* $client=null;
         if($request->client)
         {
@@ -70,15 +71,12 @@ class OrderController extends Controller
     {
         if ($request->ajax())
         {
+            $query=Product::select('*');
             if($request->subcategory_id != null)
             {
-                $products = Product::where('subcategory_id',$request->subcategory_id)->get();
+                $query->where('subcategory_id',$request->subcategory_id);
             }
-            else
-            {
-                $products = Product::all();
-            }
-            return view('admin.orders.posContent',['products'=>$products]);
+            return view('admin.orders.posContent',['products'=>$query->get()]);
         }
 
     }
