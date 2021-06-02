@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    {{__('accounting.indirect-cost.titles.index')}}
+    {{__('accounting.banks.titles.index')}}
 @endsection
 @section('head')
     <!-- Datatable -->
@@ -11,15 +11,15 @@
 
     <div class="page-header d-md-flex justify-content-between">
         <div>
-            <h3>{{__('accounting.indirect-cost.titles.index')}}</h3>
+            <h3>{{__('accounting.banks.titles.index')}}</h3>
             @include('admin.partials.breadcrumb',[
                 'parent' => [
-                    'name' => __("accounting.indirect-cost.titles.index"),
+                    'name' => __("accounting.banks.titles.index"),
                 ]
             ])
         </div>
         <div class="mt-2 mt-md-0">
-            <a href="{{route('indirect.costs.create')}}" class="btn btn-primary">{{__('accounting.indirect-cost.titles.subcreate')}}</a>
+            <a href="{{route('banks.create')}}" class="btn btn-primary">{{__('accounting.banks.titles.subcreate')}}</a>
         </div>
     </div>
 
@@ -44,15 +44,19 @@
                             <thead>
                             <tr>
                                 <th>{{__('app.tables.num')}}</th>
-                                <th>{{__('accounting.indirect-cost.name')}}</th>
+                                <th>{{__('accounting.banks.name')}}</th>
+                                <th>{{__('accounting.banks.balance')}}</th>
+                                <th>{{__('accounting.banks.notes')}}</th>
                                 <th class="text-right">{{__('app.tables.control')}}</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($IndirectCosts as $indirectCost)
+                            @foreach($banks as $bank)
                                 <tr>
-                                <td>{{$indirectCost->id}}</td>
-                                <td>{{$indirectCost->name}}</td>
+                                <td>{{$bank->id}}</td>
+                                <td>{{$bank->name}}</td>
+                                <td>{{$bank->opening_balance}}</td>
+                                <td>{{$bank->notes}}</td>
                                 <td class="text-right">
                                     <div class="dropdown">
                                         <a href="#" data-toggle="dropdown"
@@ -61,14 +65,19 @@
                                             <i class="ti-more-alt"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <a href="{{route('indirect.costs.edit',['indirectCost'=> $indirectCost->id])}}" class="dropdown-item">{{__('app.tables.btn.edit')}}</a>
-                                            <form method="POST" action="{{route('indirect.costs.destroy',['indirectCost'=>$indirectCost->id])}}"  >
-                                                @CSRF
-                                                <input type="hidden" name="_method" value="DELETE" >
-                                                <button class="dropdown-item text-danger" >
-                                                    {{__('app.tables.btn.delete')}}
-                                                </button>
-                                            </form>
+                                            <a href="{{route('banks.edit',['bank'=> $bank->id])}}" class="dropdown-item">{{__('app.tables.btn.edit')}}</a>
+                                           @if($bank->bankTransactions->count() > 1)
+                                                <button class="dropdown-item text-danger" disabled>{{__('accounting.banks.massages.cant_delete_bank')}}</button>
+                                            @else
+                                                <form method="POST" action="{{route('banks.destroy',['bank'=>$bank->id])}}"  >
+                                                    @CSRF
+                                                    <input type="hidden" name="_method" value="DELETE" >
+                                                    <button class="dropdown-item text-danger" >
+                                                        {{__('app.tables.btn.delete')}}
+                                                    </button>
+                                                </form>
+                                           @endif
+
                                         </div>
                                     </div>
                                 </td>
