@@ -40,6 +40,37 @@ ROute::group([
         });
 
     });
+
+    Route::group(['prefix' =>'banks'],function (){
+        Route::get('/','BankController@index')->name('banks.index');
+        Route::group(['middleware' => ['can:إضافة تكاليف غير مباشرة']],function (){
+            Route::get('/create','BankController@create')->name('banks.create');
+            Route::post('/store','BankController@store')->name('banks.store');
+        });
+        Route::group(['middleware' => ['can:تعديل تكاليف غير مباشرة']],function (){
+            Route::get('/edit/{bank}','BankController@edit')->name('banks.edit');
+            Route::put('/update/{bank}','BankController@update')->name('banks.update');
+        });
+        Route::group(['middleware' => ['can:حذف تكاليف غير مباشرة']],function (){
+            Route::delete('/destroy/{bank}','BankController@destroy')->name('banks.destroy');
+        });
+    });
+
+    Route::group(['prefix' =>'transactions'],function (){
+        Route::get('/','BankTransactionController@index')->name('transactions.index');
+        Route::group(['middleware' => ['can:إضافة تكاليف غير مباشرة']],function (){
+            Route::get('/create','BankTransactionController@create')->name('transactions.create');
+            Route::post('/store','BankTransactionController@store')->name('transactions.store');
+        });
+        Route::group(['middleware' => ['can:تعديل تكاليف غير مباشرة']],function (){
+            Route::get('/edit/{transaction}','BankTransactionController@edit')->name('transactions.edit');
+            Route::put('/update/{transaction}','BankTransactionController@update')->name('transactions.update');
+        });
+        Route::group(['middleware' => ['can:حذف تكاليف غير مباشرة']],function (){
+            Route::delete('/destroy/{transaction}','BankTransactionController@destroy')->name('transactions.destroy');
+        });
+    });
+
     Route::group(['prefix' =>'indirect-expenses'],function (){
         Route::get('/','IndirectExpenseController@index')->name('indirect.expenses.index');
 
