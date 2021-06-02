@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    {{__('accounting.indirect-cost.titles.edit')}}
+    {{__('accounting.banks.titles.edit')}}
 @endsection
 @section('head')
     <!-- Prism -->
@@ -11,10 +11,10 @@
 
     <div class="page-header">
         <div>
-            <h3>{{__('accounting.indirect-cost.titles.edit')}}</h3>
+            <h3>{{__('accounting.banks.titles.edit')}}</h3>
             @include('admin.partials.breadcrumb',[
                 'parent' => [
-                    'name' => __("accounting.indirect-cost.titles.edit"),
+                    'name' => __("accounting.banks.titles.edit"),
                 ]
             ])
         </div>
@@ -40,14 +40,33 @@
                                     </ul>
                                 </div>
                             @endif
-                            <h6 class="card-title">{{__('accounting.indirect-cost.titles.edit')}}</h6>
-                            <form method="post" action="{{route('indirect.costs.update',['indirectCost'=>$indirectCost->id])}}" multiple>
+                            <h6 class="card-title">{{__('accounting.banks.titles.edit')}}</h6>
+                            <form method="post" action="{{route('banks.update',['bank'=>$bank->id])}}" multiple>
                                 @CSRF
                                 <input type="hidden" name="_method" value="PUT" >
                                 <div class="form-group row">
-                                    <label for="name" class="col-sm-2 col-form-label">{{__('accounting.indirect-cost.name')}}</label>
+                                    <label for="name" class="col-sm-2 col-form-label">{{__('accounting.banks.name')}}</label>
                                     <div class="col-sm-10">
-                                        <input type="text" name="name" value="{{old('name',$indirectCost->name)}}" class="form-control" id="name" placeholder="{{__('accounting.indirect-cost.placeholder.name')}}">
+                                        <input type="text" name="name" value="{{old('name',$bank->name)}}" class="form-control" id="name" placeholder="{{__('accounting.banks.placeholder.name')}}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="notes" class="col-sm-2 col-form-label">{{__('accounting.banks.notes')}}</label>
+                                    <div class="col-sm-10">
+                                        <textarea type="text" name="notes"  class="form-control" id="notes" placeholder="{{__('accounting.banks.placeholder.notes')}}">{{old('name',$bank->notes)}}</textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="balance" class="col-sm-2 col-form-label">{{__('accounting.banks.balance')}}</label>
+                                    <div class="col-sm-10">
+                                        @if($transCount > 1)
+                                        <input readonly type="text" name="opening_balance" value="{{old('opening_balance',$bank->opening_balance)}}" class="form-control" id="balance" placeholder="{{__('accounting.banks.placeholder.balance')}}">
+                                            <p class="alert alert-danger">{{__('accounting.banks.massages.cant_edit_balance')}}</p>
+
+                                        @else
+                                            <input  type="text" name="opening_balance" value="{{old('opening_balance',$bank->opening_balance)}}" class="form-control" id="balance" placeholder="{{__('accounting.banks.placeholder.balance')}}">
+                                        @endif
+
                                     </div>
                                 </div>
                                 <div class="form-group row">

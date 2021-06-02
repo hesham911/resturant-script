@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    {{__('accounting.indirect-cost.titles.create')}}
+    {{__('accounting.banks.titles.create')}}
 @endsection
 @section('head')
     <!-- Prism -->
@@ -11,10 +11,10 @@
 
     <div class="page-header">
         <div>
-            <h3>{{__('accounting.indirect-cost.titles.create')}}</h3>
+            <h3>{{__('accounting.banks.titles.create')}}</h3>
             @include('admin.partials.breadcrumb',[
                 'parent' => [
-                    'name' => __("accounting.indirect-cost.titles.create"),
+                    'name' => __("accounting.banks.titles.create"),
                 ]
             ])
         </div>
@@ -40,13 +40,25 @@
                                     </ul>
                                 </div>
                             @endif
-                            <h6 class="card-title">{{__('accounting.indirect-cost.titles.subcreate')}}</h6>
-                            <form method="post" action="{{route('indirect.costs.store')}}" multiple>
+                            <h6 class="card-title">{{__('accounting.banks.titles.subcreate')}}</h6>
+                            <form method="post" action="{{route('banks.store')}}" multiple>
                                 @CSRF
                                 <div class="form-group row">
-                                    <label for="name" class="col-sm-2 col-form-label">{{__('accounting.indirect-cost.name')}}</label>
+                                    <label for="name" class="col-sm-2 col-form-label">{{__('accounting.banks.name')}}</label>
                                     <div class="col-sm-10">
-                                        <input type="text" name="name" value="{{old('name')}}" class="form-control" id="name" placeholder="{{__('accounting.indirect-cost.placeholder.name')}}">
+                                        <input type="text" name="name" value="{{old('name')}}" class="form-control" id="name" placeholder="{{__('accounting.banks.placeholder.name')}}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="notes" class="col-sm-2 col-form-label">{{__('accounting.banks.notes')}}</label>
+                                    <div class="col-sm-10">
+                                        <textarea type="text" name="notes"  class="form-control" id="notes" placeholder="{{__('accounting.banks.placeholder.notes')}}">{{old('name')}}</textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="balance" class="col-sm-2 col-form-label">{{__('accounting.banks.balance')}}</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="opening_balance" value="{{old('opening_balance')}}" class="form-control" id="balance" placeholder="{{__('accounting.banks.placeholder.balance')}}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
