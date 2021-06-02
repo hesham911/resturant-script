@@ -21,8 +21,10 @@ class SalesReportController extends Controller
         $material_id = $request->material ; 
         config()->set('database.connections.mysql.strict', false);
         if ($request->from != null & $request->to != null ) {
-            $orders = DB::table('orders')->where('status',0)->join('order_product','orders.id', '=','order_product.order_id')->join('products' , 'order_product.product_id' , 'products.id')->select(DB::Raw('DATE(orders.created_at) day','select* from products'),'products.price')->groupBy('day')->get();
-            // $orders;
+            $orders = Order::with('products')->where('status',3)->get()
+                            ->groupBy(function($data){
+                                return $data->created_at->format('d/m/y');
+                            });
             return response()->json($orders);
         }
 
