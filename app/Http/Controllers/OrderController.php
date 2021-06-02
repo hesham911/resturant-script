@@ -158,7 +158,8 @@ class OrderController extends Controller
         } */
         $order->requests()->sync($requests);
         $request->session()->flash('message',__('orders.massages.created_successfully'));
-        return redirect(route('orders.index'));
+       // return redirect(route('orders.index'));
+       return redirect(route('orders.create'));
     }
 
     /**
@@ -170,6 +171,14 @@ class OrderController extends Controller
     public function show(Order $order)
     {
         return view('admin.orders.view',['order'=>$order]);
+    }
+    public function printclient(Order $order)
+    {
+        return view('admin.orders.printClient',['order'=>$order]);
+    }
+    public function printkitchen(Order $order)
+    {
+        return view('admin.orders.printKitchen',['order'=>$order]);
     }
 
     /**
@@ -189,7 +198,8 @@ class OrderController extends Controller
             $order->payment()->save($payment);
         }
         $request->session()->flash('message',__('orders.massages.change_status'));
-        return redirect(route('orders.index'));
+        //return redirect(route('orders.index'));
+        return redirect(route('orders.create'));
     }
 
     /**
@@ -221,7 +231,8 @@ class OrderController extends Controller
         $order->cancel_reason=$request->cancel_reason;
         $order->save();
         $request->session()->flash('message',__('orders.massages.cancel_successfully'));
-        return redirect(route('orders.index'));
+        //return redirect(route('orders.index'));
+        return redirect(route('orders.create'));
     }
 
     /**
@@ -322,7 +333,8 @@ class OrderController extends Controller
         }
         $order->requests()->sync($requests);
         $request->session()->flash('message',__('orders.massages.updated_successfully'));
-        return redirect(route('orders.index'));
+        //return redirect(route('orders.index'));
+        return redirect(route('orders.create'));
     }
 
     /**

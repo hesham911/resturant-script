@@ -22,23 +22,6 @@
         <!-- print -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.js"></script>
         <!-- print -->
-        <!-- css -->
-        <style >
-            body.rtl .layout-wrapper .content-wrapper .content-body .content {
-                margin-left: 30px;
-                margin-right: 30px;
-            }
-            body:not(.horizontal-navigation) .navigation {
-                z-index: 998;
-                width: 0;
-                position: fixed;
-                display: flex;
-                flex-direction: row;
-                left: 0;
-                bottom: 50px;
-                top: 70px;
-            }
-        </style>
     </head>
     <body class="small-navigation2 rtl">
     <!-- Preloader -->
