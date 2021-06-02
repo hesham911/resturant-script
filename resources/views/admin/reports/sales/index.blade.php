@@ -127,25 +127,16 @@
                         data:'id',
                         name: 'id'
                     },{
-                        data:'name',
-                        name: 'name'
+                        data:'created_at',
+                        name: 'created_at'
                     },{
-                        data:'measuring.name',
-                        name: 'unit'
-                    },{
-                        data:function(data){
-                            var quantity = 0;
-                            $.each(data.supplies,function(index , value){
-                                quantity += +value.quantity;
-                            });
-                            return quantity;
-                        },
-                        name: 'quantity'
+                        data:'id',
+                        name: 'length'
                     },{
                         data:function(data){
                             var price = 0;
-                            $.each(data.supplies,function(index , value){
-                                price +=  + value.price;
+                            $.each(data.products,function(index , value){
+                                price += +value.price * value.pivot.quantity;
                             });
                             return price;
                         },
