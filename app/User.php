@@ -72,6 +72,16 @@ class User extends Authenticatable
         return $this->hasMany(Phone::class,'user_id');
     }
 
+    public function workPeriods()
+    {
+        return $this->hasMany(WorkPeriod::class,'user_id');
+    }
+
+    public function bankTransactions()
+    {
+        return $this->hasMany(BankTransaction::class,'user_id');
+    }
+
     public function ScopeGetNumbersPhones($query,$user)
     {
         $phones = $user->phones->pluck('number');
