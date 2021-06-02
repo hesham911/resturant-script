@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
- {{__('reports.titles.create')}}
+ {{__('reports.titles.sales')}}
 @endsection
 @section('head')
     <!-- Prism -->
@@ -15,10 +15,10 @@
 
     <div class="page-header">
         <div>
-            <h3> {{__('reports.titles.warehouse')}} </h3>
+            <h3> {{__('reports.titles.sales')}} </h3>
             @include('admin.partials.breadcrumb',[
                 'parent' => [
-                    'name' => __('reports.titles.warehouse'),
+                    'name' => __('reports.titles.sales'),
                 ]
             ])
         </div>
@@ -41,7 +41,7 @@
                                     </ul>
                                 </div>
                             @endif
-                            <h6 class="card-title">{{__('reports.titles.warehouse')}}</h6>
+                            <h6 class="card-title">{{__('reports.titles.sales')}}</h6>
                             <div class="mb-5 row">
                                 <div class="form-group row col-md-3">
                                     <label class="col-3">من </label>
@@ -54,11 +54,11 @@
                                 <div class="form-group d-flex col-md-4">
                                     <label class="col-4">المادة الخام </label>
                                     <select class="select2 col-8 " multiple id="material">
-                                        @if ($materials->count() > 0)
+                                        {{-- @if ($materials->count() > 0)
                                             @foreach ($materials as $material)
                                                 <option value="{{$material->id}}">{{$material->name}}</option>
                                             @endforeach
-                                        @endif
+                                        @endif --}}
                                     </select>
                                 </div>
                                 <div class="">
@@ -69,10 +69,9 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>المادة الخام</th>
-                                        <th> الوحدة </th>
-                                        <th>الكمية </th>
-                                        <th>السعر</th>
+                                        <th>{{__('reports.date')}}</th>
+                                        <th>{{__('reports.ordercount')}}</th>
+                                        <th>{{__('reports.ordersum')}}</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -115,7 +114,7 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    url:'{{route("reports.warehouse.index.data")}}',
+                    url:'{{route("reports.sales.index.data")}}',
                     data: function(d){
                         d.to = $('#to').val();
                         d.from = $('#from').val();

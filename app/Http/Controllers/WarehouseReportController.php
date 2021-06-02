@@ -24,9 +24,10 @@ class WarehouseReportController extends Controller
             $materials->with(['supplies'=>function ($query)use($from , $to){
                 $query->whereBetween('created_at' , [$from , $to]);
             }]);
-        }else{
-            $materials->with('supplies');
         }
+        // else{
+        //     $materials->with('supplies');
+        // }
 
         if ($material_id) {
             $materials->whereIn('id', $material_id);
