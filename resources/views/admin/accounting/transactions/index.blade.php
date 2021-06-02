@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    {{__('accounting.banks.titles.index')}}
+    {{__('accounting.transactions.titles.index')}}
 @endsection
 @section('head')
     <!-- Datatable -->
@@ -11,15 +11,15 @@
 
     <div class="page-header d-md-flex justify-content-between">
         <div>
-            <h3>{{__('accounting.banks.titles.index')}}</h3>
+            <h3>{{__('accounting.transactions.titles.index')}}</h3>
             @include('admin.partials.breadcrumb',[
                 'parent' => [
-                    'name' => __("accounting.banks.titles.index"),
+                    'name' => __("accounting.transactions.titles.index"),
                 ]
             ])
         </div>
         <div class="mt-2 mt-md-0">
-            <a href="{{route('banks.create')}}" class="btn btn-primary">{{__('accounting.banks.titles.subcreate')}}</a>
+            <a href="{{route('transactions.create')}}" class="btn btn-primary">{{__('accounting.transactions.titles.subcreate')}}</a>
         </div>
     </div>
 
@@ -43,20 +43,20 @@
                         <table id="user-list" class="table table-lg">
                             <thead>
                             <tr>
-                                <th>{{__('app.tables.num')}}</th>
-                                <th>{{__('accounting.banks.name')}}</th>
-                                <th>{{__('accounting.banks.balance')}}</th>
-                                <th>{{__('accounting.banks.notes')}}</th>
+                                <th>{{__('accounting.transactions.date')}}</th>
+                                <th>{{__('accounting.transactions.fromBank')}}</th>
+                                <th>{{__('accounting.transactions.toBank')}}</th>
+                                <th>{{__('accounting.transactions.amount')}}</th>
                                 <th class="text-right">{{__('app.tables.control')}}</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($banks as $bank)
+                            @foreach($bankTrans as $k=> $bankTran)
                                 <tr>
-                                <td>{{$bank->id}}</td>
-                                <td>{{$bank->name}}</td>
-                                <td>{{$bank->opening_balance}}</td>
-                                <td>{{$bank->notes}}</td>
+                                <td>{{$k}}</td>
+                                <td>{{\App\Bank::getBankFromId($bankTran[1]->bank_id)->name}}</td>
+                                <td>{{\App\Bank::getBankFromId($bankTran[0]->bank_id)->name}}</td>
+                                <td>{{$bankTran[0]->amount}}</td>
                                 <td class="text-right">
                                     <div class="dropdown">
                                         <a href="#" data-toggle="dropdown"
@@ -64,21 +64,21 @@
                                            aria-haspopup="true" aria-expanded="false">
                                             <i class="ti-more-alt"></i>
                                         </a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a href="{{route('banks.edit',['bank'=> $bank->id])}}" class="dropdown-item">{{__('app.tables.btn.edit')}}</a>
-                                           @if($bank->bankTransactions->count() > 1)
-                                                <button class="dropdown-item text-danger" disabled>{{__('accounting.banks.massages.cant_delete_bank')}}</button>
-                                            @else
-                                                <form method="POST" action="{{route('banks.destroy',['bank'=>$bank->id])}}"  >
-                                                    @CSRF
-                                                    <input type="hidden" name="_method" value="DELETE" >
-                                                    <button class="dropdown-item text-danger" >
-                                                        {{__('app.tables.btn.delete')}}
-                                                    </button>
-                                                </form>
-                                           @endif
+                                        {{--<div class="dropdown-menu dropdown-menu-right">--}}
+                                            {{--<a href="{{route('banks.edit',['bank'=> $bank->id])}}" class="dropdown-item">{{__('app.tables.btn.edit')}}</a>--}}
+                                           {{--@if($bank->bankTransactions->count() > 1)--}}
+                                                {{--<button class="dropdown-item text-danger" disabled>{{__('accounting.banks.massages.cant_delete_bank')}}</button>--}}
+                                            {{--@else--}}
+                                                {{--<form method="POST" action="{{route('banks.destroy',['bank'=>$bank->id])}}"  >--}}
+                                                    {{--@CSRF--}}
+                                                    {{--<input type="hidden" name="_method" value="DELETE" >--}}
+                                                    {{--<button class="dropdown-item text-danger" >--}}
+                                                        {{--{{__('app.tables.btn.delete')}}--}}
+                                                    {{--</button>--}}
+                                                {{--</form>--}}
+                                           {{--@endif--}}
 
-                                        </div>
+                                        {{--</div>--}}
                                     </div>
                                 </td>
                             </tr>
