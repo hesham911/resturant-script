@@ -63,7 +63,7 @@ class BankTransactionController extends Controller
                     'bank_id'       =>  $fromBank->id,
                     'user_id'       =>  Auth::id(),
                     'notes'         =>  $validated['notes'],
-                    'amount'        =>  $amount,
+                    'amount'        =>  - $amount,
                     'balance'       =>  BankTransaction::subBalance($amount,$fromBank->id),
                     'created_at'    => Carbon::now(),
                     'updated_at'    => Carbon::now(),
@@ -71,10 +71,10 @@ class BankTransactionController extends Controller
                     'bank_id'       =>  $toBank->id,
                     'user_id'       =>  Auth::id(),
                     'notes'         =>  $validated['notes'],
-                    'amount'        =>  - $amount,
+                    'amount'        =>  $amount,
                     'balance'       =>  BankTransaction::sumBalance($amount,$toBank->id),
-                    'created_at'    => Carbon::now(),
-                    'updated_at'    => Carbon::now(),
+                    'created_at'    =>  Carbon::now(),
+                    'updated_at'    =>  Carbon::now(),
                 ]
             ]);
         }

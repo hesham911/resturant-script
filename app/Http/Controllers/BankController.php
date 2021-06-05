@@ -28,7 +28,8 @@ class BankController extends Controller
      */
     public function create()
     {
-        return view('admin.accounting.banks.create');
+        $types = Bank::type();
+        return view('admin.accounting.banks.create',['types'=>$types]);
     }
 
     /**
@@ -75,8 +76,9 @@ class BankController extends Controller
     public function edit(Bank $bank)
     {
         $transCount = $bank->bankTransactions->count();
+        $types = Bank::type();
 
-        return view('admin.accounting.banks.edit',['bank'=>$bank,'transCount' => $transCount]);
+        return view('admin.accounting.banks.edit',['bank'=>$bank,'transCount' => $transCount,'types'=>$types]);
 
     }
 
