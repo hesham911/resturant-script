@@ -13,12 +13,14 @@ class CreateFloorsTable extends Migration
      */
     public function up()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Schema::create('floors', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->timestamps();
             $table->softDeletes();
         });
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 
     /**
@@ -28,6 +30,8 @@ class CreateFloorsTable extends Migration
      */
     public function down()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Schema::dropIfExists('floors');
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }
