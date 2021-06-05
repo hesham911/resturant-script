@@ -20,4 +20,9 @@ class IndirectExpense extends Model
     {
         return $this->belongsTo(IndirectCost::class,'indirect_cost_id');
     }
+
+    public function workperiod()
+    {
+        return $this->belongsTo(WorkPeriod::class,'work_period_id');
+    }
 }

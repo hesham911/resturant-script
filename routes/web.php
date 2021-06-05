@@ -12,7 +12,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('x',function (){
+    dd(\App\WorkPeriod::GetAllIncome(1));
+});
 
 ROute::group([
     'prefix' =>'dashbord',
@@ -22,8 +24,24 @@ ROute::group([
     Route::resource('/zones','ZoneController');
     Route::resource('/roles','RoleController');
     Route::resource('/products','ProductController');
-    Route::resource('/employees','EmployeeController');
-    //Route::resource('/clients','ClientController');
+    Route::group(['prefix' =>'employees'],function (){
+        Route::get('/','EmployeeController@index')->name('indirect.costs.index');
+
+        Route::group(['middleware' => ['can:إضافة مستخدم']],function (){
+            Route::get('/create','EmployeeController@create')->name('employees.create');
+            Route::post('/store','EmployeeController@store')->name('employees.store');
+        });
+        Route::group(['middleware' => ['can:تعديل مستخدم']],function (){
+            Route::get('/edit/{employee}','EmployeeController@edit')->name('employees.edit');
+            Route::put('/update/{employee}','EmployeeController@update')->name('employees.update');
+        });
+        Route::group(['middleware' => ['can:حذف مستخدم']],function (){
+            Route::delete('/destroy/{employee}','EmployeeController@destroy')->name('employees.destroy');
+        });
+        Route::group(['middleware' => ['can:عرض مستخدم']],function (){
+            Route::get('/','EmployeeController@index')->name('employees.index');
+        });
+    });
     Route::group(['prefix' =>'indirect-costs'],function (){
         Route::get('/','IndirectCostController@index')->name('indirect.costs.index');
 
@@ -40,6 +58,50 @@ ROute::group([
         });
 
     });
+
+    Route::group(['prefix' =>'banks'],function (){
+        Route::get('/','BankController@index')->name('banks.index');
+        Route::group(['middleware' => ['can:إضافة تكاليف غير مباشرة']],function (){
+            Route::get('/create','BankController@create')->name('banks.create');
+            Route::post('/store','BankController@store')->name('banks.store');
+        });
+        Route::group(['middleware' => ['can:تعديل تكاليف غير مباشرة']],function (){
+            Route::get('/edit/{bank}','BankController@edit')->name('banks.edit');
+            Route::put('/update/{bank}','BankController@update')->name('banks.update');
+        });
+        Route::group(['middleware' => ['can:حذف تكاليف غير مباشرة']],function (){
+            Route::delete('/destroy/{bank}','BankController@destroy')->name('banks.destroy');
+        });
+    });
+
+    Route::group(['prefix'=>'work-period'],function (){
+        Route::group(['middleware'=>'can:بدأ الشيفت'],function (){
+            Route::get('/start','WorkPeriodController@create')->name('start.work.view');
+            Route::post('/start','WorkPeriodController@store')->name('start.work.store');
+        });
+        Route::group(['middleware'=>'can:إغلاق الشيفت'],function (){
+            Route::get('/end/{workperiod}','WorkPeriodController@edit')->name('end.work.view');
+
+            Route::put('/end/{workperiod}','WorkPeriodController@update')->name('end.work.update');
+        });
+
+    });
+
+    Route::group(['prefix' =>'transactions'],function (){
+        Route::get('/','BankTransactionController@index')->name('transactions.index');
+        Route::group(['middleware' => ['can:إضافة تكاليف غير مباشرة']],function (){
+            Route::get('/create','BankTransactionController@create')->name('transactions.create');
+            Route::post('/store','BankTransactionController@store')->name('transactions.store');
+        });
+        Route::group(['middleware' => ['can:تعديل تكاليف غير مباشرة']],function (){
+            Route::get('/edit/{transaction}','BankTransactionController@edit')->name('transactions.edit');
+            Route::put('/update/{transaction}','BankTransactionController@update')->name('transactions.update');
+        });
+        Route::group(['middleware' => ['can:حذف تكاليف غير مباشرة']],function (){
+            Route::delete('/destroy/{transaction}','BankTransactionController@destroy')->name('transactions.destroy');
+        });
+    });
+
     Route::group(['prefix' =>'indirect-expenses'],function (){
         Route::get('/','IndirectExpenseController@index')->name('indirect.expenses.index');
 

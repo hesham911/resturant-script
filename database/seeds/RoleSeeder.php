@@ -17,13 +17,22 @@ class RoleSeeder extends Seeder
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         // create roles and
-        Role::create(['name' => 'محاسب']);
-        Role::create(['name' => 'كاشير']);
-        Role::create(['name' => 'صاله مان']);
-        Role::create(['name' => 'مدير المخزن']);
-        Role::create(['name' => 'الشيف']);
-        Role::create(['name' => 'العميل']);
-        Role::create(['name' => 'صاحب الموقع']);
-        Role::create(['name' => 'ديليفري مان']);
+        Role::create(['name' => 'التحكم-في-المستخدمين']);
+        Role::create(['name' => 'التحكم-في-العملاء']);
+        Role::create(['name' => 'التحكم-في-الصلاحيات']);
+        Role::create(['name' => 'التحكم-في-الأقسام']);
+        Role::create(['name' => 'التحكم-في-المنتجات']);
+        Role::create(['name' => 'التحكم-في-المنطقة']);
+        Role::create(['name' => 'التحكم-في-الطاولة']);
+        Role::create(['name' => 'التحكم-في-الطابق']);
+        Role::create(['name' => 'التحكم-في-الإعدادات']);
+        Role::create(['name' => 'التحكم-في-التقارير']);
+        Role::create(['name' => 'التحكم-في-التكاليف']);
+        Role::create(['name' => 'التحكم-في-الطلبات']);
+        Role::create(['name' => 'التحكم-في-تصنيع-المنتج']);
+        Role::create(['name' => 'التحكم-في-المواد-الخام']);
+        Role::create(['name' => 'التحكم-في-المخزن']);
+        Role::create(['name' => 'التحكم-في-التلفيات']);
+        Role::create(['name' => 'التحكم-في-الشيفت']);
     }
 }
