@@ -23,6 +23,62 @@ return [
         'name'                       => ' الاسم ',
     ],
 
+    'work-periods' =>[
+        'start'         =>[
+            'titles'            => [
+                'index'                 => ' بدأ شيفت  ',
+                'create'                => ' إضافة شيفت ',
+                'subcreate'             => 'إضافة شيفت جديد',
+                'edit'                  => 'تعديل  الشفت  ',
+                'show'                  => ' عرض  الشفت  ',
+            ],
+            'placeholder'       => [
+                'bank'                       => ' أختر الخزينة التي تعمل عليها  ',
+                'pocket_money'               => ' المبلغ المتبقي من الشفت السابق ',
+            ],
+            'massages'          => [
+                'created_successfully'   => 'تم  تسجيل  الشيفت   بنجاح',
+                'updated_successfully'   => 'تم تعديل  الشيفت بنجاح',
+                'deleted_check'          => 'هل تريد حقا حذف هذة الشيفت',
+                'deleted_successfully'   => 'تم حذف  الشيفت بنجاح',
+                'error_successfully'     => 'حدث خطأ من فضلك راجع البيانات المطلوبة',
+            ],
+            'bank'              => ' أختر الخزينه ',
+            'pocket_money'      => ' مبلغ متبقي  ',
+        ],
+        'end'           =>[
+            'titles'            => [
+                'index'                 => ' تسليم الشيفت  ',
+                'money'                 => ' المعاملات الحسابية خلال الشيفت  ',
+                'payments-table'        => ' تفاصيل المبيعات خلال الشيفت  ',
+                'expenses-table'        => ' تفاصيل المشتريات خلال الشيفت  ',
+                'analytics'             => ' عدد العمليات خلال الشيفت  ',
+            ],
+            'placeholder'       => [
+                'income'                     => ' المبيعات كأوردرات خلال الشفت ',
+                'outcome'                    => ' المدفوعات خلال الشفت ',
+                'total'                      => 'المبلغ الكلي بعد نهاية الشفت ',
+                'pocket_money'               => ' مبلغ متبقي من الشفت السابق ',
+            ],
+            'money-report'      => [
+                'title'                      => ' التقرير المالي ',
+                'income'                     => ' المبيعات ',
+                'outcome'                    => ' مشتريات ',
+                'total'                      => ' المبلغ الكلي ',
+                'pocket_money'               => ' مبلغ متبقي ',
+            ],
+            'massages'          => [
+                'created_successfully'   => 'تم  تسليم الشيفت بنجاح   بنجاح',
+                'updated_successfully'   => 'تم تعديل  الشيفت بنجاح',
+                'deleted_check'          => 'هل تريد حقا حذف هذة الشيفت',
+                'deleted_successfully'   => 'تم حذف  الشيفت بنجاح',
+                'error_successfully'     => 'حدث خطأ من فضلك راجع البيانات المطلوبة',
+            ],
+
+        ],
+
+    ],
+
     'banks' =>[
         'titles'            => [
             'index'                 => ' الخزينة ',
@@ -35,6 +91,7 @@ return [
             'name'                       => ' الاسم الخزينة ',
             'notes'                      => ' ملحوظات ',
             'balance'                    => ' الرصيد الإفتتاحي ',
+            'types_bank'                 => ' نوع الخزينة ',
         ],
         'massages'          => [
             'created_successfully'   => 'تم  تسجيل  الخزينة   بنجاح',
@@ -49,6 +106,7 @@ return [
         'name'                       => ' الاسم ',
         'notes'                      => ' ملحوظات ',
         'balance'                    => ' الرصيد الإفتتاحي ',
+        'types_bank'                 => ' نوع الخزينة ',
     ],
 
     'transactions' =>[
