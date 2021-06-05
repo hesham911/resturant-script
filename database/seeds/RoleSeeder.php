@@ -33,5 +33,6 @@ class RoleSeeder extends Seeder
         Role::create(['name' => 'التحكم-في-المواد-الخام']);
         Role::create(['name' => 'التحكم-في-المخزن']);
         Role::create(['name' => 'التحكم-في-التلفيات']);
+        Role::create(['name' => 'التحكم-في-الشيفت']);
     }
 }

@@ -26,6 +26,16 @@ class RolePermissionSeeder extends Seeder
             'تعديل عميل',
         ]);
 
+        Role::findByName('التحكم-في-الخزينة')->syncPermissions([
+            'عرض الخزينة',
+            'إضافة الخزينة',
+            'تعديل الخزينة',
+        ]);
+
+        Role::findByName('التحكم-في-تحويلات-المالية')->syncPermissions([
+            'عرض التحويلات المالية',
+            'إضافة التحويلات المالية',
+        ]);
         Role::findByName('التحكم-في-الصلاحيات')->syncPermissions([
             'عرض صلاحية',
             'إضافة صلاحية',
@@ -130,6 +140,10 @@ class RolePermissionSeeder extends Seeder
             'إضافة تلفيات',
             'تعديل تلفيات',
             'إلغاء تلفيات',
+        ]);
+        Role::findByName('التحكم-في-الشيفت')->syncPermissions([
+            'بدأ الشيفت',
+            'إغلاق الشيفت',
         ]);
     }
 }
