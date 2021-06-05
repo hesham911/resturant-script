@@ -27,6 +27,7 @@ class BankRequest extends FormRequest
             'name'               =>   'required|string|min:2',
             'opening_balance'    =>   'required|numeric|min:0|not_in:0',
             'notes'              =>   '',
+            'type'               =>   'required',
         ];
     }
 
@@ -39,6 +40,7 @@ class BankRequest extends FormRequest
             'name'              =>__('accounting.banks.name'),
             'opening_balance'   =>__('accounting.banks.balance'),
             'notes'             =>__('accounting.banks.notes'),
+            'type'              =>__('accounting.banks.types_bank'),
         ];
     }
 }
