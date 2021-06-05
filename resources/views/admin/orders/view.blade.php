@@ -65,7 +65,7 @@
 @section('script')
     <script>
         // print reset
-        $('#printOrder').on('click',function()
+        /* $('#printOrder').on('click',function()
         {
             var node = document.getElementById('check-printing');
             domtoimage.toPng(node)
@@ -87,6 +87,6 @@
                 link.href = dataUrl;
                 link.click();
             }); */
-        });
+        /*}); */
     </script>
 @endsection

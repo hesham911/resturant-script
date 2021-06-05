@@ -51,7 +51,21 @@
                         <i class="minimize" data-feather="minimize"></i>
                     </a>
                 </li>
-
+                @if (request()->is('dashbord/orders/create'))
+                    <li class="nav-item dropdown d-none d-md-block">
+                        <a href="{{url('/dashbord')}}" class="nav-link">
+                            <i class="fa fa-dashcube" aria-hidden="true"></i>
+                            لوحة التحكم
+                        </a>
+                    </li>
+                @else
+                    <li class="nav-item dropdown d-none d-md-block">
+                        <a href="{{url('/dashbord/orders/create')}}" role="button"
+                            class="nav-link btn btn-secondary">
+                            POS   <i data-feather="shopping-cart"></i>
+                        </a>
+                    </li>
+                @endif
                 {{-- <li class="nav-item dropdown">
                     <a href="#" class="nav-link nav-link-notify" title="Notifications" data-toggle="dropdown">
                         <i data-feather="bell"></i>
@@ -174,13 +188,13 @@
                         </div>
                     </div>
                 </li>
-                
+
                <li class="nav-item dropdown">
                     <a href="#" class="nav-link" title="Settings" data-sidebar-target="#settings">
                         <i data-feather="settings"></i>
                     </a>
                 </li>  --}}
-                
+
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" title="User menu" data-toggle="dropdown">
                         <span class="ml-2 d-sm-inline d-none">{{Auth::user()->name}}</span>
@@ -220,7 +234,7 @@
                             </p>
                         </div> --}}
                     </div>
-                </li> 
+                </li>
             </ul>
         </div>
     </div>

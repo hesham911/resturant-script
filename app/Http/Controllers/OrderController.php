@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Zone;
 use App\Order;
+use App\Phone;
 use App\Table;
 use App\Client;
 use App\Payment;
@@ -40,18 +42,57 @@ class OrderController extends Controller
      */
     public function create(Request $request)
     {
-        $client=null;
+        $categories = Category::all();
+        $subcategories = Subcategory::all();
+        $products = Product::all();
+        $types = Order::type();
+        $client = null;
+        $phones = Phone::all();
+        $tables = Table::all();
+        $zones   = Zone::all();
+        $clients = Client::orderBy('id','DESC')->with(['user:name,id'])->get();
+        $orders = Order::where('status',0)->latest()->get();
+        return view('admin.orders.pos',['categories'=>$categories,'subcategories'=>$subcategories,
+        'types'=>$types,'products'=>$products,'phones'=>$phones,'tables'=>$tables,'client'=>$client,
+        'clients'=>$clients,'zones'=>$zones,'orders'=>$orders,]);
+        /* $client=null;
         if($request->client)
         {
             $client = Client::findOrFail($request->client);
         }
-        /* $clients = Client::all(); */
         $categories = Category::all();
         $tables = Table::all();
         $types = Order::type();
         $products = Product::all();
         return view('admin.orders.create',['categories'=>$categories,
-            'tables'=>$tables,'types'=>$types,'products'=>$products,'client'=>$client]);
+            'tables'=>$tables,'types'=>$types,'products'=>$products,'client'=>$client]); */
+    }
+    public function filterData(Request $request)
+    {
+        if ($request->ajax())
+        {
+            $query=Product::select('*');
+            if($request->subcategory_id != null)
+            {
+                $query->where('subcategory_id',$request->subcategory_id);
+            }
+            return view('admin.orders.posContent',['products'=>$query->get()]);
+        }
+
+    }
+    public function clientinfo(Request $request)
+    {
+        if ($request->ajax())
+        {
+            if($request->client_id != null)
+            {
+                $phone = Phone::findOrFail($request->client_id);
+                $cl=$phone->user->id;
+                $client = User::findOrFail($cl);
+            }
+            return view('admin.orders.clientInfo',['client'=>$client]);
+        }
+
     }
 
     /**
@@ -155,7 +196,8 @@ class OrderController extends Controller
         } */
         $order->requests()->sync($requests);
         $request->session()->flash('message',__('orders.massages.created_successfully'));
-        return redirect(route('orders.index'));
+       // return redirect(route('orders.index'));
+       return redirect(route('orders.create'));
     }
 
     /**
@@ -167,6 +209,14 @@ class OrderController extends Controller
     public function show(Order $order)
     {
         return view('admin.orders.view',['order'=>$order]);
+    }
+    public function printclient(Order $order)
+    {
+        return view('admin.orders.printClient',['order'=>$order]);
+    }
+    public function printkitchen(Order $order)
+    {
+        return view('admin.orders.printKitchen',['order'=>$order]);
     }
 
     /**
@@ -186,7 +236,8 @@ class OrderController extends Controller
             $order->payment()->save($payment);
         }
         $request->session()->flash('message',__('orders.massages.change_status'));
-        return redirect(route('orders.index'));
+        //return redirect(route('orders.index'));
+        return redirect(route('orders.create'));
     }
 
     /**
@@ -218,7 +269,8 @@ class OrderController extends Controller
         $order->cancel_reason=$request->cancel_reason;
         $order->save();
         $request->session()->flash('message',__('orders.massages.cancel_successfully'));
-        return redirect(route('orders.index'));
+        //return redirect(route('orders.index'));
+        return redirect(route('orders.create'));
     }
 
     /**
@@ -229,6 +281,11 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
+        $client=null;
+        if($order->client_id)
+        {
+            $client = Client::findOrFail($order->client_id);
+        }
         $categories = Category::all();
         $tables = Table::all();
         $types = Order::type();
@@ -236,7 +293,7 @@ class OrderController extends Controller
         $ordProducts=$order->products;
         return view('admin.orders.edit',['order'=>$order,'categories'=>$categories,
             'tables'=>$tables,'types'=>$types,'products'=>$products,
-            'ordProducts'=>$ordProducts]);
+            'ordProducts'=>$ordProducts,'client'=>$client]);
     }
 
     /**
@@ -314,7 +371,8 @@ class OrderController extends Controller
         }
         $order->requests()->sync($requests);
         $request->session()->flash('message',__('orders.massages.updated_successfully'));
-        return redirect(route('orders.index'));
+        //return redirect(route('orders.index'));
+        return redirect(route('orders.create'));
     }
 
     /**
