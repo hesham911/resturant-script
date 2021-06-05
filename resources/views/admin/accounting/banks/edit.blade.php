@@ -5,6 +5,7 @@
 @section('head')
     <!-- Prism -->
     <link rel="stylesheet" href="{{ url('vendors/prism/prism.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{url('vendors/select2/css/select2.min.css')}}" type="text/css">
 @endsection
 
 @section('content')
@@ -51,6 +52,19 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
+                                    <label for="types_bank" class="col-sm-2 col-form-label">{{__('accounting.banks.types_bank')}}</label>
+                                    <div class="col-sm-10">
+                                        <select name="type" id="types_bank" class="types_bank">
+                                            <option disabled >{{__('accounting.banks.placeholder.types_bank')}}</option>
+                                            @if(count($types) > 0)
+                                                @foreach($types as $key => $type)
+                                                    <option value="{{$key}}" {{(old('type',$bank->type)==$key)? 'selected':''}}>{{$type}}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
                                     <label for="notes" class="col-sm-2 col-form-label">{{__('accounting.banks.notes')}}</label>
                                     <div class="col-sm-10">
                                         <textarea type="text" name="notes"  class="form-control" id="notes" placeholder="{{__('accounting.banks.placeholder.notes')}}">{{old('name',$bank->notes)}}</textarea>
@@ -62,11 +76,9 @@
                                         @if($transCount > 1)
                                         <input readonly type="text" name="opening_balance" value="{{old('opening_balance',$bank->opening_balance)}}" class="form-control" id="balance" placeholder="{{__('accounting.banks.placeholder.balance')}}">
                                             <p class="alert alert-danger">{{__('accounting.banks.massages.cant_edit_balance')}}</p>
-
                                         @else
                                             <input  type="text" name="opening_balance" value="{{old('opening_balance',$bank->opening_balance)}}" class="form-control" id="balance" placeholder="{{__('accounting.banks.placeholder.balance')}}">
                                         @endif
-
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -91,4 +103,12 @@
 
     <!-- Prism -->
     <script src="{{ url('vendors/prism/prism.js') }}"></script>
+    <script src="{{url('vendors/select2/js/select2.min.js')}}"></script>
+    <script>
+        $(document).ready(function () {
+            $('.types_bank').select2({
+                placeholder: "الوظيفة"
+            });
+        });
+    </script>
 @endsection
