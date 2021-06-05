@@ -20,8 +20,11 @@ class CreateWorkPeriodsTable extends Migration
                     $table->foreign('user_id')->references('id')->on('users');
                 $table->bigInteger('bank_id')->unsigned();
                     $table->foreign('bank_id')->references('id')->on('banks');
-                $table->decimal('opening_balance')->default(0);
-                $table->decimal('close_balance');
+                //$table->decimal('opening_balance')->default(0);
+                $table->decimal('close_balance')->nullable();
+                $table->timestamp('date_start')->nullable();
+                $table->timestamp('date_end')->nullable();
+                $table->tinyInteger('status')->default(1);
                 $table->timestamps();
                 $table->softDeletes();
             });
