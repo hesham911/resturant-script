@@ -18,7 +18,8 @@ class CreateBanksTable extends Migration
                 $table->id();
                 $table->string('name');
                 $table->decimal('opening_balance')->default(0);
-                $table->text('notes');
+                $table->text('notes')->nullable();
+                $table->string('type');
                 $table->timestamps();
                 $table->softDeletes();
             });

@@ -20,7 +20,7 @@ class CreateBankTransactionsTable extends Migration
                     $table->foreign('user_id')->references('id')->on('users');
                 $table->bigInteger('bank_id')->unsigned();
                     $table->foreign('bank_id')->references('id')->on('banks');
-                $table->text('notes');
+                $table->text('notes')->nullable();
                 $table->decimal('amount');
                 $table->decimal('balance');
                 $table->timestamps();
