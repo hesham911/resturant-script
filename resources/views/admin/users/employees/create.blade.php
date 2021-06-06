@@ -153,7 +153,11 @@
     <script src="{{asset('vendors/jquery.repeater.min.js')}}"></script>
     <script>
         $(document).ready(function () {
-            $('.basic-repeater').repeater();
+            $('.basic-repeater').repeater({show: function () {
+                $(this).slideDown(function (){
+                    $('.layout-wrapper .content-wrapper .content-body .content').getNiceScroll().resize();
+                });}
+            });
 
             $('.type-employees').select2({
                 placeholder: "الوظيفة"

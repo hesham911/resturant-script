@@ -142,7 +142,9 @@
         MaterialSelect();
         $('.repeater').repeater({
             show: function () {
-                $(this).slideDown();
+                $(this).slideDown(function (){
+                    $('.layout-wrapper .content-wrapper .content-body .content').getNiceScroll().resize();
+                });
                 $('.select2-container').remove();
                 MaterialSelect();
                 $('.select2-container').css('width','100%');
