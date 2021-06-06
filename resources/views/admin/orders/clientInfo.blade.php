@@ -11,8 +11,8 @@
 <select class="btn btn-danger" name="client_zone" id="orderClientZone">
     <option value="">اختر العنوان</option>
     @foreach ($client->client->zones as $zone)
-    <option  value="{{$zone->name}} - {{$zone->pivot->address}}">
-        {{$zone->name}}-{{$zone->pivot->address}} </option>
+        <option  value="{{$zone->pivot->id}}">
+            {{$zone->name}}-{{$zone->pivot->address}} </option>
     @endforeach
 </select>
 @endif

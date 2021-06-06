@@ -12,7 +12,7 @@ class Client extends BasicUser
 
    	public function zones()
     {
-        return $this->belongsToMany(Zone::class,'client_zone')->withPivot('address')->withTimestamps();
+        return $this->belongsToMany(Zone::class,'client_zone')->withPivot(['address','id'])->withTimestamps();
     }
 
     public function user()

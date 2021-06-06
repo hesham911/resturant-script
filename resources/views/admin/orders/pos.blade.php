@@ -289,7 +289,7 @@
                                                                                 <label class="custom-control-label" for="user-list-select-all"></label>
                                                                             </div>
                                                                         </th>
-                                                                        <th>{{__('app.tables.num')}}</th>
+                                                                        <th>#</th>
                                                                         {{-- <th>{{__('orders.client_id')}}</th> --}}
                                                                         <th>{{__('orders.category_id')}}</th>
                                                                         <th>{{__('orders.table_id')}}</th>
