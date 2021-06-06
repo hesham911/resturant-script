@@ -29,7 +29,7 @@ class SupplyUpdateRequest extends FormRequest
             'price'=>'required|numeric|max:999999',
             'Supplier_name'=>'required',
             'expiry_date'=>'required',
-            'employee_id'=>'required',
+            'user_id'=>'required',
             'bill_number'=>'required|numeric|max:999999',
         ];
     }
@@ -42,7 +42,7 @@ class SupplyUpdateRequest extends FormRequest
             'price'=>__('supplies.price'),
             'Supplier_name'=>__('supplies.Supplier_name'),
             'expiry_date'=>__('supplies.expiry_date'),
-            'employee_id'=>__('supplies.employee_id'),
+            'user_id'=>__('supplies.user_id'),
             'bill_number'=>__('supplies.bill_number'),
         ];
     }
