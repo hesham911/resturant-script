@@ -24,10 +24,6 @@ ROute::group([
     Route::resource('/zones','ZoneController');
     Route::resource('/roles','RoleController');
     Route::resource('/products','ProductController');
-<<<<<<< HEAD
-    Route::resource('/employees','EmployeeController');
-    //Route::resource('/clients','ClientController');
-=======
     Route::group(['prefix' =>'employees'],function (){
         Route::get('/','EmployeeController@index')->name('indirect.costs.index');
 
@@ -46,7 +42,6 @@ ROute::group([
             Route::get('/','EmployeeController@index')->name('employees.index');
         });
     });
->>>>>>> 7612fef92bfa57ada1ac75b1c55badb25eaa364c
     Route::group(['prefix' =>'indirect-costs'],function (){
         Route::get('/','IndirectCostController@index')->name('indirect.costs.index');
 
@@ -63,8 +58,6 @@ ROute::group([
         });
 
     });
-<<<<<<< HEAD
-=======
 
     Route::group(['prefix' =>'banks'],function (){
         Route::get('/','BankController@index')->name('banks.index');
@@ -109,7 +102,6 @@ ROute::group([
         });
     });
 
->>>>>>> 7612fef92bfa57ada1ac75b1c55badb25eaa364c
     Route::group(['prefix' =>'indirect-expenses'],function (){
         Route::get('/','IndirectExpenseController@index')->name('indirect.expenses.index');
 

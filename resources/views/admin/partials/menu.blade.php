@@ -471,50 +471,5 @@
                 @endif
         </ul>
     </li>
-    <li>
-        @if (Auth::user()->hasAnyPermission(['إضافة عميل','عرض عميل','إضافة مستخدم','عرض مستخدم']))
-            <a href="#">
-                <span class="nav-link-icon">
-                    <i class="fa fa-money"></i>
-                </span>
-                <span>المصروفات</span>
-            </a>
-        @endif
-        <ul>
-            @if (Auth::user()->hasAnyPermission(['إضافة عميل','عرض عميل']))
-                <li>
-                    <a href="#">التكاليف الغير مباشرة</a>
-                    <ul>
-                        @if (Auth::user()->hasAnyPermission(['عرض عميل']))
-                            <li>
-                                <a class="{{(request()->is('dashbord/indirect-costs'))? 'active' : '' }}" href="{{route('indirect.costs.index')}}">عرض الكل</a>
-                            </li>
-                        @endif
-                        @if (Auth::user()->hasAnyPermission(['إضافة عميل']))
-                            <li>
-                                <a class="{{(request()->is('dashbord/indirect-costs/create'))? 'active' : '' }}" href="{{route('indirect.costs.create')}}">إضافة  جديدة</a>
-                            </li>
-                        @endif
-                    </ul>
-                </li>
-            @endif
-            @if (Auth::user()->hasAnyPermission(['إضافة مستخدم','عرض مستخدم']))
-                <li>
-                    <a href="#">المصروفات الغير مباشرة</a>
-                    <ul>
-                        @if (Auth::user()->hasAnyPermission(['عرض مستخدم']))
-                            <li>
-                                <a class="{{(request()->is('dashbord/indirect-expenses'))? 'active' : '' }}" href="{{route('indirect.expenses.index')}}">عرض الكل</a>
-                            </li>
-                        @endif
-                        @if (Auth::user()->hasAnyPermission(['إضافة مستخدم']))
-                            <li>
-                                <a class="{{(request()->is('dashbord/indirect-expenses/create'))? 'active' : '' }}" href="{{route('indirect.expenses.create')}}">إضافة  جديدة</a>
-                            </li>
-                        @endif
-                    </ul>
-                </li>
-            @endif
-        </ul>
-    </li>
+    
 </ul>

@@ -23,8 +23,6 @@ return [
         'name'                       => ' الاسم ',
     ],
 
-<<<<<<< HEAD
-=======
     'work-periods' =>[
         'start'         =>[
             'titles'            => [
@@ -143,7 +141,6 @@ return [
         'date'                       => 'تاريخ ',
     ],
 
->>>>>>> 7612fef92bfa57ada1ac75b1c55badb25eaa364c
     'indirect-expenses' =>[
         'titles'            => [
             'index'                 => ' المصاريف ',

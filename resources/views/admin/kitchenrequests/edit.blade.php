@@ -64,7 +64,7 @@
                                         <input type="text" class="form-control" id="inputPassword" placeholder="{{__('kitchenrequests.quantity')}}" value="{{old('quantity',$kitchenrequest->quantity)}}" name="quantity">
                                     </div>
                                 </div>
-                                <input type="hidden" value="{{$kitchenrequest->employee_id}}" name="employee_id">
+                                <input type="hidden" value="{{$kitchenrequest->user_id}}" name="user_id">
                                 <div class="d-flex flex-row-reverse" >
                                     <button class="btn btn-primary " type="submit">
                                        {{__('app.forms.btn.FormSubmit')}}

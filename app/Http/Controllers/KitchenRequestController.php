@@ -134,7 +134,9 @@ class KitchenRequestController extends Controller
      */
     public function update(KitchenRequestRequest $request, KitchenRequest $kitchenrequest)
     {
-        $validated = $request->validated();
+        $material_id = $request->material_id;
+        $quantity = $request->quantity;
+        $user_id = $request->user_id;
         $oldWarehouseStock = WarehouseStock::where('material_id', $kitchenrequest->material_id)->get()->first();
         foreach ($kitchenrequest->supplies as  $supply) {
             if ( $kitchenrequest->quantity  != 0) {
@@ -149,13 +151,13 @@ class KitchenRequestController extends Controller
         }
         $oldWarehouseStock->quantity = $oldWarehouseStock->quantity +  $kitchenrequest->quantity ;
         $oldWarehouseStock->save();
-        $WarehouseStock = WarehouseStock::where('material_id',$validated['material_id'])->get()->first();
-        $material = Material::find($validated['material_id']);
+        $WarehouseStock = WarehouseStock::where('material_id',$material_id)->get()->first();
+        $material = Material::find($material_id);
         $supplies = $material->supplies->where('status',false);
-        $request_quantity = $validated['quantity'];
+        $request_quantity = $quantity;
         $request_total_price=0 ;
         $supply_ids = [];
-        if ($WarehouseStock->quantity >= $validated['quantity']) {
+        if ($WarehouseStock->quantity >= $quantity) {
             foreach ($supplies as $supply) {
                 $supply_remaining_amount = $supply->quantity - $supply->used_amount;
                 $supply_unit_price = $supply->price / $supply->quantity;
@@ -181,11 +183,11 @@ class KitchenRequestController extends Controller
                     $supply_ids[]= $supply->id;
                 }
             }
-            $WarehouseStock->quantity =$WarehouseStock->quantity - $validated['quantity'] ;
+            $WarehouseStock->quantity =$WarehouseStock->quantity - $quantity ;
             $WarehouseStock->save();
-            $kitchenrequest->material_id = $validated['material_id'];
-            $kitchenrequest->quantity = $validated['quantity'];
-            $kitchenrequest->employee_id = $validated['employee_id'];
+            $kitchenrequest->material_id = $material_id;
+            $kitchenrequest->quantity = $quantity;
+            $kitchenrequest->user_id = $user_id;
             $kitchenrequest->total_cost = $request_total_price;
             $kitchenrequest->save();
             $kitchenrequest->supplies()->sync($supply_ids);
