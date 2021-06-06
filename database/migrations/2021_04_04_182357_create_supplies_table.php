@@ -23,6 +23,7 @@ class CreateSuppliesTable extends Migration
             $table->decimal('quantity');
             $table->integer('price');
             $table->date('expiry_date')->nullable();
+            $table->string('Supplier_name');
             $table->boolean('status')->default(false);
             $table->decimal('used_amount')->default(0);
             $table->bigInteger('bill_number')->unsigned();

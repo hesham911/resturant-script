@@ -28,7 +28,7 @@ class SupplyRequest extends FormRequest
             'group.*.quantity'=>'required|numeric|max:999999',
             'group.*.price'=>'required|numeric|max:999999',
             'Supplier_name'=>'required',
-            'group.*.expiry_date'=>'required',
+            'group.*.expiry_date'=>'date',
             'user_id'=>'required',
             'bill_number'=>'required|numeric|max:999999',
         ];
