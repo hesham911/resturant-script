@@ -28,7 +28,17 @@ class WorkPeriodController extends Controller
     public function create()
     {
         $banks = Bank::getBankCashierNotInWork()->get();
-        return view('admin.accounting.work-period.start-work',['banks'=>$banks]);
+        $userlog = Auth::user()->userLog();
+
+        if ($userlog == true){
+            $workPeriod= WorkPeriod::GetIdFromUser(Auth::id())->first()->id;
+
+            return redirect(route('orders.create',['workPeriod'=>$workPeriod]));
+        }else{
+           // $banks = Bank::getBankCashierNotInWork()->get();
+            return view('admin.accounting.work-period.start-work',['banks'=>$banks]);
+        }
+
     }
 
     /**
@@ -49,7 +59,7 @@ class WorkPeriodController extends Controller
 
         $workPeriod = WorkPeriod::create($workPeriod);
 
-        return route('orders.create',['workPeriod'=>$workPeriod]);
+        return redirect(route('orders.create',['workPeriod'=>$workPeriod]));
     }
 
     /**
@@ -94,7 +104,7 @@ class WorkPeriodController extends Controller
     public function update(Request $request, WorkPeriod $workperiod)
     {
        $workperiod->update($request->all());
-       return route('start.work.view');
+       return redirect(route('start.work.view'));
     }
 
     /**

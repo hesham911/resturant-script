@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class WorkPeriod extends Model
 {
@@ -94,5 +95,10 @@ class WorkPeriod extends Model
     public function scopeGetCloseBalance($query, $id)
     {
         return $this->getAllIncome($id)->sum('total_price') - $this->getAllOutCome($id)->sum('amount');
+    }
+
+    public function scopeGetIdFromUser($query, $id)
+    {
+        return $this->where('status',1)->where('user_id',Auth::id());
     }
 }

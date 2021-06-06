@@ -60,9 +60,17 @@
                     </li>
                 @else
                     <li class="nav-item dropdown d-none d-md-block">
-                        <a href="{{url('/dashbord/orders/create')}}" role="button"
+                        <a href="{{route('start.work.view')}}" role="button"
                             class="nav-link btn btn-secondary">
                             POS   <i data-feather="shopping-cart"></i>
+                        </a>
+                    </li>
+                @endif
+                @if (\Illuminate\Support\Facades\Auth::user()->userLog() == true)
+                    <li class="nav-item dropdown d-none d-md-block">
+                        <a href="{{route('end.work.view',['workperiod'=>\App\WorkPeriod::GetIdFromUser(Auth::id())->first()->id])}}" role="button"
+                           class="nav-link btn btn-secondary">
+                            إنهاء الشفت
                         </a>
                     </li>
                 @endif

@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('x',function (){
-    dd(\App\WorkPeriod::GetAllIncome(1));
+
 });
 
 ROute::group([

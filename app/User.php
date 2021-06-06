@@ -4,8 +4,11 @@ namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Builder;
+
 
 class User extends Authenticatable
 {
@@ -88,4 +91,13 @@ class User extends Authenticatable
          return $phones->implode(' - ','number');
 
     }
+    public function ScopeUserLog($query)
+    {
+        $actworkperiods = WorkPeriod::where('status',1)->pluck('user_id')->toArray();
+
+        if (in_array(Auth::id(),$actworkperiods) )
+            return true;
+        return false;
+    }
+
 }
