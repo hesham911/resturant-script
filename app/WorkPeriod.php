@@ -4,6 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+<<<<<<< HEAD
+=======
+use Illuminate\Support\Facades\Auth;
+>>>>>>> 7612fef92bfa57ada1ac75b1c55badb25eaa364c
 
 class WorkPeriod extends Model
 {
@@ -95,4 +99,12 @@ class WorkPeriod extends Model
     {
         return $this->getAllIncome($id)->sum('total_price') - $this->getAllOutCome($id)->sum('amount');
     }
+<<<<<<< HEAD
+=======
+
+    public function scopeGetIdFromUser($query, $id)
+    {
+        return $this->where('status',1)->where('user_id',Auth::id());
+    }
+>>>>>>> 7612fef92bfa57ada1ac75b1c55badb25eaa364c
 }

@@ -273,15 +273,22 @@
                                                         @if ($errors->any())
                                                             <div class="alert alert-danger">
                                                                 <ul>
+<<<<<<< HEAD
                                                                 @foreach ($errors->all() as $error)
                                                                     <li>{{ $error }}</li>
                                                                 @endforeach
+=======
+                                                                    @foreach ($errors->all() as $error)
+                                                                        <li>{{ $error }}</li>
+                                                                    @endforeach
+>>>>>>> 7612fef92bfa57ada1ac75b1c55badb25eaa364c
                                                                 </ul>
                                                             </div>
                                                         @endif
                                                         <div class="table-responsive">
                                                             <table id="user-list" class="table table-lg">
                                                                 <thead>
+<<<<<<< HEAD
                                                                     <tr>
                                                                         <th>
                                                                             <div class="custom-control custom-checkbox">
@@ -342,6 +349,68 @@
                                                                             </tr>
                                                                         @endforeach
                                                                     @endif
+=======
+                                                                <tr>
+                                                                    <th>
+                                                                        <div class="custom-control custom-checkbox">
+                                                                            <input type="checkbox" class="custom-control-input" id="user-list-select-all">
+                                                                            <label class="custom-control-label" for="user-list-select-all"></label>
+                                                                        </div>
+                                                                    </th>
+                                                                    <th>#</th>
+                                                                    {{-- <th>{{__('orders.client_id')}}</th> --}}
+                                                                    <th>{{__('orders.category_id')}}</th>
+                                                                    <th>{{__('orders.table_id')}}</th>
+                                                                    <th>{{__('orders.order_type')}}</th>
+                                                                    <th>{{__('orders.order_status')}}</th>
+                                                                    <th>{{__('orders.total_price')}}</th>
+                                                                    <th class="text-right">{{__('app.tables.control')}}</th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                @if($orders->count() > 0)
+                                                                    @foreach($orders as $order )
+                                                                        <tr>
+                                                                            <td></td>
+                                                                            <td>{{ $order->id }}</td>
+                                                                            {{-- <td>{{ $order->client_id }}</td> --}}
+                                                                            <td>{{ $order->category->name }}</td>
+                                                                            <td>{{($order->table_id == null)?__('orders.no_thing'):$order->table_id}}</td>
+                                                                            <td>
+                                                                                    <span class="badge bg-primary-bright text-primary">
+                                                                                        {{ $order->typee }}
+                                                                                    </span>
+                                                                            </td>
+                                                                            <td>
+                                                                                    <span class="badge bg-info-bright text-primary">
+                                                                                        {{ $order->statuss }}
+                                                                                    </span>
+                                                                            </td>
+                                                                            <td>{{ $order->total_price}} {{__('app.settings.currency')}}</td>
+                                                                            <td class="text-right">
+                                                                                <a href="{{route('orders.printkitchen',$order->id)}}" role="button" class="btn btn-primary btn-sm"
+                                                                                   title="طباعة للمطبخ"><i class="fa fa-building"></i>
+                                                                                </a>
+                                                                                <a href="{{route('orders.edit',$order->id)}}" role="button" class="btn btn-warning btn-sm"
+                                                                                   title="{{__('app.tables.btn.edit')}}"><i class="fa fa-edit"></i>
+                                                                                </a>
+                                                                                <a href="{{route('orders.status',['order'=>$order->id,'state'=>3])}}" role="button" class="btn btn-success btn-sm"
+                                                                                   title="{{__('orders.actions.payed')}}"><i class="fa fa-credit-card"></i>
+                                                                                </a>
+                                                                                <a href="{{route('orders.printclient',$order->id)}}" role="button" class="btn btn-primary btn-sm"
+                                                                                   title="طباعة"><i class="fa fa-print"></i>
+                                                                                </a>
+                                                                                <a class="sendCancelOrder btn btn-danger btn-sm" role="button" data-toggle="modal"
+                                                                                   title="{{__('orders.actions.cancel')}}" data-id="{{$order->id}}"
+                                                                                   data-target=".examplePostModal{{$order->id}}"
+                                                                                   data-commentNotice="{{route('orders.cancel',$order->id)}}">
+                                                                                    <i class="fa fa-trash"></i>
+                                                                                </a>
+                                                                            </td>
+                                                                        </tr>
+                                                                    @endforeach
+                                                                @endif
+>>>>>>> 7612fef92bfa57ada1ac75b1c55badb25eaa364c
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -353,6 +422,10 @@
                                 </div>
                             </div>
                         </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7612fef92bfa57ada1ac75b1c55badb25eaa364c
                         <!-- Modal cancel reason -->
                         <div class="modal fade" id="examplePostModal" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-dialog" role="document">

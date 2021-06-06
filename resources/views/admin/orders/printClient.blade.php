@@ -84,8 +84,13 @@
                 @endif
                 @if ($order->type == 1)
                     <span>  اسم العميل : {{$order->client->user->name}}</span><br>
+<<<<<<< HEAD
                     <span>  رقم الهاتف : {{$order->client_phone}}</span><br>
                     <span>  الشارع : {{$order->client_zone}}</span><br>
+=======
+                    <span>  رقم الهاتف : 0{{$order->delivery_phone}}</span><br>
+                    <span>  الشارع : {{$order->full_address}}</span><br>
+>>>>>>> 7612fef92bfa57ada1ac75b1c55badb25eaa364c
                 @endif
                 <span> التاريخ : {{date("Y/m/d")}} - {{date("h:i:s a")}}</span><br>
             </h4>
@@ -116,9 +121,15 @@
             </h4>
             <hr style="width: 240px;margin-left: 90%;border: 1px solid #979797;margin:3px;margin-top: 25px">
             <h4 style="margin-right: 2%;">
+<<<<<<< HEAD
                 <span>  خدمات اضافية : {{0}} {{__('app.settings.currency')}}</span><br>
                 @if ($order->type == 1)
                     <span>   سعر الديلفيري : {{15}} {{__('app.settings.currency')}}</span><br>
+=======
+                {{--<span>  خدمات اضافية : {{0}} {{__('app.settings.currency')}}</span><br>--}}
+                @if ($order->type == 1)
+                    <span>   سعر الديلفيري : {{$order->delivery_price}} {{__('app.settings.currency')}}</span><br>
+>>>>>>> 7612fef92bfa57ada1ac75b1c55badb25eaa364c
                 @endif
             </h4>
             <h4 style="font-weight: bold;margin-right: 2%;"> اجمالي الفاتورة : {{$order->total_price}} {{__('app.settings.currency')}}</h4>

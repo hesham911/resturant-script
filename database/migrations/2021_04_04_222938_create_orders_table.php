@@ -26,7 +26,7 @@ class CreateOrdersTable extends Migration
                 $table->foreign('user_id')->references('id')->on('users');
             $table->tinyInteger('type')->default(1);
             $table->bigInteger('client_phone')->nullable();
-            $table->text('client_zone')->nullable();
+            $table->bigInteger('client_zone')->nullable();
             $table->tinyInteger('status')->default(0);
             $table->text('cancel_reason')->nullable();
             $table->timestamps();

@@ -60,12 +60,27 @@
                     </li>
                 @else
                     <li class="nav-item dropdown d-none d-md-block">
+<<<<<<< HEAD
                         <a href="{{url('/dashbord/orders/create')}}" role="button"
+=======
+                        <a href="{{route('start.work.view')}}" role="button"
+>>>>>>> 7612fef92bfa57ada1ac75b1c55badb25eaa364c
                             class="nav-link btn btn-secondary">
                             POS   <i data-feather="shopping-cart"></i>
                         </a>
                     </li>
                 @endif
+<<<<<<< HEAD
+=======
+                @if (\Illuminate\Support\Facades\Auth::user()->userLog() == true)
+                    <li class="nav-item dropdown d-none d-md-block">
+                        <a href="{{route('end.work.view',['workperiod'=>\App\WorkPeriod::GetIdFromUser(Auth::id())->first()->id])}}" role="button"
+                           class="nav-link btn btn-secondary">
+                            إنهاء الشفت
+                        </a>
+                    </li>
+                @endif
+>>>>>>> 7612fef92bfa57ada1ac75b1c55badb25eaa364c
                 {{-- <li class="nav-item dropdown">
                     <a href="#" class="nav-link nav-link-notify" title="Notifications" data-toggle="dropdown">
                         <i data-feather="bell"></i>

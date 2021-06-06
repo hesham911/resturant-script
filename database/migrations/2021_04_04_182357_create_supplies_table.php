@@ -21,7 +21,10 @@ class CreateSuppliesTable extends Migration
             $table->bigInteger('user_id')->unsigned();
                 $table->foreign('user_id')->references('id')->on('users');
             $table->decimal('quantity');
+<<<<<<< HEAD
             $table->string('Supplier_name');
+=======
+>>>>>>> 7612fef92bfa57ada1ac75b1c55badb25eaa364c
             $table->integer('price');
             $table->date('expiry_date')->nullable();
             $table->boolean('status')->default(false);
