@@ -20,7 +20,6 @@ class ProductSeeder extends Seeder
             [
                 'name'=>'مارجريتا',
                 'subcategory_id'=>$pizza,
-                'type'=>'1',
                 'price'=>'20',
                 'created_at'=> Carbon::now()->toDateTimeString(),
                 'updated_at'=> Carbon::now()->toDateTimeString(),
@@ -28,7 +27,6 @@ class ProductSeeder extends Seeder
             ,[
                 'name'=>'اسبريسو',
                 'subcategory_id'=> $coffee,
-                'type'=>'1',
                 'price'=>'30',
                 'created_at'=> Carbon::now()->toDateTimeString(),
                 'updated_at'=> Carbon::now()->toDateTimeString(),

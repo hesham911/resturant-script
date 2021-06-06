@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use Illuminate\Support\Facades\DB;
 use function PHPSTORM_META\type;
 
 class Order extends Model
@@ -46,6 +47,28 @@ class Order extends Model
     {
         return self::status()[$this->status];
     }
+
+    // Full Address
+    public function getFullAddressAttribute()
+    {
+        $add=DB::table('client_zone')->where('id',$this->client_zone)->first();
+        $zone=Zone::where('id',$add->zone_id)->first()->name;
+        return $zone.'-'.$add->address;
+    }
+    //Delivery Price
+    public function getDeliveryPriceAttribute()
+    {
+        $add=DB::table('client_zone')->where('id',$this->client_zone)->first();
+        $zone=Zone::where('id',$add->zone_id)->first();
+        return $zone->price;
+    }
+
+    //Delivery Phone
+    public function getDeliveryPhoneAttribute()
+    {
+        $phone=Phone::where('id',$this->client_phone)->first()->number;
+        return $phone;
+    }
     // get total price
     public function getTotalPriceAttribute()
     {
@@ -55,6 +78,11 @@ class Order extends Model
         {
             $for_one=$product->price * $product->pivot->quantity;
             $total +=$for_one;
+        }
+        if ($this->type == 1)
+        {
+            $delev=$this->delivery_price;
+            $total+=$delev;
         }
         return $total;
         //return $this->products->sum('price');

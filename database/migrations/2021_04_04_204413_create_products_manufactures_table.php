@@ -21,7 +21,6 @@ class CreateProductsManufacturesTable extends Migration
             $table->bigInteger('product_id')->unsigned();
                 $table->foreign('product_id')->references('id')->on('products');
             $table->decimal('required_quantity');
-            $table->decimal('waste_percentage');
             $table->timestamps();
             $table->softDeletes();
         });

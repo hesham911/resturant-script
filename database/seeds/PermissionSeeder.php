@@ -83,6 +83,15 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'عرض مصروفات غير مباشرة']);
         Permission::create(['name' => 'إضافة مصروفات غير مباشرة']);
         Permission::create(['name' => 'تعديل مصروفات غير مباشرة']);
+
+        Permission::create(['name' => 'عرض الخزينة']);
+        Permission::create(['name' => 'إضافة الخزينة']);
+        Permission::create(['name' => 'تعديل الخزينة']);
+
+        Permission::create(['name' => 'عرض التحويلات المالية']);
+        Permission::create(['name' => 'إضافة التحويلات المالية']);
+
+        //Permission::create(['name' => 'تعديل الخزينة']);
        // Permission::create(['name' => 'delete-indirect-expenses']);
 
 
@@ -94,7 +103,8 @@ class PermissionSeeder extends Seeder
 
         Permission::create(['name' => 'تأكيد الدفع']);
         Permission::create(['name' => 'البحث عن عملاء']);
-
+        Permission::create(['name' => 'بدأ الشيفت']);
+        Permission::create(['name' => 'إغلاق الشيفت']);
 
         //>>>>>>>Create system kitchen operations
         Permission::create(['name' => 'عرض تصنيع منتج']);

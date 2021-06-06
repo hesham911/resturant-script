@@ -13,14 +13,16 @@ class CreateMaterialsTable extends Migration
      */
     public function up()
     {
-        Schema::create('materials', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->bigInteger('measuring_id')->unsigned();
-                $table->foreign('measuring_id')->references('id')->on('material_measurings');
-            $table->timestamps();
-            $table->softDeletes();
-        });
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+            Schema::create('materials', function (Blueprint $table) {
+                $table->id();
+                $table->string('name');
+                $table->bigInteger('measuring_id')->unsigned();
+                    $table->foreign('measuring_id')->references('id')->on('material_measurings');
+                $table->timestamps();
+                $table->softDeletes();
+            });
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 
     /**
@@ -30,6 +32,8 @@ class CreateMaterialsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('materials');
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+            Schema::dropIfExists('materials');
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

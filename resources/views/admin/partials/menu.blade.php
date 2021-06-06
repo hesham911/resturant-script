@@ -7,45 +7,45 @@
             <span>Dashboard</span>
         </a>
     </li> --}}
-    <li>
-        @if (Auth::user()->hasPermissionTo('البحث عن عملاء'))
-            <a @if(request()->segment(1) == 'users') class="active"
-            @endif href="{{ route('clients.view.search') }}">
-                <span class="nav-link-icon">
-                    <i class="fa fa-address-book-o" aria-hidden="true"></i>
-                </span>
-                <span>البحث في العملاء</span>
-            </a>
-        @endif
-    </li>
+    {{--<li>--}}
+        {{--@if (Auth::user()->hasPermissionTo('البحث عن عملاء'))--}}
+            {{--<a @if(request()->segment(1) == 'users') class="active"--}}
+            {{--@endif href="{{ route('clients.view.search') }}">--}}
+                {{--<span class="nav-link-icon">--}}
+                    {{--<i class="fa fa-address-book-o" aria-hidden="true"></i>--}}
+                {{--</span>--}}
+                {{--<span>البحث في العملاء</span>--}}
+            {{--</a>--}}
+        {{--@endif--}}
+    {{--</li>--}}
 
     <li>
         
-    <!-- Orders -->
-    <li>
-        @if (Auth::user()->hasPermissionTo('عرض طلب'))
-        <a href="#">
-            <span class="nav-link-icon">
-                <i data-feather="shopping-cart"></i>
-            </span>
-            <span>{{__('orders.titles.index')}}</span>
-        </a>
-        @endif
-        <ul>
-            @if (Auth::user()->hasPermissionTo('عرض طلب'))
-                <li>
-                    <a class="{{(request()->is('orders'))? 'active' : '' }}"
-                        href="{{ route('orders.index') }}">{{__('app.menu.show_all')}}</a>
-                </li>
-            @endif
-            @if (Auth::user()->hasPermissionTo('إضافة طلب'))            
-                <li>
-                    <a class="{{(request()->is('orders/create'))? 'active' : '' }}"
-                        href="{{ route('orders.create') }}">{{__('app.menu.add_new')}}</a>
-                </li>
-            @endif
-        </ul>
-    </li>
+    {{--<!-- Orders -->--}}
+    {{--<li>--}}
+        {{--@if (Auth::user()->hasPermissionTo('عرض طلب'))--}}
+        {{--<a href="#">--}}
+            {{--<span class="nav-link-icon">--}}
+                {{--<i data-feather="shopping-cart"></i>--}}
+            {{--</span>--}}
+            {{--<span>{{__('orders.titles.index')}}</span>--}}
+        {{--</a>--}}
+        {{--@endif--}}
+        {{--<ul>--}}
+            {{--@if (Auth::user()->hasPermissionTo('عرض طلب'))--}}
+                {{--<li>--}}
+                    {{--<a class="{{(request()->is('orders'))? 'active' : '' }}"--}}
+                        {{--href="{{ route('orders.index') }}">{{__('app.menu.show_all')}}</a>--}}
+                {{--</li>--}}
+            {{--@endif--}}
+            {{--@if (Auth::user()->hasPermissionTo('إضافة طلب'))            --}}
+                {{--<li>--}}
+                    {{--<a class="{{(request()->is('orders/create'))? 'active' : '' }}"--}}
+                        {{--href="{{ route('orders.create') }}">{{__('app.menu.add_new')}}</a>--}}
+                {{--</li>--}}
+            {{--@endif--}}
+        {{--</ul>--}}
+    {{--</li>--}}
 
     <li>
     <!-- Products -->
@@ -53,7 +53,7 @@
         @if (Auth::user()->hasPermissionTo('عرض منتج'))
             <a href="#">
                 <span class="nav-link-icon">
-                    <i class="fas fa-product-hunt" aria-hidden="true"></i>
+                    <i class="fa fa-product-hunt" aria-hidden="true"></i>
                 </span>
                 <span>{{__('products.titles.index')}}</span>
             </a>
@@ -118,28 +118,28 @@
         </ul>
     </li>
 
-    <li>
-        @if (Auth::user()->hasAnyPermission(['إضافة صلاحية','عرض صلاحية']))
-        <a href="#">
-            <span class="nav-link-icon">
-                <i class="fa fa-lock fa-2x" ></i>
-            </span>
-            <span> الصلاحيات</span>
-        </a>
-        @endif
-        <ul>
-            @if (Auth::user()->hasAnyPermission(['عرض صلاحية']))
-                <li>
-                    <a class="{{(request()->is('dashbord/roles'))? 'active' : '' }}" href="{{route('roles.index')}}">عرض كل</a>
-                </li>
-            @endif
-            @if (Auth::user()->hasAnyPermission(['إضافة صلاحية']))
-                <li>
-                    <a class="{{(request()->is('dashbord/roles/create'))? 'active' : '' }}" href="{{ route('roles.create') }}">إضافة جديد</a>
-                </li>
-            @endif
-    </ul>
-    </li>
+    {{--<li>--}}
+        {{--@if (Auth::user()->hasAnyPermission(['إضافة صلاحية','عرض صلاحية']))--}}
+        {{--<a href="#">--}}
+            {{--<span class="nav-link-icon">--}}
+                {{--<i class="fa fa-lock fa-2x" ></i>--}}
+            {{--</span>--}}
+            {{--<span> الصلاحيات</span>--}}
+        {{--</a>--}}
+        {{--@endif--}}
+        {{--<ul>--}}
+            {{--@if (Auth::user()->hasAnyPermission(['عرض صلاحية']))--}}
+                {{--<li>--}}
+                    {{--<a class="{{(request()->is('dashbord/roles'))? 'active' : '' }}" href="{{route('roles.index')}}">عرض كل</a>--}}
+                {{--</li>--}}
+            {{--@endif--}}
+            {{--@if (Auth::user()->hasAnyPermission(['إضافة صلاحية']))--}}
+                {{--<li>--}}
+                    {{--<a class="{{(request()->is('dashbord/roles/create'))? 'active' : '' }}" href="{{ route('roles.create') }}">إضافة جديد</a>--}}
+                {{--</li>--}}
+            {{--@endif--}}
+    {{--</ul>--}}
+    {{--</li>--}}
 
     <li>
         @if (Auth::user()->hasAnyPermission(['إضافة عميل','عرض عميل','إضافة مستخدم','عرض مستخدم']))
@@ -170,7 +170,7 @@
             @endif
             @if (Auth::user()->hasAnyPermission(['إضافة مستخدم','عرض مستخدم']))
             <li>
-                <a href="#">الموظفين</a>
+                <a href="#">المستخدمين</a>
                 <ul>
                     @if (Auth::user()->hasAnyPermission(['عرض مستخدم']))
                         <li>
@@ -191,68 +191,81 @@
         @if (Auth::user()->hasAnyPermission(['إضافة قسم','عرض قسم']))
             <a href="#">
                 <span class="nav-link-icon">
-                    <i data-feather='layers' ></i>
+                    <i class="fa fa-users"></i>
                 </span>
-                <span> الأقسام</span>
+                <span>التحكم في التصنيفات</span>
             </a>
         @endif
         <ul>
-            @if (Auth::user()->hasAnyPermission(['عرض قسم']))
-                <li>
-                    <a class="{{(request()->is('dashbord/categories'))? 'active' : '' }}" href="{{route('categories.index')}}">عرض الكل</a>
-                </li>
-            @endif
-            @if (Auth::user()->hasAnyPermission(['أضافة قسم']))
-                <li>
-                    <a class="{{(request()->is('dashbord/categories/create'))? 'active' : '' }}" href="{{ route('categories.create') }}">إضافة جديد</a>
-                </li>
-            @endif
-        </ul>
-    </li>
-    <li>
-        @if (Auth::user()->hasAnyPermission(['أضافة قسم','عرض قسم']))
-            <a href="#">
+            <li>
+                @if (Auth::user()->hasAnyPermission(['إضافة قسم','عرض قسم','تعديل قسم','حذف القسم']))
+                    <a href="#">
                 <span class="nav-link-icon">
                     <i data-feather='layers' ></i>
                 </span>
-                <span> {{__('subcategories.titles.index')}}</span>
-            </a>
-        @endif
-        <ul>
-            @if (Auth::user()->hasAnyPermission(['عرض قسم']))
-                <li>
-                    <a class="{{(request()->is('dashbord/subcategories'))? 'active' : '' }}" href="{{route('subcategories.index')}}">عرض الكل</a>
-                </li>
-            @endif
-            @if (Auth::user()->hasAnyPermission(['أضافة قسم']))
-                <li>
-                    <a class="{{(request()->is('dashbord/subcategories/create'))? 'active' : '' }}" href="{{ route('subcategories.create') }}">إضافة جديد</a>
-                </li>
-            @endif
-        </ul>
-    </li>
-    <li>
-        @if (Auth::user()->hasAnyPermission(['إضافة إعدادات','عرض إعدادات']))
-            <a href="#">
+                        <span> الأقسام الرئيسية</span>
+                    </a>
+                @endif
+                <ul>
+                    @if (Auth::user()->hasAnyPermission(['عرض قسم']))
+                        <li>
+                            <a class="{{(request()->is('dashbord/categories'))? 'active' : '' }}" href="{{route('categories.index')}}">عرض الكل</a>
+                        </li>
+                    @endif
+                    @if (Auth::user()->hasAnyPermission(['أضافة قسم']))
+                        <li>
+                            <a class="{{(request()->is('dashbord/categories/create'))? 'active' : '' }}" href="{{ route('categories.create') }}">إضافة جديد</a>
+                        </li>
+                    @endif
+                </ul>
+            </li>
+            <li>
+                @if (Auth::user()->hasAnyPermission(['أضافة قسم','عرض قسم']))
+                    <a href="#">
                 <span class="nav-link-icon">
-                    <i data-feather='settings' ></i>
+                    <i data-feather='layers' ></i>
                 </span>
-                <span> {{__('settings.titles.index')}}</span>
-            </a>
-        @endif
-        <ul>
-            @if (Auth::user()->hasAnyPermission(['عرض إعدادات']))
-                <li>
-                    <a class="{{(request()->is('dashbord/settings'))? 'active' : '' }}" href="{{route('settings.index')}}">عرض الكل</a>
-                </li>
-            @endif
-            @if (Auth::user()->hasAnyPermission(['إضافة إعدادات']))
-                <li>
-                    <a class="{{(request()->is('dashbord/settings/create'))? 'active' : '' }}" href="{{ route('settings.create') }}">إضافة جديد</a>
-                </li>
-            @endif
+                        <span> {{__('subcategories.titles.index')}}</span>
+                    </a>
+                @endif
+                <ul>
+                    @if (Auth::user()->hasAnyPermission(['عرض قسم']))
+                        <li>
+                            <a class="{{(request()->is('dashbord/subcategories'))? 'active' : '' }}" href="{{route('subcategories.index')}}">عرض الكل</a>
+                        </li>
+                    @endif
+                    @if (Auth::user()->hasAnyPermission(['أضافة قسم']))
+                        <li>
+                            <a class="{{(request()->is('dashbord/subcategories/create'))? 'active' : '' }}" href="{{ route('subcategories.create') }}">إضافة جديد</a>
+                        </li>
+                    @endif
+                </ul>
+            </li>
         </ul>
     </li>
+
+    {{--<li>--}}
+        {{--@if (Auth::user()->hasAnyPermission(['إضافة إعدادات','عرض إعدادات']))--}}
+            {{--<a href="#">--}}
+                {{--<span class="nav-link-icon">--}}
+                    {{--<i data-feather='settings' ></i>--}}
+                {{--</span>--}}
+                {{--<span> {{__('settings.titles.index')}}</span>--}}
+            {{--</a>--}}
+        {{--@endif--}}
+        {{--<ul>--}}
+            {{--@if (Auth::user()->hasAnyPermission(['عرض إعدادات']))--}}
+                {{--<li>--}}
+                    {{--<a class="{{(request()->is('dashbord/settings'))? 'active' : '' }}" href="{{route('settings.index')}}">عرض الكل</a>--}}
+                {{--</li>--}}
+            {{--@endif--}}
+            {{--@if (Auth::user()->hasAnyPermission(['إضافة إعدادات']))--}}
+                {{--<li>--}}
+                    {{--<a class="{{(request()->is('dashbord/settings/create'))? 'active' : '' }}" href="{{ route('settings.create') }}">إضافة جديد</a>--}}
+                {{--</li>--}}
+            {{--@endif--}}
+        {{--</ul>--}}
+    {{--</li>--}}
     <li>
         @if (Auth::user()->hasAnyPermission(['إضافة مواد خام','عرض مواد خام']))
             <a href="#">
@@ -312,28 +325,28 @@
             </ul>
         @endif
     </li>
-    <li>
-        @if (Auth::user()->hasAnyPermission(['إضافة تصنيع منتج','عرض تصنيع منتج']))
-            <a href="#">
-                <span class="nav-link-icon">
-                    <i class="fa fa-cubes" ></i>
-                </span>
-                <span> {{__('productmanufactures.titles.index')}}</span>
-            </a>
-        @endif
-        <ul>
-            @if (Auth::user()->hasAnyPermission(['عرض تصنيع منتج']))
-                <li>
-                    <a class="{{(request()->is('productmanufactures'))? 'active' : '' }}" href="{{route('productmanufactures.index')}}">عرض الكل</a>
-                </li>
-            @endif
-            @if (Auth::user()->hasAnyPermission(['إضافة تصنيع منتج']))
-                <li>
-                    <a class="{{(request()->is('productmanufactures/create'))? 'active' : '' }}" href="{{ route('productmanufactures.create') }}">إضافة جديد</a>
-                </li>
-            @endif
-        </ul>
-    </li>
+    {{--<li>--}}
+        {{--@if (Auth::user()->hasAnyPermission(['إضافة تصنيع منتج','عرض تصنيع منتج']))--}}
+            {{--<a href="#">--}}
+                {{--<span class="nav-link-icon">--}}
+                    {{--<i class="fa fa-cubes" ></i>--}}
+                {{--</span>--}}
+                {{--<span> {{__('productmanufactures.titles.index')}}</span>--}}
+            {{--</a>--}}
+        {{--@endif--}}
+        {{--<ul>--}}
+            {{--@if (Auth::user()->hasAnyPermission(['عرض تصنيع منتج']))--}}
+                {{--<li>--}}
+                    {{--<a class="{{(request()->is('productmanufactures'))? 'active' : '' }}" href="{{route('productmanufactures.index')}}">عرض الكل</a>--}}
+                {{--</li>--}}
+            {{--@endif--}}
+            {{--@if (Auth::user()->hasAnyPermission(['إضافة تصنيع منتج']))--}}
+                {{--<li>--}}
+                    {{--<a class="{{(request()->is('productmanufactures/create'))? 'active' : '' }}" href="{{ route('productmanufactures.create') }}">إضافة جديد</a>--}}
+                {{--</li>--}}
+            {{--@endif--}}
+        {{--</ul>--}}
+    {{--</li>--}}
     <li>
         @if (Auth::user()->hasAnyPermission(['إضافة طلبية من المطبخ','عرض طلبية من المطبخ']))
             <a href="#">
@@ -376,6 +389,86 @@
                     <a class="{{(request()->is('damagedmaterials/create'))? 'active' : '' }}" href="{{ route('damagedmaterials.create') }}">إضافة جديد</a>
                 </li>
             @endif
+        </ul>
+    </li>
+    <li>
+        @if (Auth::user()->hasAnyPermission(['تعديل تكاليف غير مباشرة','إضافة تكاليف غير مباشرة','عرض تكاليف غير مباشرة']))
+            <a href="#">
+                <span class="nav-link-icon">
+                    <i class="fa fa-money"></i>
+                </span>
+                <span>المحاسبة</span>
+            </a>
+        @endif
+        <ul>
+            @if (Auth::user()->hasAnyPermission(['تعديل تكاليف غير مباشرة','إضافة تكاليف غير مباشرة','عرض تكاليف غير مباشرة','إضافة مصروفات غير مباشرة','عرض مصروفات غير مباشرة','تعديل مصروفات غير مباشرة','إضافة الخزينة','عرض الخزينة','تعديل الخزينة','إضافة التحويلات المالية','عرض التحويلات المالية']))
+                <li>
+                    <a href="#">التكاليف الغير مباشرة</a>
+                    <ul>
+                        @if (Auth::user()->hasAnyPermission(['عرض تكاليف غير مباشرة']))
+                            <li>
+                                <a class="{{(request()->is('dashbord/indirect-costs'))? 'active' : '' }}" href="{{route('indirect.costs.index')}}">عرض الكل</a>
+                            </li>
+                        @endif
+                        @if (Auth::user()->hasAnyPermission(['إضافة تكاليف غير مباشرة']))
+                            <li>
+                                <a class="{{(request()->is('dashbord/indirect-costs/create'))? 'active' : '' }}" href="{{route('indirect.costs.create')}}">إضافة  جديدة</a>
+                            </li>
+                        @endif
+                    </ul>
+                </li>
+            @endif
+            @if (Auth::user()->hasAnyPermission(['إضافة مصروفات غير مباشرة','عرض مصروفات غير مباشرة','تعديل مصروفات غير مباشرة']))
+                <li>
+                    <a href="#">المصروفات الغير مباشرة</a>
+                    <ul>
+                        @if (Auth::user()->hasAnyPermission(['عرض مصروفات غير مباشرة']))
+                            <li>
+                                <a class="{{(request()->is('dashbord/indirect-expenses'))? 'active' : '' }}" href="{{route('indirect.expenses.index')}}">عرض الكل</a>
+                            </li>
+                        @endif
+                        @if (Auth::user()->hasAnyPermission(['إضافة مصروفات غير مباشرة']))
+                            <li>
+                                <a class="{{(request()->is('dashbord/indirect-expenses/create'))? 'active' : '' }}" href="{{route('indirect.expenses.create')}}">إضافة  جديدة</a>
+                            </li>
+                        @endif
+                    </ul>
+                </li>
+            @endif
+                @if (Auth::user()->hasAnyPermission(['إضافة الخزينة','عرض الخزينة','تعديل الخزينة']))
+                    <li>
+                        <a href="#">التحكم في الخزينة</a>
+                        <ul>
+                            @if (Auth::user()->hasAnyPermission(['عرض الخزينة']))
+                                <li>
+                                    <a class="{{(request()->is('dashbord/banks'))? 'active' : '' }}" href="{{route('banks.index')}}">عرض الكل</a>
+                                </li>
+                            @endif
+                            @if (Auth::user()->hasAnyPermission(['إضافة الخزينة']))
+                                <li>
+                                    <a class="{{(request()->is('dashbord/banks/create'))? 'active' : '' }}" href="{{route('banks.create')}}">إضافة  جديدة</a>
+                                </li>
+                            @endif
+                        </ul>
+                    </li>
+                @endif
+                @if (Auth::user()->hasAnyPermission(['إضافة التحويلات المالية','عرض التحويلات المالية']))
+                    <li>
+                        <a href="#">التحكم في التحويلات المالية</a>
+                        <ul>
+                            @if (Auth::user()->hasAnyPermission(['عرض التحويلات المالية']))
+                                <li>
+                                    <a class="{{(request()->is('dashbord/transactions'))? 'active' : '' }}" href="{{route('transactions.index')}}">عرض الكل</a>
+                                </li>
+                            @endif
+                            @if (Auth::user()->hasAnyPermission(['إضافة التحويلات المالية']))
+                                <li>
+                                    <a class="{{(request()->is('dashbord/transactions/create'))? 'active' : '' }}" href="{{route('transactions.create')}}">إضافة  جديدة</a>
+                                </li>
+                            @endif
+                        </ul>
+                    </li>
+                @endif
         </ul>
     </li>
 </ul>

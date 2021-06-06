@@ -19,7 +19,6 @@ class CreateProductsTable extends Migration
             $table->bigInteger('subcategory_id')->unsigned();
                 $table->foreign('subcategory_id')->references('id')->on('subcategories');
             $table->string('name');
-            $table->tinyInteger('type');
             $table->integer('price');
             $table->timestamps();
             $table->softDeletes();

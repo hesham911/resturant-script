@@ -13,6 +13,7 @@ class CreateTablesTable extends Migration
      */
     public function up()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Schema::create('tables', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -22,6 +23,7 @@ class CreateTablesTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 
     /**
@@ -31,6 +33,8 @@ class CreateTablesTable extends Migration
      */
     public function down()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Schema::dropIfExists('tables');
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

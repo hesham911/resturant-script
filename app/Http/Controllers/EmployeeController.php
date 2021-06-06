@@ -32,7 +32,7 @@ class EmployeeController extends Controller
     {
         $types = Employee::type();
 
-        $roles = Role::all()->pluck('name');
+        $roles = Role::with('permissions:name')->get();
 
         return view('admin.users.employees.create',['types'=> $types,'roles'=>$roles]);
     }
@@ -45,13 +45,22 @@ class EmployeeController extends Controller
      */
     public function store(EmployeeRequest $request)
     {
+
         $validated = $request->validated();
+
         $validated['password'] = bcrypt($request->password);
         $validated['type'] = 1;
         $validated['is_admin'] = 1;
         //dd($request->all(),$validated);
         $user = User::create($validated);
-
+        $permissions =[];
+        if ($request->roles != null){
+            foreach ($request->roles as $k => $role){
+                foreach ($role as $key => $value){
+                    $permissions[] = $value;
+                }
+            }
+        }
         $employee = $user->employee()->create([
             'user_id'   =>$user->id,
             'type'      =>$request->type_employees,
@@ -60,7 +69,7 @@ class EmployeeController extends Controller
 
         if ($employee){
             $user->phones()->createMany($request->group_a);
-            $user->assignRole($request->roles);
+            $user->givePermissionTo($permissions);
         }
         $request->session()->flash('message',__('users.employees.massages.created_successfully'));
         return redirect(route('employees.index'));
@@ -88,15 +97,19 @@ class EmployeeController extends Controller
     public function edit(Employee $employee)
     {
         $types  = Employee::type();
-        $employeeRoles = $employee->user->roles->pluck('name');
-        $roles  = Role::whereNotIn('name',$employeeRoles)->get()->pluck('name');
+        $roles  =  Role::with('permissions:name')->get();
         $phones = $employee->user->phones->pluck('number');
-
+        $userPermissions = [];
+        if ($employee->user->getAllPermissions() != null){
+            foreach ($employee->user->getAllPermissions()->pluck('name') as $k => $value){
+                $userPermissions[] = $value;
+            }
+        }
         return view('admin.users.employees.edit',[
             'employee'          => $employee ,
             'types'             => $types ,
             'roles'             => $roles,
-            'employeeRoles'     => $employeeRoles,
+            'userPermissions'   => $userPermissions,
             'phones'            => $phones
         ]);
     }
@@ -120,10 +133,19 @@ class EmployeeController extends Controller
             'type'      =>  $request->type_employees,
             'status'    =>  $request->status_employees,
         ]);
+
         if ($updated){
+            $permissions =[];
+            if ($request->roles != null){
+                foreach ($request->roles as $k => $role){
+                    foreach ($role as $key => $value){
+                        $permissions[] = $value;
+                    }
+                }
+            }
             $employee->user->phones()->delete();
             $employee->user->phones()->createMany($request->group_a);
-            $employee->user->syncRoles($request->roles);
+            $employee->user->syncPermissions($permissions);
         }
         $request->session()->flash('message',__('users.employees.massages.updated_successfully'));
         return redirect(route('employees.index'));
