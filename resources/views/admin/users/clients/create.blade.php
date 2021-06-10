@@ -149,7 +149,9 @@
 
             $('.basic-repeater').repeater({
                 show: function () {
-                    $(this).slideDown();
+                    $(this).slideDown(function (){
+                        $('.layout-wrapper .content-wrapper .content-body .content').getNiceScroll().resize();
+                    });
                     $('.select2-container').remove();
                     $('.zone').select2({});
                     $('.select2-container').css('width','100%');

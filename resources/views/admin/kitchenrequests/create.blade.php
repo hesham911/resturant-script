@@ -54,11 +54,11 @@
                                                 @endif
                                             </select>
                                             <input type="text" class="form-control mx-3" id="inputPassword" placeholder="{{__('kitchenrequests.quantity')}}" value="{{old('quantity')}}" name="quantity" required>
-                                            <input data-repeater-delete type="button" value="Delete" class="btn btn-danger w-25"/>
+                                            <input data-repeater-delete type="button" value="{{__('app.forms.btn.delete')}}" class="btn btn-danger w-25"/>
                                         </div>
                                     </div> 
                                 </div>
-                                <input data-repeater-create type="button" value="Add" class="btn btn-primary" id="RepeaterButton"/>
+                                <input data-repeater-create type="button" value="{{__('app.forms.btn.add')}}" class="btn btn-primary" id="RepeaterButton"/>
                                 <input type="hidden" value="{{Auth::user()->id}}" name="user_id">
                                 <div class="d-flex flex-row-reverse  mt-5">
                                     <button class="btn btn-primary mt-5" type="submit">{{__('app.forms.btn.FormSubmit')}}</button>
@@ -88,7 +88,9 @@
         });
         $('.repeater').repeater({
             show: function () {
-                $(this).slideDown();
+                $(this).slideDown(function (){
+                    $('.layout-wrapper .content-wrapper .content-body .content').getNiceScroll().resize();
+                });
                 $('.select2-container').remove();
                 $('.select2').select2({});
                 $('.select2-container').css('width','100%');

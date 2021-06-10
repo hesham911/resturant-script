@@ -49,10 +49,13 @@ class WorkPeriodController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'bank'=>'required',
+        ]);
         $workPeriod= array(
             'user_id'           => Auth::id(),
             'bank_id'           => $request['bank'],
-//            'opening_balance'   => $request['opening_balance'],
+//            'opening_balance' => $request['opening_balance'],
             'date_start'        => Carbon::now(),
             'status'            => 1,
         );
