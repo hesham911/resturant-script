@@ -24,14 +24,16 @@ class OrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'client_id'  =>   'integer',
-            'client_phone'  =>   'numeric',
-            'client_zone'  =>   'string',
             'user_id' =>   'required',
             'category_id' =>   'required',
             'type' =>   'required|numeric',
+            'group_a' =>'required',
             'group_a.*.quantity' =>   'required|numeric',
+            'group_a.*.product_id' =>   'required|numeric',
             'table_id'   =>'required_if:type,==,0',
+            'client_id'   =>'required_if:type,==,1',
+            'client_phone'  =>'required_if:type,==,1',
+            'client_zone'  =>'required_if:type,==,1',
             //'products'   =>'required',
         ];
     }

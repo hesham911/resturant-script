@@ -26,9 +26,15 @@ class ProductRequest extends FormRequest
         return [
             'name'  =>   'required|min:2',
             'subcategory_id' =>   'required',
-            'type' =>   'required|numeric',
             'price' =>   'required|numeric|gt:0',
+            'group'            =>   'array',
+            'group.*.material_id'        => 'required',
+            'group.*.required_quantity'  => 'required|numeric',
         ];
+        // $ProductManufactures = [
+        //     'group.*.material_id'=>'required',
+        //     'group.*.required_quantity'=>'required|numeric|max:999999',
+        // ];
     }
     public function attributes()
     {
@@ -36,7 +42,6 @@ class ProductRequest extends FormRequest
             'name'      =>__('products.name'),
             'subcategory_id'     =>__('products.subcategory_id'),
             'price'     =>__('products.price'),
-            'type'     =>__('products.type'),
         ];
     }
 }
