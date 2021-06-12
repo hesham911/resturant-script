@@ -51,10 +51,18 @@ class KitchenRequestController extends Controller
         foreach ($validated_data['group'] as  $kitchen_request) {
             $material = Material::find($kitchen_request['material_id']);
             $supplies = $material->supplies->where('status',false);
+            if ($supplies->sum('quantity')-$supplies->sum('used_amount') < $kitchen_request['quantity'] ) {
+                $request->session()->flash('message',' الكمية المطلوبة أكبر من المخزون ');
+                return redirect(route('kitchenrequests.create')); 
+            }
+        }
+        $supply_ids = [];
+        foreach ($validated_data['group'] as  $kitchen_request) {
+            $material = Material::find($kitchen_request['material_id']);
+            $supplies = $material->supplies->where('status',false);
             $request_quantity = $kitchen_request['quantity'];
             $WarehouseStock = WarehouseStock::where('material_id',$kitchen_request['material_id'])->get()->first();
             $request_total_price=0 ;
-            $supply_ids = [];
             if ($WarehouseStock->quantity >= $kitchen_request['quantity']) {
                 foreach ($supplies as $supply) {
                     $supply_remaining_amount = $supply->quantity - $supply->used_amount;
@@ -66,19 +74,22 @@ class KitchenRequestController extends Controller
                             $supply->status = true;
                             $request_total_price = $request_total_price + ( $supply_unit_price * $supply_remaining_amount);
                             $supply->save();
+                            $supply_ids[]= ['supply_id'=>$supply->id , 'quantity'=> $supply_remaining_amount];
+
                         }elseif ( $supply_remaining_amount > $request_quantity ) {
                             $supply->used_amount = $supply->used_amount + $request_quantity;
                             $request_total_price = $request_total_price + ( $supply_unit_price * $request_quantity);
-                            $request_quantity = 0;
                             $supply->save();
+                            $supply_ids[]= ['supply_id'=>$supply->id , 'quantity'=> $request_quantity];
+                            $request_quantity = 0;
                         }else {
                             $supply->used_amount = $supply->used_amount + $request_quantity;
                             $supply->status = true;
                             $request_total_price = $request_total_price + ( $supply_unit_price * $request_quantity);
-                            $request_quantity = 0;
                             $supply->save();
+                            $supply_ids[]= ['supply_id'=>$supply->id , 'quantity'=> $request_quantity];
+                            $request_quantity = 0;
                         }
-                        $supply_ids[]= $supply->id;
                     }
                 }
                 $WarehouseStock->quantity =$WarehouseStock->quantity - $kitchen_request['quantity'] ;
@@ -157,6 +168,11 @@ class KitchenRequestController extends Controller
         $request_quantity = $request->quantity;
         $request_total_price=0 ;
         $supply_ids = [];
+
+        if ($supplies->sum('quantity')-$supplies->sum('used_amount') < $request_quantity) {
+            $request->session()->flash('message',' الكمية المطلوبة أكبر من المخزون ');
+            return redirect(route('kitchenrequests.create')); 
+        }
         if ($WarehouseStock->quantity >= $request->quantity) {
             foreach ($supplies as $supply) {
                 $supply_remaining_amount = $supply->quantity - $supply->used_amount;
@@ -168,19 +184,21 @@ class KitchenRequestController extends Controller
                         $supply->status = true;
                         $request_total_price = $request_total_price + ( $supply_unit_price * $supply_remaining_amount);
                         $supply->save();
+                        $supply_ids[]= ['supply_id'=>$supply->id , 'quantity'=> $supply_remaining_amount];
                     }elseif ( $supply_remaining_amount > $request_quantity ) {
                         $supply->used_amount = $supply->used_amount + $request_quantity;
                         $request_total_price = $request_total_price + ( $supply_unit_price * $request_quantity);
-                        $request_quantity = 0;
                         $supply->save();
+                        $supply_ids[]= ['supply_id'=>$supply->id , 'quantity'=> $request_quantity];
+                        $request_quantity = 0;
                     }else {
                         $supply->used_amount = $supply->used_amount + $request_quantity;
                         $supply->status = true;
                         $request_total_price = $request_total_price + ( $supply_unit_price * $request_quantity);
-                        $request_quantity = 0;
                         $supply->save();
+                        $supply_ids[]= ['supply_id'=>$supply->id , 'quantity'=> $request_quantity];
+                        $request_quantity = 0;
                     }
-                    $supply_ids[]= $supply->id;
                 }
             }
             $WarehouseStock->quantity =$WarehouseStock->quantity - $request->quantity ;

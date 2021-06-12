@@ -19,6 +19,7 @@ class CreateRequestsupplyTable extends Migration
                 $table->foreign('request_id')->references('id')->on('kitchen_requests');
             $table->bigInteger('supply_id')->unsigned();
                 $table->foreign('supply_id')->references('id')->on('supplies');
+            $table->decimal('quantity');
             $table->timestamps();
         });
     }
