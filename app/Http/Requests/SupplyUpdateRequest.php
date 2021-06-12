@@ -28,7 +28,7 @@ class SupplyUpdateRequest extends FormRequest
             'quantity'=>'required|numeric|max:999999',
             'price'=>'required|numeric|max:999999',
             'Supplier_name'=>'required',
-            'expiry_date'=>'required',
+            'expiry_date'=>'nullable',
             'user_id'=>'required',
             'bill_number'=>'required|numeric|max:999999',
         ];
