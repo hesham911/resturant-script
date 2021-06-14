@@ -7,21 +7,22 @@
             <span>Dashboard</span>
         </a>
     </li> --}}
-    {{--<li>--}}
-        {{--@if (Auth::user()->hasPermissionTo('البحث عن عملاء'))--}}
-            {{--<a @if(request()->segment(1) == 'users') class="active"--}}
-            {{--@endif href="{{ route('clients.view.search') }}">--}}
-                {{--<span class="nav-link-icon">--}}
-                    {{--<i class="fa fa-address-book-o" aria-hidden="true"></i>--}}
-                {{--</span>--}}
-                {{--<span>البحث في العملاء</span>--}}
-            {{--</a>--}}
-        {{--@endif--}}
-    {{--</li>--}}
-
     <li>
+        @if (Auth::user()->hasPermissionTo('عرض طلب'))
+
+            <a class="{{(request()->is('orders'))? 'active' : '' }}"
+               href="{{ route('orders.index') }}">
+                <span class="nav-link-icon">
+                <i data-feather="shopping-cart"></i>
+            </span>
+                <span>عرض كل الطلبات</span>
+            </a>
+        @endif
+    </li>
+
+
         
-    {{--<!-- Orders -->--}}
+    <!-- Orders -->
     {{--<li>--}}
         {{--@if (Auth::user()->hasPermissionTo('عرض طلب'))--}}
         {{--<a href="#">--}}
@@ -38,7 +39,7 @@
                         {{--href="{{ route('orders.index') }}">{{__('app.menu.show_all')}}</a>--}}
                 {{--</li>--}}
             {{--@endif--}}
-            {{--@if (Auth::user()->hasPermissionTo('إضافة طلب'))            --}}
+            {{--@if (Auth::user()->hasPermissionTo('إضافة طلب'))--}}
                 {{--<li>--}}
                     {{--<a class="{{(request()->is('orders/create'))? 'active' : '' }}"--}}
                         {{--href="{{ route('orders.create') }}">{{__('app.menu.add_new')}}</a>--}}
