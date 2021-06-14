@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('x',function (){
-
+        \App\User::workFormUserId();
 });
 
 ROute::group([
@@ -290,14 +290,24 @@ ROute::group([
         Route::get('/show/{order}','OrderController@show')->name('orders.show');
     });
 
-    Route::group(['prefix' =>'reports/warehouse'],function(){
-        Route::get('/','WarehouseReportController@index')->name('reports.warehouse.index');
-        Route::post('/data','WarehouseReportController@indexData')->name('reports.warehouse.index.data');
-    });
+    Route::group(['prefix'=>'reports'],function (){
+        Route::group(['prefix' =>'warehouse'],function(){
+            Route::get('/','WarehouseReportController@index')->name('reports.warehouse.index');
+            Route::post('/data','WarehouseReportController@indexData')->name('reports.warehouse.index.data');
+        });
 
-    Route::group(['prefix' =>'reports/sales'],function(){
-        Route::get('/','SalesReportController@index')->name('reports.sales.index');
-        Route::post('/data','SalesReportController@indexData')->name('reports.sales.index.data');
+        Route::group(['prefix' =>'daily'],function(){
+            Route::get('/income','ReportController@dailyIncome')->name('reports.dailyIncome.index');
+            Route::post('/income/data','ReportController@dailyIncomeData')->name('reports.dailyIncome.data');
+            Route::get('/outcome','ReportController@dailyOutcome')->name('reports.dailyOutcome.index');
+            Route::post('/outcome/data','ReportController@dailyOutcomeData')->name('reports.dailyOutcome.data');
+        });
+
+        Route::group(['prefix' =>'sales'],function(){
+            Route::get('/','SalesReportController@index')->name('reports.sales.index');
+            Route::post('/data','SalesReportController@indexData')->name('reports.sales.index.data');
+        });
+
     });
 
     /* Route::get('orders', function () {
