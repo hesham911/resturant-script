@@ -100,4 +100,9 @@ class User extends Authenticatable
         return false;
     }
 
+    public function ScopeWorkFormUserId($query)
+    {
+        return WorkPeriod::where('status',1)->where('user_id',Auth::id())->first()->id;
+    }
+
 }
