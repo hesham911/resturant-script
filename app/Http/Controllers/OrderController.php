@@ -254,7 +254,7 @@ class OrderController extends Controller
             for ($i=0; $i < $product->pivot->quantity ; $i++) {
                 if ($product->ProductManufactures->count() > 0) {
                     foreach ($product->ProductManufactures as $ProductManufacture) {
-                        $kitchenrequests = $order->requests->where('material_id',$ProductManufacture->material_id)->first();
+                        $kitchenrequests = $order->requests->where('material_id',$ProductManufacture->material_id);
                         $productmanufacturequantity = $ProductManufacture->required_quantity;
                         if ($productmanufacturequantity > 0) {
                             foreach ($kitchenrequests as $kitchenrequest) {
