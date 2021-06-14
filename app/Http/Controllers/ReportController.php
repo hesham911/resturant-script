@@ -2,84 +2,56 @@
 
 namespace App\Http\Controllers;
 
+use App\Payment;
 use App\Report;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function dailyIncome()
     {
-        //
+        $x = Payment::whereDate('created_at',Carbon::today())->paginate(14);
+            dd($x);
+        return view('admin.reports.daily.income');
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function dailyOutcome()
     {
-        //
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function dailyIncomeData()
     {
-        //
+        $x = Payment::whereDate('created_at',Carbon::today())->paginate(14);
+        dd($x);
+        return view('admin.reports.daily.income');
+
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Report  $report
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Report $report)
+    public function dailyOutcomeData()
     {
-        //
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Report  $report
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Report $report)
+    public function Income()
     {
-        //
+
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Report  $report
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Report $report)
+    public function Outcome()
     {
-        //
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Report  $report
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Report $report)
+    public function CostReport()
     {
-        //
+
+    }
+
+    public function supplyReport()
+    {
+
     }
 }
