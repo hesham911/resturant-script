@@ -14,13 +14,12 @@
             ])
         </div>
         <div class="mt-2 mt-md-0">
-            <a href="#" class="btn btn-primary" id="printOrder">{{__('orders.titles.print')}}</a>
+            <a href="{{route('orders.printclient',$order->id)}}" class="btn btn-primary" target="_blank" id="printOrder">{{__('orders.titles.print')}}</a>
         </div>
     </div>
     <div class="row col-md-6" id="check-printing" style="background-color: #fff;color:#000;">
         <div>
-            <h5>مطعم سين</h5>
-            <h6>الهاتف : 0213546645</h6>
+            <img src="{{asset('assets/media/image/dark-logo.png')}}" style="margin: 2% 28%;"/>
             <h6> رقم الفاتورة : {{$order->id}}</h6>
             <h6>  نوع الطلب : {{$order->typee}}</h6>
             @if ($order->type == 0)
@@ -28,8 +27,8 @@
             @endif
             @if ($order->type == 1)
                 <h6>  اسم العميل : {{$order->client->user->name}}</h6>
-                <h6>  رقم الهاتف : {{$order->client_phone}}</h6>
-                <h6>  الشارع : {{$order->client_zone}}</h6>
+                <h6>  رقم الهاتف : 0{{$order->delivery_phone}}</h6>
+                <h6>  الشارع : {{$order->full_address}}</h6>
             @endif
             <h6> التاريخ : {{date("Y/m/d")}} - {{date("h:i:s a")}}</h6>
         </div>
@@ -56,7 +55,7 @@
             </tbody>
         </table>
         <div>
-            <h6>  خدمات اضافية : {{0}} {{__('app.settings.currency')}}</h6>
+            <h6>  سعر الديلفيري : {{$order->delivery_price}} {{__('app.settings.currency')}}</h6>
             <h5> اجمالي الفاتورة : {{$order->total_price}} {{__('app.settings.currency')}}</h5>
         </div>
     </div>

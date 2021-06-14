@@ -329,7 +329,7 @@
                                                                                 <a href="{{route('orders.status',['order'=>$order->id,'state'=>3])}}" role="button" class="btn btn-success btn-sm"
                                                                                    title="{{__('orders.actions.payed')}}"><i class="fa fa-credit-card"></i>
                                                                                 </a>
-                                                                                <a href="{{route('orders.printclient',$order->id)}}" role="button" class="btn btn-primary btn-sm"
+                                                                                <a href="{{route('orders.printclient',$order->id)}}" role="button" target="_blank" class="btn btn-primary btn-sm"
                                                                                    title="طباعة"><i class="fa fa-print"></i>
                                                                                 </a>
                                                                                 <a class="sendCancelOrder btn btn-danger btn-sm" role="button" data-toggle="modal"
