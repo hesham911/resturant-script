@@ -298,9 +298,7 @@ ROute::group([
 
         Route::group(['prefix' =>'daily'],function(){
             Route::get('/income','ReportController@dailyIncome')->name('reports.dailyIncome.index');
-            Route::post('/income/data','ReportController@dailyIncomeData')->name('reports.dailyIncome.data');
             Route::get('/outcome','ReportController@dailyOutcome')->name('reports.dailyOutcome.index');
-            Route::post('/outcome/data','ReportController@dailyOutcomeData')->name('reports.dailyOutcome.data');
         });
 
         Route::group(['prefix' =>'sales'],function(){
