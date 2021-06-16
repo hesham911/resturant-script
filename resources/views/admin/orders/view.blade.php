@@ -55,7 +55,9 @@
             </tbody>
         </table>
         <div>
-            <h6>  سعر الديلفيري : {{$order->delivery_price}} {{__('app.settings.currency')}}</h6>
+            @if ($order->type == 1)
+                <h6>  سعر الديلفيري : {{$order->delivery_price}} {{__('app.settings.currency')}}</h6>
+            @endif
             <h5> اجمالي الفاتورة : {{$order->total_price}} {{__('app.settings.currency')}}</h5>
         </div>
     </div>
