@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    {{__('reports.titles.create')}}
+    {{__('reports.titles.daily_income')}}
 @endsection
 @section('head')
     <!-- Prism -->
@@ -15,10 +15,10 @@
 
     <div class="page-header">
         <div>
-            <h3> {{__('reports.titles.warehouse')}} </h3>
+            <h3> {{__('reports.titles.daily_income')}} </h3>
             @include('admin.partials.breadcrumb',[
                 'parent' => [
-                    'name' => __('reports.titles.warehouse'),
+                    'name' => __('reports.titles.daily_income'),
                 ]
             ])
         </div>
@@ -41,7 +41,7 @@
                                     </ul>
                                 </div>
                             @endif
-                            <h6 class="card-title">{{__('reports.titles.warehouse')}}</h6>
+                            <h6 class="card-title">{{__('reports.titles.daily_income')}}</h6>
                             <table id="myTable" class="table table-hover ">
                                 <thead>
                                 <tr>
