@@ -42,39 +42,62 @@
                                 </div>
                             @endif
                             <h6 class="card-title">{{__('reports.titles.warehouse')}}</h6>
-                            <div class="mb-5 row">
-                                <div class="form-group row col-md-3">
-                                    <label class="col-3">من </label>
-                                    <input type="date" class="form-control col-9" id="from">
-                                </div>
-                                <div class="form-group row col-md-4">
-                                    <label class="col-3">الي </label>
-                                    <input type="date" class="form-control col-9" id="to">
-                                </div>
-                                <div class="form-group d-flex col-md-4">
-                                    <label class="col-4">المادة الخام </label>
-                                    <select class="select2 col-8 " multiple id="material">
-                                        @if ($materials->count() > 0)
-                                            @foreach ($materials as $material)
-                                                <option value="{{$material->id}}">{{$material->name}}</option>
-                                            @endforeach
-                                        @endif
-                                    </select>
-                                </div>
-                                <div class="">
-                                    <button class="btn btn-primary" id="view">عرض </button>
-                                </div>
-                            </div>
                             <table id="myTable" class="table table-hover ">
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>المادة الخام</th>
-                                    <th> الوحدة </th>
-                                    <th>الكمية </th>
-                                    <th>السعر</th>
+                                    <th>{{__('reports.daily.employee')}}</th>
+                                    <th>{{__('reports.daily.bank')}}</th>
+                                    <th>{{__('reports.daily.amount')}}</th>
+                                    <th>{{__('reports.daily.time')}}</th>
+                                    <th>{{__('reports.daily.order_show')}}</th>
                                 </tr>
                                 </thead>
+                                <tbody>
+                                    @foreach($payments as $payment)
+                                        <tr>
+                                            <td>{{$payment->id}}</td>
+                                            <td>{{$payment->user->name}}</td>
+                                            <td>{{$payment->workperiod->bank->name}}</td>
+                                            <td>{{$payment->total_price}}</td>
+                                            <td>{{$payment->created_at->format('H:i:s')}}</td>
+                                            <td class="text-right">
+                                                <div class="dropdown">
+                                                    <a href="#" data-toggle="dropdown"
+                                                       class="btn btn-floating"
+                                                       aria-haspopup="true" aria-expanded="false">
+                                                        <i class="ti-more-alt"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a href="{{route('orders.show',['order'=>$payment->order_id])}}" class="dropdown-item">{{__('orders.actions.view')}}</a>                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th> {{__('reports.daily.date')}} {{\Carbon\Carbon::today()->format('Y-m-d')}}</th>
+                                        <th> {{__('reports.daily.total')}} {{$payments->sum('total_price')}}</th>
+                                        <th> {{__('reports.daily.orders_count')}} {{$payments->count()}}</th>
+                                    </tr>
+
+                                </tfoot>
+                                {{--<thead>--}}
+                               {{----}}
+                                {{--<tr>--}}
+                                    {{--<th>التاريخ</th>--}}
+                                    {{--<th>المجموع الكلي</th>--}}
+                                    {{--<th>عدد الأوردرات</th>--}}
+                                {{--</tr>--}}
+                                {{--</thead>--}}
+                                {{--<tbody>--}}
+                                {{--<tr>--}}
+                                    {{--<td>{{\Carbon\Carbon::today()->format('Y-m-d')}}</td>--}}
+                                    {{--<td>{{$payments->sum('total_price')}}</td>--}}
+                                    {{--<td>{{$payments->count()}}</td>--}}
+                                {{--</tr>--}}
+                                {{--</tbody>--}}
                             </table>
                         </div>
                     </div>
@@ -95,66 +118,19 @@
     <script src="{{ url('vendors/dataTable/datatables.min.js') }}"></script>
     <script src="{{ url('vendors/dataTable/Buttons-1.6.1/js/dataTables.buttons.min.js') }}"></script>
     <script>
-        $(document).ready(function(){
-            $('.select2').select2();
-            $('#view').click(function(){
-                table.ajax.reload();
-            });
-            var table = $('#myTable').DataTable({
-                language: {
-                    url: "{{ url('vendors/dataTable/arabic.json') }}"
-                },
-                processing: true,
-                serverSide: true,
-                searching:false,
-                dom: 'Bfrtip',
-                buttons: [
-                    'excel', 'pdf' , 'print'
-                ],
-                ajax:{
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    url:'{{route("reports.warehouse.index.data")}}',
-                    data: function(d){
-                        d.to = $('#to').val();
-                        d.from = $('#from').val();
-                        d.material =  $('#material').val();
-                    },
-                    type:'POST',
-                },
-                columns:[
-                    {
-                        data:'id',
-                        name: 'id'
-                    },{
-                        data:'name',
-                        name: 'name'
-                    },{
-                        data:'measuring.name',
-                        name: 'unit'
-                    },{
-                        data:function(data){
-                            var quantity = 0;
-                            $.each(data.supplies,function(index , value){
-                                quantity += +value.quantity;
-                            });
-                            return quantity;
-                        },
-                        name: 'quantity'
-                    },{
-                        data:function(data){
-                            var price = 0;
-                            $.each(data.supplies,function(index , value){
-                                price +=  + value.price;
-                            });
-                            return price;
-                        },
-                        name: 'price'
-                    },
-                ],
-            });
+        var table = $('#myTable').DataTable({
+            language: {
+                url: "{{ url('vendors/dataTable/arabic.json') }}"
+            },
+            searching:false,
+            dom: 'Bfrtip',
+            buttons: [
+                'print',
+                { extend: 'excelHtml5', footer: true }
+            ]
+        })
 
-        });
+
+
     </script>
 @endsection
