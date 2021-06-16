@@ -393,6 +393,24 @@
         </ul>
     </li>
     <li>
+        @if (Auth::user()->hasAnyPermission(['عرض التقارير']))
+            <a href="#">
+                <span class="nav-link-icon">
+                    <i class="fa fa-tasks" ></i>
+                </span>
+                <span> {{__('reports.titles.index')}}</span>
+            </a>
+        @endif
+        <ul>
+            <li>
+                <a class="{{(request()->is('reports/warehouse'))? 'active' : '' }}" href="{{route('reports.warehouse.index')}}">{{__('reports.titles.warehouse')}}</a>
+            </li>
+            <li>
+                <a class="{{(request()->is('reports/daily/income'))? 'active' : '' }}" href="{{route('reports.dailyIncome.index')}}">{{__('reports.titles.daily_income')}}</a>
+            </li>
+        </ul>
+    </li>
+    <li>
         @if (Auth::user()->hasAnyPermission(['تعديل تكاليف غير مباشرة','إضافة تكاليف غير مباشرة','عرض تكاليف غير مباشرة']))
             <a href="#">
                 <span class="nav-link-icon">
