@@ -11,9 +11,8 @@ class ReportController extends Controller
 {
     public function dailyIncome()
     {
-        $x = Payment::whereDate('created_at',Carbon::today())->paginate(14);
-            dd($x);
-        return view('admin.reports.daily.income');
+        $payments = Payment::whereDate('created_at',Carbon::today())->with('workperiod.bank','user')->get();
+        return view('admin.reports.daily.income',['payments'=>$payments]);
 
     }
 
