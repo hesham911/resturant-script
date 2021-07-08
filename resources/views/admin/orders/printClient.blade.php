@@ -116,7 +116,6 @@
             </h4>
             <hr style="width: 240px;margin-left: 90%;border: 1px solid #979797;margin:3px;margin-top: 25px">
             <h4 style="margin-right: 2%;">
-
                 {{--<span>  خدمات اضافية : {{0}} {{__('app.settings.currency')}}</span><br>--}}
                 @if ($order->type == 1)
                     <span>   سعر الديلفيري : {{$order->delivery_price}} {{__('app.settings.currency')}}</span><br>

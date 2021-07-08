@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\IndirectExpenseRequest;
 use App\IndirectCost;
 use App\IndirectExpense;
+use App\WorkPeriod;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -29,7 +31,8 @@ class IndirectExpenseController extends Controller
     public function create()
     {
         $IndirectCosts = IndirectCost::get();
-        return view('admin.accounting.indirect-expenses.create',['IndirectCosts'=>$IndirectCosts]);
+         $workPeriod= WorkPeriod::GetIdFromUser(Auth::id())->first()->id;
+        return view('admin.accounting.indirect-expenses.create',['IndirectCosts'=>$IndirectCosts,'workPeriod'=>$workPeriod]);
     }
 
     /**
@@ -41,7 +44,6 @@ class IndirectExpenseController extends Controller
     public function store(IndirectExpenseRequest $request)
     {
        $validated = $request->validated();
-
        $dates = explode(' - ', $validated['daterangepicker']);
        $start = Carbon::parse($dates[0]);
        $end   = Carbon::parse($dates[1]);
@@ -50,6 +52,7 @@ class IndirectExpenseController extends Controller
            'indirect_cost_id'   => $validated['costs'],
            'date_from'          => $start,
            'date_to'            => $end,
+           'work_period_id'     => $request['work_period_id'],
            'amount'             => $validated['amount'],
        ]);
 

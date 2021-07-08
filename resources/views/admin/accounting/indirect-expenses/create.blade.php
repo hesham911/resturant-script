@@ -47,6 +47,7 @@
                             <h6 class="card-title">{{__('accounting.indirect-expenses.titles.subcreate')}}</h6>
                             <form method="post" action="{{route('indirect.expenses.store')}}" multiple>
                                 @CSRF
+                                <input hidden name="work_period_id" value="{{$workPeriod}}">
                                 <div class="form-group row">
                                     <label for="costs" class="col-sm-2 col-form-label">{{__('accounting.indirect-expenses.cost')}}</label>
                                     <div class="col-sm-10">

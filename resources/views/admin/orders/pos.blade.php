@@ -282,7 +282,6 @@
                                                         <div class="table-responsive">
                                                             <table id="user-list" class="table table-lg">
                                                                 <thead>
-
                                                                 <tr>
                                                                     <th>
                                                                         <div class="custom-control custom-checkbox">

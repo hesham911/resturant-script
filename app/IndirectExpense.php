@@ -11,7 +11,7 @@ class IndirectExpense extends Model
     /**
      * @var array
      */
-    protected $fillable=['indirect_cost_id','date_from','date_to','amount'];
+    protected $fillable=['indirect_cost_id','date_from','date_to','amount','work_period_id'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
