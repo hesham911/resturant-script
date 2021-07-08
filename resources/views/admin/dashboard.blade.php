@@ -9,6 +9,18 @@
 @endsection
 
 @section('content')
+    @if (Session::has('message'))
+        <div class="alert alert-info">{{ Session::get('message') }}</div>
+    @endif
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <div class="h-100 d-flex align-items-center justify-content-center">
         <div class=" ">
             <h2 class=" text-center">أهلا بك {{Auth::user()->name}}</h2>

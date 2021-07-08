@@ -24,6 +24,11 @@ class MeasuringSeeder extends Seeder
                 'created_at'=> Carbon::now()->toDateTimeString(),
                 'updated_at'=> Carbon::now()->toDateTimeString(),
             ]
+            ,[
+                'name'=>'باللتر',
+                'created_at'=> Carbon::now()->toDateTimeString(),
+                'updated_at'=> Carbon::now()->toDateTimeString(),
+            ]
         ]);
     }
 }

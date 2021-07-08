@@ -40,6 +40,7 @@ class EmployeeRequest extends FormRequest
                 'digits:11',
                 'unique_phone'
             ],
+            'roles'              =>   'array'
         ];
     }
 
@@ -55,6 +56,7 @@ class EmployeeRequest extends FormRequest
             'status_employees'  =>     __('users.employees.status'),
             'group_a'           =>     __('users.employees.phone'),
             'group_a.*.*'       =>     __('users.employees.phone'),
+            'roles'             =>     __('users.employees.phone'),
         ];
     }
 }

@@ -8,6 +8,7 @@
 
     <!-- select2 css -->
     <link rel="stylesheet" href="{{url('vendors/select2/css/select2.min.css')}}" type="text/css">
+    <link rel="stylesheet" href="{{asset('vendors/checkbox-nested/css/bootstrap-multiselect.min.css')}}" type="text/css">
 @endsection
 
 @section('content')
@@ -78,23 +79,16 @@
                                         </select>
                                     </div>
                                 </div>
-
                                 <div class="form-group row">
                                     <label for="roles" class="col-sm-2 col-form-label">{{__('users.employees.roles_employees')}}</label>
                                     <div class="col-sm-10">
-                                        <select name="roles[]" id="roles" class="roles-employees" multiple>
-                                            <option disabled >{{__('users.employees.placeholder.roles_employees')}}</option>
-                                            @if(count($employeeRoles) > 0)
-                                                @foreach($employeeRoles as $key => $employeeRole)
-                                                    <option value="{{$employeeRole}}" selected>{{$employeeRole}}</option>
+                                        @foreach($roles as $k =>$role)
+                                            <select id="{{$role->name}}" name="roles[{{$role->name}}][]" multiple="multiple">
+                                                @foreach($role->permissions as $k =>$v)
+                                                    <option value="{{$v->name}}" {{in_array($v->name,$userPermissions) ? 'selected' : ''}}>{{$v->name}}</option>
                                                 @endforeach
-                                            @endif
-                                            @if(count($roles) > 0)
-                                                @foreach($roles as $key => $role)
-                                                    <option value="{{$role}}" {{ (old('roles') == $role) ? 'selected':'' }}>{{$role}}</option>
-                                                @endforeach
-                                            @endif
-                                        </select>
+                                            </select>
+                                        @endforeach
                                     </div>
                                 </div>
 
@@ -160,6 +154,7 @@
     <!-- select2 script -->
     <script src="{{url('vendors/select2/js/select2.min.js')}}"></script>
     <script src="{{asset('vendors/jquery.repeater.min.js')}}"></script>
+    <script  src="{{asset('vendors/checkbox-nested/js/bootstrap-multiselect.min.js')}}" ></script>
     <script>
         $(document).ready(function () {
             $('.basic-repeater').repeater();
@@ -168,8 +163,16 @@
                 placeholder: "الوظيفة"
             });
 
-            $('.roles-employees').select2({
-                placeholder: "الصلاحية",
+//            $('.roles-employees').select2({
+//                placeholder: "الصلاحية"
+//            });
+            var hhh = {!! json_encode($roles) !!}
+
+            $.each( hhh, function (index,value) {
+                $('#'+value.name).multiselect({
+                    nonSelectedText: value.name,
+                    includeSelectAllOption: true
+                });
             });
         });
     </script>

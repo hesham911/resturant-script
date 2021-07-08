@@ -77,14 +77,6 @@
                                         <input type="text" class="form-control" id="inputPassword" placeholder="{{__('productmanufactures.required_quantity')}}" value="{{old('required_quantity',$productmanufacture->required_quantity)}}" name="required_quantity">
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                        <label for="inputPassword" class="col-sm-2 col-form-label">
-                                            {{__('productmanufactures.waste_percentage')}}
-                                        </label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="inputPassword" placeholder="{{__('productmanufactures.waste_percentage')}}" value="{{old('waste_percentage',$productmanufacture->waste_percentage)}}" name="waste_percentage">
-                                        </div>
-                                </div>
                                 <div class="d-flex flex-row-reverse" >
                                     <button class="btn btn-primary " type="submit">
                                        {{__('app.forms.btn.FormSubmit')}}

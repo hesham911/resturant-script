@@ -13,12 +13,14 @@ class CreateIndirectCostsTable extends Migration
      */
     public function up()
     {
-        Schema::create('indirect_costs', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->timestamps();
-            $table->softDeletes();
-        });
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+            Schema::create('indirect_costs', function (Blueprint $table) {
+                $table->id();
+                $table->string('name');
+                $table->timestamps();
+                $table->softDeletes();
+            });
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 
     /**
@@ -28,6 +30,8 @@ class CreateIndirectCostsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('indirect_costs');
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+            Schema::dropIfExists('indirect_costs');
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

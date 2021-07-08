@@ -27,6 +27,7 @@ class OrderRequest extends FormRequest
             'user_id' =>   'required',
             'category_id' =>   'required',
             'type' =>   'required|numeric',
+            'group_a' =>'required',
             'group_a.*.quantity' =>   'required|numeric',
             'group_a.*.product_id' =>   'required|numeric',
             'table_id'   =>'required_if:type,==,0',

@@ -130,12 +130,12 @@ class UserSeeder extends Seeder
             'status' => 1,
             'created_at' => \Carbon\Carbon::now()
         ]]);
-        Employee::where('type',5)->get()->first()->user->assignRole('ديليفري مان');
-        Employee::where('type',4)->get()->first()->user->assignRole('الشيف');
-        Employee::where('type',3)->get()->first()->user->assignRole('مدير المخزن');
-        Employee::where('type',2)->get()->first()->user->assignRole('صاله مان');
-        Employee::where('type',1)->get()->first()->user->assignRole('محاسب');
-        Employee::where('type',0)->get()->first()->user->assignRole('كاشير');
-        User::where('id',7)->get()->first()->assignRole('صاحب الموقع');
+//        Employee::where('type',5)->get()->first()->user->assignRole('ديليفري');
+//        Employee::where('type',4)->get()->first()->user->assignRole('الشيف');
+//        Employee::where('type',3)->get()->first()->user->assignRole('المخزن');
+//        Employee::where('type',2)->get()->first()->user->assignRole('صاله');
+//        Employee::where('type',1)->get()->first()->user->assignRole('محاسب');
+//        Employee::where('type',0)->get()->first()->user->assignRole('كاشير');
+        \App\User::findOrFail(7)->syncRoles(\Spatie\Permission\Models\Role::all());
     }
 }

@@ -13,7 +13,6 @@ class ProductManufacture extends Model
         'material_id',
         'product_id',
         'required_quantity',
-        'waste_percentage',
     ];
 
     protected $table = 'products_manufactures';
@@ -23,7 +22,7 @@ class ProductManufacture extends Model
     }
 
     public function material (){
-        return $this->belongsTo(material::class);
+        return $this->belongsTo(Material::class);
     }
 
 }

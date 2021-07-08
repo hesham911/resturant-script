@@ -16,10 +16,12 @@ class CreatePaymentsTable extends Migration
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('employee_id')->unsigned();
-                $table->foreign('employee_id')->references('id')->on('employees');
+            $table->bigInteger('user_id')->unsigned();
+                $table->foreign('user_id')->references('id')->on('users');
             $table->bigInteger('order_id')->unsigned();
                 $table->foreign('order_id')->references('id')->on('orders');
+            $table->bigInteger('work_period_id')->unsigned();
+                $table->foreign('work_period_id')->references('id')->on('work_periods');
             $table->integer('total_price');
             $table->timestamps();
             $table->softDeletes();

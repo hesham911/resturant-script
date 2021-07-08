@@ -31,7 +31,7 @@ class Supply extends Model
     }
 
     public function kitchen_requests(){
-        return $this->belongsToMany(KitchenRequest::class, 'request_supply'  , 'supply_id' ,'request_id');
+        return $this->belongsToMany(KitchenRequest::class, 'request_supply'  , 'supply_id' ,'request_id')->withPivot('quantity');
     }
 
     public function SyncSupply ($kitchen_request ,$supply_ids){

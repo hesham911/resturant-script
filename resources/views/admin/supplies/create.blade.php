@@ -73,10 +73,7 @@
                                                     <label for="customer_name"> {{__('supplies.quantity')}} </label>
                                                     <input type="text" class="form-control" id="inputPassword" placeholder="{{__('supplies.quantity')}}" value="{{old('quantity')}}" name="quantity" required>
                                                 </div>
-                                                <div class="col-md-6 form-group">
-                                                    <label for="customer_name">{{__('supplies.Supplier_name')}}</label>
-                                                    <input type="text" class="form-control" id="inputPassword" placeholder="{{__('supplies.Supplier_name')}}" value="{{old('Supplier_name')}}" name="Supplier_name" required>
-                                                </div>
+                                                
                                                 <div class=" d-flex col-md-6 text-center align-items-center">
                                                     <input data-repeater-delete type="button" value="{{__('app.forms.btn.delete')}}" class="btn btn-danger w-25"/>
                                                 </div>
@@ -85,15 +82,19 @@
                                     </div>
                                 </div>
                                 <button type="button" class="btn btn-primary" data-repeater-create="">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus mr-2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Add
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus mr-2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> {{__('app.forms.btn.add')}}
                                 </button>
                                 <input type="hidden" value="{{Auth::user()->id}}" name="user_id">
-                                <div class="d-flex flex-row-reverse justify-content-between mt-5">
-                                    <button class="btn btn-primary " type="submit">{{__('app.forms.btn.FormSubmit')}}</button>
-                                    <div class="d-flex">
-                                        <label>{{__('supplies.bill_number')}}</label>
-                                        <input type="text" class="form-control" id="bill_number" placeholder="{{__('supplies.bill_number')}}" value="{{old('bill_number',$bill_number+1)}}" name="bill_number">
+                                <div class="row mt-5">
+                                    <div class="row form-group  col-md-5">
+                                        <label class="col-4">{{__('supplies.bill_number')}}</label>
+                                        <input type="text" class="form-control col-8" id="bill_number" placeholder="{{__('supplies.bill_number')}}" value="{{old('bill_number',$bill_number+1)}}" name="bill_number">
                                     </div>
+                                    <div class=" form-group col-md-5 row">
+                                        <label class="col-4 " for="customer_name">{{__('supplies.Supplier_name')}}</label>
+                                        <input type="text" class="form-control col-8" id="inputPassword" placeholder="{{__('supplies.Supplier_name')}}" value="{{old('Supplier_name')}}" name="Supplier_name" required>
+                                    </div>  
+                                    <button class="btn btn-primary mx-3" type="submit">{{__('app.forms.btn.FormSubmit')}}</button>
                                 </div>
                             </form>
                         </div>
@@ -120,7 +121,9 @@
         });
         $('.repeater').repeater({
             show: function () {
-                $(this).slideDown();
+                $(this).slideDown(function (){
+                    $('.layout-wrapper .content-wrapper .content-body .content').getNiceScroll().resize();
+                });
                 $('.select2-container').remove();
                 $('.select2').select2({});
                 $('.select2-container').css('width','100%');

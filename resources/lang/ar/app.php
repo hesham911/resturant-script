@@ -7,6 +7,8 @@ return [
             'edit'                  => ' تعديل ',
             'add'                   => ' إضافة ',
             'delete'                => ' حذف ',
+            'close'                 => ' اغلاق ',
+            'word-period'           => ' اغلاق الشيفت ',
         ],
     ],
     'tables'    =>[
