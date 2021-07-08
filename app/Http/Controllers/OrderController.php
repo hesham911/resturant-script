@@ -47,6 +47,7 @@ class OrderController extends Controller
         $products = Product::all();
         $types = Order::type();
         $client = null;
+        $workPeriod = $request->workPeriod;
         $phones = Phone::all();
         $tables = Table::all();
         $zones   = Zone::all();
@@ -54,7 +55,7 @@ class OrderController extends Controller
         $orders = Order::where('status',0)->latest()->get();
         return view('admin.orders.pos',['categories'=>$categories,'subcategories'=>$subcategories,
         'types'=>$types,'products'=>$products,'phones'=>$phones,'tables'=>$tables,'client'=>$client,
-        'clients'=>$clients,'zones'=>$zones,'orders'=>$orders,]);
+        'clients'=>$clients,'zones'=>$zones,'orders'=>$orders,'workPeriod' =>$workPeriod]);
         /* $client=null;
         if($request->client)
         {
@@ -232,6 +233,7 @@ class OrderController extends Controller
         {
             $payment = new Payment();
             $payment->user_id = Auth::user()->id;
+            $payment->work_period_id = User::WorkFormUserId();
             $payment->total_price = $order->total_price;
             $order->payment()->save($payment);
         }
@@ -252,7 +254,7 @@ class OrderController extends Controller
             for ($i=0; $i < $product->pivot->quantity ; $i++) {
                 if ($product->ProductManufactures->count() > 0) {
                     foreach ($product->ProductManufactures as $ProductManufacture) {
-                        $kitchenrequests = $order->requests->where('material_id',$ProductManufacture->material_id)->first();
+                        $kitchenrequests = $order->requests->where('material_id',$ProductManufacture->material_id);
                         $productmanufacturequantity = $ProductManufacture->required_quantity;
                         if ($productmanufacturequantity > 0) {
                             foreach ($kitchenrequests as $kitchenrequest) {

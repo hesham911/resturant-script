@@ -83,7 +83,6 @@
                     </div>
                 </div>
                 <!-- end::navigation -->
-
                 <!-- Content body -->
                 <div class="content-body">
                     <!-- Content -->
@@ -93,6 +92,7 @@
                                 <form  method="POST"  action="{{route('orders.store') }}" >
                                     @CSRF
                                     <input hidden name="user_id" value="{{Auth::user()->id}}">
+                                    <input hidden name="work_period_id" value="{{$workPeriod}}">
                                     <div class="row">
                                         <div class="col-lg-4 col-md-12">
                                             <div class="card">
@@ -329,7 +329,7 @@
                                                                                 <a href="{{route('orders.status',['order'=>$order->id,'state'=>3])}}" role="button" class="btn btn-success btn-sm"
                                                                                    title="{{__('orders.actions.payed')}}"><i class="fa fa-credit-card"></i>
                                                                                 </a>
-                                                                                <a href="{{route('orders.printclient',$order->id)}}" role="button" class="btn btn-primary btn-sm"
+                                                                                <a href="{{route('orders.printclient',$order->id)}}" role="button" target="_blank" class="btn btn-primary btn-sm"
                                                                                    title="طباعة"><i class="fa fa-print"></i>
                                                                                 </a>
                                                                                 <a class="sendCancelOrder btn btn-danger btn-sm" role="button" data-toggle="modal"

@@ -17,7 +17,7 @@ class CreateWarehouseStocksTable extends Migration
             $table->id();
             $table->bigInteger('material_id')->unsigned();
                 $table->foreign('material_id')->references('id')->on('materials');
-            $table->decimal('quantity')->unsigned();
+            $table->decimal('quantity',8,3);
             $table->softDeletes();
             $table->timestamps();
         });

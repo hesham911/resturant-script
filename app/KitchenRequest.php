@@ -32,7 +32,7 @@ class KitchenRequest extends Model
     }
 
     public function supplies(){
-        return $this->belongsToMany(Supply::class, 'request_supply'  ,'request_id' , 'supply_id');
+        return $this->belongsToMany(Supply::class, 'request_supply'  ,'request_id' , 'supply_id')->withPivot('quantity');
     }
 
     public function orders(){

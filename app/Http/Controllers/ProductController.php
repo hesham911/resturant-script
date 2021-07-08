@@ -72,9 +72,13 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $subcategories = Subcategory::all();
+        $materials = Material::get();
         // $types = Product::type();
-        return view('admin.products.edit',['product'=>$product,
-            'subcategories'=>$subcategories]);
+        return view('admin.products.edit',[
+            'product'=>$product,
+            'subcategories'=>$subcategories,
+            'materials'=>$materials,
+            ]);
     }
 
     /**
@@ -88,6 +92,8 @@ class ProductController extends Controller
     {
         $validated = $request->validated();
         $product->update($validated);
+        $product->ProductManufactures()->delete();
+        $product->ProductManufactures()->createMany($validated['group']);
         $request->session()->flash('message',__('products.massages.updated_successfully'));
         return redirect(route('products.index'));
     }

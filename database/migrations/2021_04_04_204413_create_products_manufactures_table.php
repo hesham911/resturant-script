@@ -20,7 +20,7 @@ class CreateProductsManufacturesTable extends Migration
                 $table->foreign('material_id')->references('id')->on('materials');
             $table->bigInteger('product_id')->unsigned();
                 $table->foreign('product_id')->references('id')->on('products');
-            $table->decimal('required_quantity');
+            $table->decimal('required_quantity' , 6 , 3);
             $table->timestamps();
             $table->softDeletes();
         });

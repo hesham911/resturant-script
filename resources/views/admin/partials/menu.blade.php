@@ -7,21 +7,22 @@
             <span>Dashboard</span>
         </a>
     </li> --}}
-    {{--<li>--}}
-        {{--@if (Auth::user()->hasPermissionTo('البحث عن عملاء'))--}}
-            {{--<a @if(request()->segment(1) == 'users') class="active"--}}
-            {{--@endif href="{{ route('clients.view.search') }}">--}}
-                {{--<span class="nav-link-icon">--}}
-                    {{--<i class="fa fa-address-book-o" aria-hidden="true"></i>--}}
-                {{--</span>--}}
-                {{--<span>البحث في العملاء</span>--}}
-            {{--</a>--}}
-        {{--@endif--}}
-    {{--</li>--}}
-
     <li>
+        @if (Auth::user()->hasPermissionTo('عرض طلب'))
+
+            <a class="{{(request()->is('orders'))? 'active' : '' }}"
+               href="{{ route('orders.index') }}">
+                <span class="nav-link-icon">
+                <i data-feather="shopping-cart"></i>
+            </span>
+                <span>عرض كل الطلبات</span>
+            </a>
+        @endif
+    </li>
+
+
         
-    {{--<!-- Orders -->--}}
+    <!-- Orders -->
     {{--<li>--}}
         {{--@if (Auth::user()->hasPermissionTo('عرض طلب'))--}}
         {{--<a href="#">--}}
@@ -38,7 +39,7 @@
                         {{--href="{{ route('orders.index') }}">{{__('app.menu.show_all')}}</a>--}}
                 {{--</li>--}}
             {{--@endif--}}
-            {{--@if (Auth::user()->hasPermissionTo('إضافة طلب'))            --}}
+            {{--@if (Auth::user()->hasPermissionTo('إضافة طلب'))--}}
                 {{--<li>--}}
                     {{--<a class="{{(request()->is('orders/create'))? 'active' : '' }}"--}}
                         {{--href="{{ route('orders.create') }}">{{__('app.menu.add_new')}}</a>--}}
@@ -389,6 +390,24 @@
                     <a class="{{(request()->is('damagedmaterials/create'))? 'active' : '' }}" href="{{ route('damagedmaterials.create') }}">إضافة جديد</a>
                 </li>
             @endif
+        </ul>
+    </li>
+    <li>
+        @if (Auth::user()->hasAnyPermission(['عرض التقارير']))
+            <a href="#">
+                <span class="nav-link-icon">
+                    <i class="fa fa-tasks" ></i>
+                </span>
+                <span> {{__('reports.titles.index')}}</span>
+            </a>
+        @endif
+        <ul>
+            <li>
+                <a class="{{(request()->is('reports/warehouse'))? 'active' : '' }}" href="{{route('reports.warehouse.index')}}">{{__('reports.titles.warehouse')}}</a>
+            </li>
+            <li>
+                <a class="{{(request()->is('reports/daily/income'))? 'active' : '' }}" href="{{route('reports.dailyIncome.index')}}">{{__('reports.titles.daily_income')}}</a>
+            </li>
         </ul>
     </li>
     <li>

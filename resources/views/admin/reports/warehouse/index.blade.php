@@ -109,7 +109,7 @@
                 searching:false,
                 dom: 'Bfrtip',
                 buttons: [
-                    'excel', 'pdf' , 'print'
+                    'excel', 'print'
                 ],
                 ajax:{
                     headers: {

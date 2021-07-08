@@ -19,6 +19,7 @@ class RolePermissionSeeder extends Seeder
             'تعديل مستخدم',
             'حذف مستخدم',
         ]);
+
         
         Role::findByName('التحكم-في-العملاء')->syncPermissions([
             'عرض عميل',
@@ -128,12 +129,10 @@ class RolePermissionSeeder extends Seeder
             'تعديل توريد للمخزن',
             'حذف توريد للمخزن',
             'عرض رصيد المخزن',
-        ]);
-        Role::findByName('التحكم-في-المواد-الخام')->syncPermissions([
-            'عرض مواد خام',
-            'إضافة مواد خام',
-            'تعديل مواد خام',
-            'حذف مواد خام',
+            'عرض طلبية من المطبخ',
+            'إضافة طلبية من المطبخ',
+            'تعديل طلبية من المطبخ',
+            'حذف طلبية من المطبخ',
         ]);
         Role::findByName('التحكم-في-التلفيات')->syncPermissions([
             'عرض تلفيات',
