@@ -198,7 +198,8 @@ class OrderController extends Controller
         $order->requests()->sync($requests);
         $request->session()->flash('message',__('orders.massages.created_successfully'));
        // return redirect(route('orders.index'));
-       return redirect(route('orders.create'));
+       return redirect(route('orders.printkitchen',$order->id));
+       //return redirect(route('orders.create'));
     }
 
     /**

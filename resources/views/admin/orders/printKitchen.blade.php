@@ -108,7 +108,7 @@
             </h4>
         </div>
         <div class="footer-fixed no-print">
-            <a class="btn-back no-print" onclick="window.history.back();">رجـــوع</a>
+            <a href="{{route('orders.create')}}" class="btn-back no-print" {{-- onclick="window.history.back();" --}}>رجـــوع</a>
         </div>
     </body>
     <script>
