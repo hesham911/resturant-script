@@ -18,7 +18,7 @@ class MaterialSeeder extends Seeder
         $unit = MaterialMeasuring::where('name','بالوحدة')->get()->first();
         Material::insert([
             [
-                'name'=>' طماطم',
+                'name'=>'طماطم',
                 'measuring_id'=> $kilo->id,
                 'created_at'=> Carbon::now()->toDateTimeString(),
                 'updated_at'=> Carbon::now()->toDateTimeString(),
@@ -26,6 +26,12 @@ class MaterialSeeder extends Seeder
             ,[
                 'name'=>'فراخ',
                 'measuring_id'=> $unit->id,
+                'created_at'=> Carbon::now()->toDateTimeString(),
+                'updated_at'=> Carbon::now()->toDateTimeString(),
+            ]
+            ,[
+                'name'=>'قهوة',
+                'measuring_id'=> $kilo->id,
                 'created_at'=> Carbon::now()->toDateTimeString(),
                 'updated_at'=> Carbon::now()->toDateTimeString(),
             ]
