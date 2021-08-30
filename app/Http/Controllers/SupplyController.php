@@ -55,19 +55,8 @@ class SupplyController extends Controller
     {
         $validated = $request->validated();
         foreach($validated['group'] as $supply_data){
-            $supply = new Supply;
-            $supply->material_id =  $supply_data['material_id'];
-            $supply->quantity =  $supply_data['quantity'];
-            $supply->price =  $supply_data['price'];
-            $supply->Supplier_name =  $validated['Supplier_name'];
-            $supply->expiry_date =  $supply_data['expiry_date'];
-            $supply->user_id =  $validated['user_id'];
-            $supply->bill_number =  $validated['bill_number'];
-            $supply->save();
-            $stock = WarehouseStock::firstOrNew(['material_id'=>$supply_data['material_id']]);
-            $stock->material_id = $supply_data['material_id'];
-            $stock->quantity = $stock->quantity + $supply_data['quantity'];
-            $stock->save();
+            $supply = $this->storeSingleSupply($supply_data , $validated);
+            $stock = $this->AddNewSupplyToWarehouseStock( $supply_data , $supply);
         }
         $request->session()->flash('message',__('supplies.massages.created_succesfully'));
         return redirect(route('supplies.index'));
@@ -110,13 +99,9 @@ class SupplyController extends Controller
     {
         $validated = $request->validated();
         //to reset the last added quantity
-        $warehouse_stock = WarehouseStock::findOrFail($supply->material_id);
-        $warehouse_stock->quantity = $warehouse_stock->quantity - $supply->quantity ;
-        $warehouse_stock->save();
+        $warehouse_stock = $this->SubtractOldSupplyFromWarehouseStock($supply);
         $supply->update($validated);
-        $warehouse_stock = WarehouseStock::firstOrNew(['material_id'=>$validated['material_id']]);
-        $warehouse_stock->quantity = $warehouse_stock->quantity + $supply->quantity ;
-        $warehouse_stock->save();
+        $warehouse_stock = $this->AddNewSupplyToWarehouseStock($validated , $supply);
         $request->session()->flash('message',__('supplies.massages.updated_succesfully'));
         return redirect(route('supplies.index'));
     }
@@ -129,11 +114,36 @@ class SupplyController extends Controller
      */
     public function destroy(Request $request,Supply $supply)
     {
-        $warehouse_stock = WarehouseStock::findOrFail($supply->material_id);
-        $warehouse_stock->quantity = $warehouse_stock->quantity - $supply->quantity ;
-        $warehouse_stock->save();
+        $warehouse_stock = $this->SubtractOldSupplyFromWarehouseStock($supply);
         $supply->delete();
         $request->session()->flash('message',__('supplies.massages.deleted_succesfully'));
         return redirect(route('supplies.index'));
+    }
+
+    private function storeSingleSupply($supply_data , $validated){
+        $supply = new Supply;
+        $supply->material_id =  $supply_data['material_id'];
+        $supply->quantity =  $supply_data['quantity'];
+        $supply->price =  $supply_data['price'];
+        $supply->Supplier_name =  $validated['Supplier_name'];
+        $supply->expiry_date =  $supply_data['expiry_date'];
+        $supply->user_id =  $validated['user_id'];
+        $supply->bill_number =  $validated['bill_number'];
+        $supply->save();
+        return $supply ;
+    }
+
+    private function SubtractOldSupplyFromWarehouseStock($supply){
+        $warehouse_stock = WarehouseStock::findOrFail($supply->material_id);
+        $warehouse_stock->quantity = $warehouse_stock->quantity - $supply->quantity ;
+        $warehouse_stock->save();
+        return $warehouse_stock;
+    }
+
+    private function AddNewSupplyToWarehouseStock($validated , $supply){
+        $warehouse_stock = WarehouseStock::firstOrNew(['material_id'=>$validated['material_id']]);
+        $warehouse_stock->quantity = $warehouse_stock->quantity + $supply->quantity ;
+        $warehouse_stock->save();
+        return $warehouse_stock;
     }
 }
