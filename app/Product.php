@@ -31,7 +31,7 @@ class Product extends Model
     // subcategory
     public function subcategory()
     {
-    	return $this->belongsTo(Subcategory::class);
+    	return $this->belongsTo(Subcategory::class)->withTrashed();
     }
     // orders
     public function orders()

@@ -232,30 +232,30 @@ class KitchenRequestController extends Controller
                 if ($supply_remaining_amount < $request_quantity) {
                     $request_quantity =  $request_quantity - $supply_remaining_amount;
                     $request_total_price = $request_total_price + ( $supply_unit_price * $supply_remaining_amount);
-                    $this->updateSupply(1 , $supply->quantity );
+                    $this->updateSupply(1 , $supply->quantity , $supply );
                     $supply_ids[]= ['supply_id'=>$supply->id , 'quantity'=> $supply_remaining_amount];
 
                 }elseif ( $supply_remaining_amount > $request_quantity ) {
                     $request_total_price = $request_total_price + ( $supply_unit_price * $request_quantity);
-                    $this->updateSupply( 0 , $supply->used_amount + $request_quantity);
+                    $this->updateSupply( 0 , $supply->used_amount + $request_quantity , $supply);
                     $supply_ids[]= ['supply_id'=>$supply->id , 'quantity'=> $request_quantity];
                     $request_quantity = 0;
                 }else {
                     $request_total_price = $request_total_price + ( $supply_unit_price * $request_quantity);
-                    $this->updateSupply( 1 , $supply->used_amount + $request_quantity);
+                    $this->updateSupply( 1 , $supply->used_amount + $request_quantity , $supply);
                     $supply_ids[]= ['supply_id'=>$supply->id , 'quantity'=> $request_quantity];
                     $request_quantity = 0;
                 }
+                $WarehouseStock->quantity =$WarehouseStock->quantity - $kitchen_request['quantity'] ;
+                $WarehouseStock->save();
+                $kitchenrequest = $this->storeKitchenRequest($kitchen_request , $request_total_price);
+                $kitchenrequest->supplies()->sync($supply_ids);
             }
-            $WarehouseStock->quantity =$WarehouseStock->quantity - $kitchen_request['quantity'] ;
-            $WarehouseStock->save();
-            $kitchenrequest = $this->storeKitchenRequest($kitchen_request , $request_total_price);
-            $kitchenrequest->supplies()->sync($supply_ids);
         }
 
     }
 
-    private function updateSupply ($status , $amount){
+    private function updateSupply ($status , $amount , $supply){
         $supply->update([
             'status' =>  true,
             'used_amount' =>  $amount,

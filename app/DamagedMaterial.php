@@ -14,7 +14,7 @@ class DamagedMaterial extends Model
     protected $fillable  = ['supply_id','price','quantity','user_id'];
 
     public function material(){
-        return $this->belongsTo(Material::class);
+        return $this->belongsTo(Material::class)->withTrashed();
     }
 
     public function user (){

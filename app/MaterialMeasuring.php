@@ -9,6 +9,6 @@ class MaterialMeasuring extends Model
 {
     use SoftDeletes;
     public function materials (){
-        return $this->hasMany(Material::class , 'measuring_id');
+        return $this->hasMany(Material::class , 'measuring_id')->withTrashed();
     }
 }

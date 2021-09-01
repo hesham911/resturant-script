@@ -37,6 +37,6 @@ class Material extends Model
     }
 
     public function damagedMaterials (){
-        return $this->hasMany(DamagedMaterial::class);
+        return $this->hasMany(DamagedMaterial::class)->withTrashed();
     }
 }
