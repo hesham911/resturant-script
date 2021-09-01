@@ -246,13 +246,12 @@ class KitchenRequestController extends Controller
                     $supply_ids[]= ['supply_id'=>$supply->id , 'quantity'=> $request_quantity];
                     $request_quantity = 0;
                 }
-                $WarehouseStock->quantity =$WarehouseStock->quantity - $kitchen_request['quantity'] ;
-                $WarehouseStock->save();
-                $kitchenrequest = $this->storeKitchenRequest($kitchen_request , $request_total_price);
-                $kitchenrequest->supplies()->sync($supply_ids);
+                
             }
         }
-
+        $WarehouseStock->update(['quantity' => $WarehouseStock->quantity - $kitchen_request['quantity']]);
+        $kitchenrequest = $this->storeKitchenRequest($kitchen_request , $request_total_price);
+        $kitchenrequest->supplies()->sync($supply_ids);
     }
 
     private function updateSupply ($status , $amount , $supply){
