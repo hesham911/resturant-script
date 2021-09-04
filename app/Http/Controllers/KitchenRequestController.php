@@ -48,7 +48,6 @@ class KitchenRequestController extends Controller
     public function store(KitchenRequestRequest  $request)
     {
         $validated_data = $request->validated();
-        $this->checkForEnoughSupplies($validated_data['group']);
         foreach ($validated_data['group'] as  $kitchen_request) {
             $supplies = Material::find($kitchen_request['material_id'])->supplies->where('status',false);
             $WarehouseStock = WarehouseStock::where('material_id',$kitchen_request['material_id'])->get()->first();
@@ -198,17 +197,6 @@ class KitchenRequestController extends Controller
         $kitchenrequest->delete();
         $request->session()->flash('message',__('kitchenrequests.massages.deleted_succesfully'));
         return redirect(route('kitchenrequests.index'));
-    }
-
-    private function checkForEnoughSupplies($array){
-        foreach ($array as  $kitchen_request) {
-            $material = Material::find($kitchen_request['material_id']);
-            $supplies = $material->supplies->where('status',false);
-            if ($supplies->sum('quantity')-$supplies->sum('used_amount') < $kitchen_request['quantity'] ) {
-                $request->session()->flash('message',' الكمية المطلوبة أكبر من المخزون ');
-                return redirect(route('kitchenrequests.create')); 
-            }
-        }
     }
 
     private function storeKitchenRequest($item , $total){

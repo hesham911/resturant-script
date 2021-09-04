@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\EnoughSuppliesRule;
 
 class KitchenRequest extends FormRequest
 {
@@ -26,6 +27,7 @@ class KitchenRequest extends FormRequest
         return [
             'group.*.material_id'=>'required',
             'group.*.quantity'=>'required|numeric|max:999999',
+            'group'=> new EnoughSuppliesRule,
             'user_id'=>'required',
         ];
     }
