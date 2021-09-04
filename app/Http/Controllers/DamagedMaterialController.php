@@ -45,24 +45,14 @@ class DamagedMaterialController extends Controller
     public function store(Request $request , DamagedMaterialRequest $form_request)
     {
         $validated_data = $form_request->validated();
-        // dd($validated_data['group']);
         foreach ($validated_data['group'] as $item ) {
             $calculation = Supply::calculation($item['material_id'] , $item['quantity']  );
-            if ($calculation['status'] == 'success') {
-                $damaged_material = new DamagedMaterial;
-                $damaged_material->user_id = $validated_data['user_id'];
-                $damaged_material->material_id = $item['material_id'];
-                $damaged_material->quantity = $item['quantity'];
-                $damaged_material->price = $calculation['request_total_price'];
-                $damaged_material->save();
-            }elseif ( $calculation['status'] == 'null_kitchen_request') {
-                $request->session()->flash('message',__('damagedmaterials.massages.null_kitchen_request'));
-                return redirect(route('damagedmaterials.create'));
-
-            }elseif ($calculation['status'] == 'insufficient_kitchen_request') {
-                $request->session()->flash('message',__('damagedmaterials.massages.insufficient_kitchen_request'));
-                return redirect(route('damagedmaterials.create'));
-            }
+            $damaged_material = new DamagedMaterial;
+            $damaged_material->user_id = $validated_data['user_id'];
+            $damaged_material->material_id = $item['material_id'];
+            $damaged_material->quantity = $item['quantity'];
+            $damaged_material->price = $calculation['request_total_price'];
+            $damaged_material->save();
         }
         $request->session()->flash('message',__('damagedmaterials.massages.created_succesfully'));
         return redirect(route('damagedmaterials.index'));
