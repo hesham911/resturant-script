@@ -24,7 +24,7 @@ class MaterialRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'required',
+            'name'=>'required|string',
             'measuring_id'=>'required',
         ];
     }

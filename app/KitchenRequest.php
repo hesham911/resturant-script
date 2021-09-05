@@ -17,7 +17,7 @@ class KitchenRequest extends Model
     ];
 
     public function material(){
-        return $this->belongsTo(Material::class);
+        return $this->belongsTo(Material::class)->withTrashed();
     }
 
     public function user (){

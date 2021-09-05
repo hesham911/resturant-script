@@ -16,10 +16,12 @@ class Supply extends Model
         'user_id',
         'material_id',
         'bill_number',
+        'used_amount',
+        'status',
     ];
 
     public function material (){
-        return $this->belongsTo(Material::class);
+        return $this->belongsTo(Material::class)->withTrashed();
     }
 
     public function user (){
