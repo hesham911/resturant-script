@@ -31,9 +31,7 @@ class KitchenRequestController extends Controller
      */
     public function create()
     {
-        $materials = Material::whereHas('warehousestock',function($query){
-            $query->where('quantity','>', 0);
-        })->get();
+        $materials = Material::has('availableSupplies')->get();
         return view('admin.kitchenrequests.create',[
             'materials'=>$materials,
         ]);

@@ -30,7 +30,7 @@ class DamagedMaterialController extends Controller
      */
     public function create()
     {
-        $materials = Material::get();
+        $materials =  Material::has('availableSupplies')->get();
         return view('admin.damagedmaterials.create',[
             'materials' => $materials ,
         ]);
