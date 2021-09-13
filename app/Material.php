@@ -19,6 +19,12 @@ class Material extends Model
         return $this->hasMany(Supply::class);
     }
 
+    public function availableSupplies (){
+        return $this->hasMany(Supply::class)
+            ->where('status',0)
+            ->where('quantity' , '>' , 0);
+    } 
+
     public function ProductManufacture (){
         return $this->hasMany(ProductManufacture::class);
     }
@@ -37,6 +43,6 @@ class Material extends Model
     }
 
     public function damagedMaterials (){
-        return $this->hasMany(DamagedMaterial::class);
+        return $this->hasMany(DamagedMaterial::class)->withTrashed();
     }
 }

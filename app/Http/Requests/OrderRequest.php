@@ -40,11 +40,12 @@ class OrderRequest extends FormRequest
     public function attributes()
     {
         return [
-            'client_id'      =>__('orders.client_id'),
-            'category_id'     =>__('orders.category_id'),
-            'table_id'     =>__('orders.table_id'),
-            'type'     =>__('orders.order_type'),
-            'products'     =>__('orders.products'),
+            'client_id'     =>__('orders.client_id'),
+            'category_id'   =>__('orders.category_id'),
+            'table_id'      =>__('orders.table_id'),
+            'type'          =>__('orders.order_type'),
+            'products'      =>__('orders.products'),
+            'group_a'       => __('orders.products'),
         ];
     }
 }

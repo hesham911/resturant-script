@@ -28,6 +28,7 @@ class EmployeeRequest extends FormRequest
     {
         return [
             'name'               =>   'required|string|min:2',
+            'password'           =>   'required',
             'email'              =>   [
                 'email',
                  Rule::unique('users','email')
@@ -38,7 +39,8 @@ class EmployeeRequest extends FormRequest
             'group_a.*.*'        =>   [
                 'numeric',
                 'digits:11',
-                'unique_phone'
+                'unique_phone',
+                'unique:phones',
             ],
             'roles'              =>   'array'
         ];

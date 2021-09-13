@@ -27,6 +27,8 @@ class ClientRequest extends FormRequest
             'name'               =>   'required|string|min:2',
             'group_a'            =>   'array',
             'group_b'            =>   'array',
+            'group_b.*.address'  =>   'required|string ',
+            'group_b.*.zone'     =>   'required',
         ];
     }
 
@@ -39,7 +41,8 @@ class ClientRequest extends FormRequest
             'name'              =>  __('users.clients.name'),
             'group_a'           =>  __('users.clients.phone'),
             'group_b'           =>  __('users.clients.address'),
-
+            'group_b.*.address' =>  __('users.clients.address'),
+            'group_b.*.zone'    =>  __('users.clients.zone'),
         ];
     }
 }
