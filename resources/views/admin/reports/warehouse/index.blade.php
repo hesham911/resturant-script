@@ -153,8 +153,9 @@
                         name: 'price'
                     },
                 ],
+        }).on( 'draw.dt', function () {
+            $('.layout-wrapper .content-wrapper .content-body .content').getNiceScroll().resize();
         });
-        
     });
     </script>
 @endsection
