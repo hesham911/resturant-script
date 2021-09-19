@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Employee;
 use App\Zone;
 use App\Order;
 use App\Phone;
@@ -51,11 +52,12 @@ class OrderController extends Controller
         $phones = Phone::all();
         $tables = Table::all();
         $zones   = Zone::all();
+        $deleveryMen   = Employee::where('type' , 5)->get();
         $clients = Client::orderBy('id','DESC')->with(['user:name,id'])->get();
         $orders = Order::where('status',0)->latest()->get();
         return view('admin.orders.pos',['categories'=>$categories,'subcategories'=>$subcategories,
         'types'=>$types,'products'=>$products,'phones'=>$phones,'tables'=>$tables,'client'=>$client,
-        'clients'=>$clients,'zones'=>$zones,'orders'=>$orders,'workPeriod' =>$workPeriod]);
+        'clients'=>$clients,'zones'=>$zones,'orders'=>$orders,'workPeriod' =>$workPeriod ,'deleveryMen'=>$deleveryMen ]);
         /* $client=null;
         if($request->client)
         {

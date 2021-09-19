@@ -194,6 +194,14 @@
                                                                 {{$phone->number}} </option>
                                                         @endforeach
                                                 </select>
+                                                <select class="btn btn-info select2 col-12" name="delevery_id"
+                                                    id="orderdeleveryMan" style="37% !important">
+                                                    <option value="" disabled selected>طيار الدليفيري </option>
+                                                    @foreach ($deleveryMen as $man)
+                                                            <option  value="{{$man->id}}">
+                                                                {{$man->user->name}} </option>
+                                                     @endforeach
+                                                </select>
                                                 <!-- client zone and phone -->
                                                 <div class="col-12 mt-1" id="clientInfo">
                                                     @include('admin.orders.clientInfo')

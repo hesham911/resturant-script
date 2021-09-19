@@ -24,6 +24,8 @@ class CreateOrdersTable extends Migration
                 $table->foreign('table_id')->references('id')->on('tables');
             $table->bigInteger('user_id')->unsigned();
                 $table->foreign('user_id')->references('id')->on('users');
+            $table->bigInteger('delevery_id')->unsigned();
+                $table->foreign('delevery_id')->references('id')->on('clients');
             $table->tinyInteger('type')->default(1);
             $table->bigInteger('client_phone')->nullable();
             $table->bigInteger('client_zone')->nullable();
