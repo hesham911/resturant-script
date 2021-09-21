@@ -22,7 +22,7 @@ class WarehouseOutReportController extends Controller
         $material_id = $request->material ; 
 
         if ($request->from != null & $request->to != null ) {
-            $materials->with(['kitchenrequests'=>function ($query)use($from , $to){
+            $materials->with(['supplies'=>function ($query)use($from , $to){
                 $query->whereBetween('created_at' , [$from , $to]);
             }]);
         }

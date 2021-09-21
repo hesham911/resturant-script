@@ -406,6 +406,9 @@
                 <a class="{{(request()->is('reports/warehouse'))? 'active' : '' }}" href="{{route('reports.warehouse.index')}}">{{__('reports.titles.warehouse')}}</a>
             </li>
             <li>
+                <a class="{{(request()->is('reports/warehouseout'))? 'active' : '' }}" href="{{route('reports.warehouseout.index')}}">{{__('reports.titles.warehouseout')}}</a>
+            </li>
+            <li>
                 <a class="{{(request()->is('reports/daily/income'))? 'active' : '' }}" href="{{route('reports.dailyIncome.index')}}">{{__('reports.titles.daily_income')}}</a>
             </li>
         </ul>

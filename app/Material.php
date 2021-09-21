@@ -20,7 +20,7 @@ class Material extends Model
     }
 
     public function kitchenrequests (){
-        return $this->hasMany(Supply::class);
+        return $this->hasMany(KitchenRequest::class);
     }
 
     public function availableSupplies (){

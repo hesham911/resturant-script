@@ -136,8 +136,8 @@
                     },{
                         data:function(data){
                             var quantity = 0;
-                            $.each(data.kitchenrequests,function(index , value){
-                                quantity += +value.quantity;
+                            $.each(data.supplies,function(index , value){
+                                quantity += +value.used_amount;
                             });
                             return quantity;
                         },
@@ -145,10 +145,11 @@
                     },{
                         data:function(data){
                             var price = 0;
-                            $.each(data.kitchenrequests,function(index , value){
-                                price +=  + value.price;
+                            $.each(data.supplies,function(index , value){
+                                var singleItemPrice = value.quantity / value.price;
+                                price +=  + singleItemPrice * value.used_amount;
                             });
-                            return price;
+                            return price.toFixed(2);
                         },
                         name: 'price'
                     },
