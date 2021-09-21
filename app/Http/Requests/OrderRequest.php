@@ -34,6 +34,7 @@ class OrderRequest extends FormRequest
             'client_id'   =>'required_if:type,==,1',
             'client_phone'  =>'required_if:type,==,1',
             'client_zone'  =>'required_if:type,==,1',
+            'delevery_id'  =>'required_if:type,==,1',
             //'products'   =>'required',
         ];
     }

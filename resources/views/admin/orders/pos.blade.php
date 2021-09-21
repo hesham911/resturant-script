@@ -186,7 +186,7 @@
                                                         @endforeach
                                                     @endif
                                                 </select>
-                                                <select class="btn btn-info select2 col-12" name="client_phone"
+                                                <select class="btn btn-info select2 clientselect col-12" name="client_phone"
                                                     id="orderClient" style="37% !important">
                                                     <option value="">رقم العميل</option>
                                                     @foreach ($phones as $phone)
@@ -228,14 +228,14 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form id="client_form" method="post" action="{{route('clients.store')}}" multiple>
+                                        <form id="client_form" method="post" action="{{route('clients.store')}}"  multiple>
                                             {{csrf_field()}}
                                             <div class="form-row">
                                                 <div class="col-3">
                                                     <input type="text" class="form-control" name="name" value="{{old('name')}}" placeholder="{{__('users.clients.placeholder.name')}}">
                                                 </div>
                                                 <div class="col-3">
-                                                    <input type="text" class="form-control" name="number"  placeholder="{{__('users.clients.placeholder.phone')}}">
+                                                    <input type="text" class="form-control" name="number"  placeholder="{{__('users.clients.placeholder.phone')}}" required>
                                                 </div>
                                                 <div class="col-3">
                                                     <select id="inputState" name="zone" class="form-control">
@@ -254,8 +254,8 @@
 
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button onclick="handleSubmit()" class="btn btn-primary">Save changes</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('app.forms.btn.close')}}</button>
+                                        <button id="clientFormSubmit" class="btn btn-primary">{{__('app.forms.btn.FormSubmit')}}</button>
                                     </div>
                                 </div>
                             </div>
@@ -426,29 +426,76 @@
     <script>
         // modal
         function handleSubmit (data) {
-                var url = '{{route('clients.store.ajax')}}';
-                $.ajax({
-                    type: "POST",
-                    url: url,
-                    data:   $('#client_form').serialize(),
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(data) {
-                        console.log(data.phone);
-                        $(document).ajaxStop(function(){
-                            $('#exampleModal').modal('hide');
-                        });
-                        var datam = {
-                            id: data.phone.id,
-                            text: data.phone.number
-                        };
-                        var newOption = new Option(datam.text, datam.id, false, false);
-                        $('.select2').append(newOption);
-                        $('.select2').val($('.select2 option:last-child').val()).trigger('change');
+            var url = '{{route('clients.store.ajax')}}';
+            $.ajax({
+                type: "POST",
+                url: url,
+                data:   $('#client_form').serialize(),
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(data) {
+                    console.log(data.phone);
+                    $(document).ajaxStop(function(){
+                        $('#exampleModal').modal('hide');
+                    });
+                    var datam = {
+                        id: data.phone.id,
+                        text: data.phone.number
+                    };
+                    var newOption = new Option(datam.text, datam.id, false, false);
+                    $('.clientselect').append(newOption);
+                    $('.clientselect').val($('.select2 option:last-child').val()).trigger('change');
+                }
+            });
+        };
+
+        function clientFormValidation(formId  , array){
+            form = document.getElementById(formId);
+            document.getElementById('errorDiv') ? document.getElementById('errorDiv').remove() : '';
+            var ul = document.createElement('ul'); 
+            var div = createDiv(ul);
+            form.prepend(div);
+            for(var i =0 ; i < array.length ; i++){
+                var children = form.getElementsByTagName(array[i]);
+                inputTypeLoop(children ,ul );
+            }
+        };
+
+        function inputTypeLoop (children , ul){
+            for (let index = 0; index < children.length; index++) {
+                const element = children[index];
+                if (element.value == 0) {
+                    if (element.getAttribute("name") != '_token' && element.getAttribute("name") !='_method' ) {
+                        createListItem (element , ul);
                     }
-                });
-            };
+                }
+            }
+        }
+        
+        function createListItem (element , ul){
+            var error = document.createElement('li');
+            error.innerHTML = `please fill ${element.getAttribute("name")} ` ;
+            error.classList.add('px-2') ;
+            ul.prepend(error);
+        }
+
+        function createDiv(ul){
+            var div = document.createElement('div'); 
+            div.setAttribute("id", "errorDiv"); 
+            div.classList.add('alert');
+            div.classList.add('alert-danger');
+            div.prepend(ul);
+            return div
+        }
+
+
+        $('#clientFormSubmit').on('click',function(){
+            clientFormValidation('client_form' , ['input' , 'select']);
+            handleSubmit();
+        });
+
+
             //
         // filter
         $(document).ready(function()
