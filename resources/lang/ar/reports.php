@@ -6,7 +6,7 @@ return [
             'index'                 => 'التقارير ',
             'warehouse'             => ' تقرير وارد المخزن ',
             'daily_income'          => ' التقرير اليومي مبيعات ',
-            'warehouse_outcome'     => ' تقرير صادر المخزن ',
+            'warehouseout'     => ' تقرير صادر المخزن ',
             'sales'                 => ' تقرير المبيعات ',
         ],
 

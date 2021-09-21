@@ -19,6 +19,10 @@ class Material extends Model
         return $this->hasMany(Supply::class);
     }
 
+    public function kitchenrequests (){
+        return $this->hasMany(Supply::class);
+    }
+
     public function availableSupplies (){
         return $this->hasMany(Supply::class)
             ->where('status',0)

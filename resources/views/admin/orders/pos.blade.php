@@ -195,7 +195,7 @@
                                                         @endforeach
                                                 </select>
                                                 <select class="btn btn-info select2 col-12" name="delevery_id"
-                                                    id="orderdeleveryMan" style="37% !important">
+                                                    id="orderdeleveryMan" style="37% !important" required>
                                                     <option value="" disabled selected>طيار الدليفيري </option>
                                                     @foreach ($deleveryMen as $man)
                                                             <option  value="{{$man->id}}">
@@ -418,11 +418,13 @@
         <!-- App scripts -->
         <script src="{{ url('assets/js/app.min.js') }}"></script>
         <!-- selectto -->
-    <script src="{{asset('vendors/select2/js/select2.min.js')}}"></script>
-    <!-- repeater -->
-    <script src="{{asset('vendors/jquery.repeater.min.js')}}"></script>
-    <!-- Datatable -->
-    <script src="{{ url('vendors/dataTable/datatables.min.js') }}"></script>
+        <script src="{{asset('vendors/select2/js/select2.min.js')}}"></script>
+        <!-- repeater -->
+        <script src="{{asset('vendors/jquery.repeater.min.js')}}"></script>
+        <!-- Datatable -->
+        <script src="{{ url('vendors/dataTable/datatables.min.js') }}"></script>
+        {{-- form validation  --}}
+        <script src="{{ url('vendors/form-validation/validation.js') }}"></script>
     <script>
         // modal
         function handleSubmit (data) {
@@ -450,47 +452,11 @@
             });
         };
 
-        function clientFormValidation(formId  , array){
-            form = document.getElementById(formId);
-            document.getElementById('errorDiv') ? document.getElementById('errorDiv').remove() : '';
-            var ul = document.createElement('ul'); 
-            var div = createDiv(ul);
-            form.prepend(div);
-            for(var i =0 ; i < array.length ; i++){
-                var children = form.getElementsByTagName(array[i]);
-                inputTypeLoop(children ,ul );
-            }
-        };
-
-        function inputTypeLoop (children , ul){
-            for (let index = 0; index < children.length; index++) {
-                const element = children[index];
-                if (element.value == 0) {
-                    if (element.getAttribute("name") != '_token' && element.getAttribute("name") !='_method' ) {
-                        createListItem (element , ul);
-                    }
-                }
-            }
-        }
         
-        function createListItem (element , ul){
-            var error = document.createElement('li');
-            error.innerHTML = `please fill ${element.getAttribute("name")} ` ;
-            error.classList.add('px-2') ;
-            ul.prepend(error);
-        }
-
-        function createDiv(ul){
-            var div = document.createElement('div'); 
-            div.setAttribute("id", "errorDiv"); 
-            div.classList.add('alert');
-            div.classList.add('alert-danger');
-            div.prepend(ul);
-            return div
-        }
 
 
         $('#clientFormSubmit').on('click',function(){
+            //code is separated to file
             clientFormValidation('client_form' , ['input' , 'select']);
             handleSubmit();
         });
