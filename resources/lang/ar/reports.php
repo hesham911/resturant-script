@@ -6,8 +6,9 @@ return [
             'index'                 => 'التقارير ',
             'warehouse'             => ' تقرير وارد المخزن ',
             'daily_income'          => ' التقرير اليومي مبيعات ',
-            'warehouseout'     => ' تقرير صادر المخزن ',
+            'warehouseout'          => ' تقرير صادر المخزن ',
             'sales'                 => ' تقرير المبيعات ',
+            'kitchenrequestout'     =>  'تقرير استهلاك المطبخ' ,
         ],
 
         'warehouse'     => [

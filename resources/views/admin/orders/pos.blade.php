@@ -195,7 +195,7 @@
                                                         @endforeach
                                                 </select>
                                                 <select class="btn btn-info select2 col-12" name="delevery_id"
-                                                    id="orderdeleveryMan" style="37% !important" required>
+                                                    id="orderdeleveryMan" style="37% !important">
                                                     <option value="" disabled selected>طيار الدليفيري </option>
                                                     @foreach ($deleveryMen as $man)
                                                             <option  value="{{$man->id}}">

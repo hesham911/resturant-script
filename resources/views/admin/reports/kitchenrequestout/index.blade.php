@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    {{__('reports.titles.warehouseout')}}
+    {{__('reports.titles.kitchenrequestout')}}
 @endsection
 @section('head')
     <!-- Prism -->
@@ -15,10 +15,10 @@
 
     <div class="page-header">
         <div>
-            <h3> {{__('reports.titles.warehouseout')}} </h3>
+            <h3> {{__('reports.titles.kitchenrequestout')}} </h3>
             @include('admin.partials.breadcrumb',[
                 'parent' => [
-                    'name' => __('reports.titles.warehouseout'),
+                    'name' => __('reports.titles.kitchenrequestout'),
                 ]
             ])
         </div>
@@ -41,7 +41,7 @@
                                     </ul>
                                 </div>
                             @endif
-                            <h6 class="card-title">{{__('reports.titles.warehouseout')}}</h6>
+                            <h6 class="card-title">{{__('reports.titles.kitchenrequestout')}}</h6>
                             <div class="mb-5 row">
                                 <div class="form-group row col-md-3">
                                     <label class="col-3">من </label>
@@ -115,7 +115,7 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    url:'{{route("reports.warehouseout.index.data")}}',
+                    url:'{{route("reports.kitchenrequestout.index.data")}}',
                     data: function(d){
                         d.to = $('#to').val();
                         d.from = $('#from').val();
@@ -136,7 +136,7 @@
                     },{
                         data:function(data){
                             var quantity = 0;
-                            $.each(data.supplies,function(index , value){
+                            $.each(data.kitchenrequests,function(index , value){
                                 quantity += +value.used_amount;
                             });
                             return quantity;
@@ -145,9 +145,11 @@
                     },{
                         data:function(data){
                             var price = 0;
-                            $.each(data.supplies,function(index , value){
-                                var singleItemPrice =  value.price / value.quantity ;
-                                price +=   singleItemPrice * value.used_amount;
+                            $.each(data.kitchenrequests,function(index , value){
+                                if (value.used_amount != 0) {
+                                    var singleItemPrice = value.total_cost  / value.quantity  ;
+                                    price +=  singleItemPrice * value.used_amount;
+                                }
                             });
                             return price.toFixed(2);
                         },

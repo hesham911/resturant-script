@@ -301,6 +301,11 @@ ROute::group([
             Route::post('/data','WarehouseOutReportController@indexData')->name('reports.warehouseout.index.data');
         });
 
+        Route::group(['prefix' =>'kitchenrequestout'],function(){
+            Route::get('/','KitchenRequestOutReportController@index')->name('reports.kitchenrequestout.index');
+            Route::post('/data','KitchenRequestOutReportController@indexData')->name('reports.kitchenrequestout.index.data');
+        });
+
         Route::group(['prefix' =>'daily'],function(){
             Route::get('/income','ReportController@dailyIncome')->name('reports.dailyIncome.index');
             Route::get('/outcome','ReportController@dailyOutcome')->name('reports.dailyOutcome.index');
