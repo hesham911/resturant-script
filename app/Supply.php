@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -89,5 +90,13 @@ class Supply extends Model
             'request_total_price' =>$request_total_price ,
             'status'=> $status
         ];
+    }
+
+    public function scopeExpiredMaterials($query)
+    {
+        $twoDayBeforeExpire =Carbon::now()->addDays(2)->toDateString();
+
+      return    $query->where("expiry_date",'=',$twoDayBeforeExpire)->with('material')->get();
+
     }
 }
