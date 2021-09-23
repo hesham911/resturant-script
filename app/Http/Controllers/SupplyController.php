@@ -98,8 +98,10 @@ class SupplyController extends Controller
     public function update(SupplyUpdateRequest $request,Supply $supply)
     {
         $validated = $request->validated();
+
         //to reset the last added quantity
         $warehouse_stock = $this->SubtractOldSupplyFromWarehouseStock($supply);
+        //dd($warehouse_stock);
         $supply->update($validated);
         $warehouse_stock = $this->AddNewSupplyToWarehouseStock($validated , $supply);
         $request->session()->flash('message',__('supplies.massages.updated_succesfully'));
@@ -134,7 +136,8 @@ class SupplyController extends Controller
     }
 
     private function SubtractOldSupplyFromWarehouseStock($supply){
-        $warehouse_stock = WarehouseStock::findOrFail($supply->material_id);
+
+        $warehouse_stock = WarehouseStock::where('material_id',$supply->material_id)->first();
         $warehouse_stock->quantity = $warehouse_stock->quantity - $supply->quantity ;
         $warehouse_stock->save();
         return $warehouse_stock;
