@@ -54,6 +54,8 @@ return [
             'address'                    => ' أكتب عنوان العميل عنوان العميل ',
             'phone'                      => ' إضافة رقم هاتف جديد ',
             'search'                     => ' إبحث في العملاء ',
+            'addtoblacklist'             => ' اضافة الي القائمة السوداء',
+            'removefromblacklist'        => 'حذف من القائمة السوداء '
         ],
         'massages'          => [
             'created_successfully'   => 'تم  تسجيل  العميل   بنجاح',

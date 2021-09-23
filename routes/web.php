@@ -127,6 +127,8 @@ ROute::group([
         Route::group(['middleware' => ['can:تعديل عميل']],function (){
             Route::get('/edit/{client}','ClientController@edit')->name('clients.edit');
             Route::put('/update/{client}','ClientController@update')->name('clients.update');
+            Route::put('/blacklist/{client}/add','ClientController@addToBlacklist')->name('clients.blacklist.add');
+            Route::put('/blacklist/{client}/remove','ClientController@removeFromBlackList')->name('clients.blacklist.remove');
         });
         Route::group(['middleware' => ['can:حذف عميل']], function () {
             Route::delete('/destroy/{client}','ClientController@destroy')->name('clients.destroy');

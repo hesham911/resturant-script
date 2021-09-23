@@ -7,6 +7,7 @@ use App\Http\Requests\ClientRequest;
 use App\User;
 use App\Zone;
 use Illuminate\Http\Request;
+use Redirect;
 
 class ClientController extends Controller
 {
@@ -72,23 +73,13 @@ class ClientController extends Controller
     {
 
         $validated = $request->all();
-        //dd($addresses);
         $validated['type'] = 0;
         $validated['is_admin'] = 0;
         $user = User::create($validated);
         $client = $user->client()->create(['user_id'=>$user->id]);
-        //dd($validated);
-        if ($client){
 
+        if ($client){
             $phone=$user->phones()->create(["user_id"=>$user->id,"number"=>$validated['number']]);
-            //$addresses = $request->number;
-//            foreach ($addresses as $key => $address){
-//                unset ($addresses[$key]);
-//                $new_key = $address['zone'];
-//                $addresses[$new_key] = [
-//                    'address' =>$address['address']
-//                ];
-//            }
             $client->zones()->attach([
                 $validated['zone'] =>[
                     'address' => $validated['address']
@@ -100,8 +91,7 @@ class ClientController extends Controller
             'data' => $client,
             'phone' => $phone,
         ],200);
-//        $request->session()->flash('success',__('clients.massages.created_successfully'));
-//        return redirect(route('clients.index'));
+
     }
 
 
@@ -179,5 +169,18 @@ class ClientController extends Controller
         $request->session()->flash('message',__('clients.massages.deleted_successfully'));
         return redirect(route('admin.users.clients.index'));
     }
+
+    public function addToBlacklist (Request $request , Client $client){
+        $client->update(['blacklist' => 1]);
+        $request->session()->flash('message',__('clients.massages.added_to_blacklist_successfully'));
+        return Redirect::Back();
+    }
+
+    public function removeFromBlackList (Request $request , Client $client){
+        $client->update(['blacklist' => 0]);
+        $request->session()->flash('message',__('clients.massages.added_to_blacklist_successfully'));
+        return Redirect::Back();
+    }
+
 
 }

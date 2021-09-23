@@ -186,14 +186,17 @@
                                                         @endforeach
                                                     @endif
                                                 </select>
-                                                <select class="btn btn-info select2 clientselect col-12" name="client_phone"
+                                                <div class="my-3 ">
+                                                    <select class="btn btn-info select2 clientselect col-12 " name="client_phone"
                                                     id="orderClient" style="37% !important">
-                                                    <option value="">رقم العميل</option>
-                                                    @foreach ($phones as $phone)
+                                                        <option value="">رقم العميل</option>
+                                                        @foreach ($phones as $phone)
                                                             <option  value="{{$phone->id}}">
                                                                 {{$phone->number}} </option>
                                                         @endforeach
-                                                </select>
+                                                    </select>
+                                                </div>
+                                                
                                                 <select class="btn btn-info select2 col-12" name="delevery_id"
                                                     id="orderdeleveryMan" style="37% !important">
                                                     <option value="" disabled selected>طيار الدليفيري </option>
