@@ -134,6 +134,7 @@ ROute::group([
             Route::delete('/destroy/{client}','ClientController@destroy')->name('clients.destroy');
         });
         Route::get('/','ClientController@index')->name('clients.index');
+        Route::get('/getajax','ClientController@getAjax')->name('clients.getajax');
         Route::get('/show/{client}','ClientController@show')->name('clients.show');
         Route::group(['middleware' => ['can:البحث عن عملاء']], function () {
             Route::get('/search','ClientController@viewSearch')->name('clients.view.search');

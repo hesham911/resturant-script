@@ -349,6 +349,9 @@
                                                                                    data-commentNotice="{{route('orders.cancel',$order->id)}}">
                                                                                     <i class="fa fa-trash"></i>
                                                                                 </a>
+                                                                                @if ($order->client->blacklist == 0)
+                                                                                    
+                                                                                @endif
                                                                             </td>
                                                                         </tr>
                                                                     @endforeach

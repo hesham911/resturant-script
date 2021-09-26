@@ -173,13 +173,18 @@ class ClientController extends Controller
     public function addToBlacklist (Request $request , Client $client){
         $client->update(['blacklist' => 1]);
         $request->session()->flash('message',__('clients.massages.added_to_blacklist_successfully'));
-        return Redirect::Back();
+        // return Redirect::Back();
     }
 
     public function removeFromBlackList (Request $request , Client $client){
         $client->update(['blacklist' => 0]);
         $request->session()->flash('message',__('clients.massages.added_to_blacklist_successfully'));
-        return Redirect::Back();
+        // return Redirect::Back();
+    }
+
+    public function getAjax(Request $request ){
+        $clients = Client::with('user','user.phones')->get();
+        return $clients ;
     }
 
 
