@@ -129,11 +129,14 @@ ROute::group([
         Route::group(['middleware' => ['can:تعديل عميل']],function (){
             Route::get('/edit/{client}','ClientController@edit')->name('clients.edit');
             Route::put('/update/{client}','ClientController@update')->name('clients.update');
+            Route::put('/blacklist/{client}/add','ClientController@addToBlacklist')->name('clients.blacklist.add');
+            Route::put('/blacklist/{client}/remove','ClientController@removeFromBlackList')->name('clients.blacklist.remove');
         });
         Route::group(['middleware' => ['can:حذف عميل']], function () {
             Route::delete('/destroy/{client}','ClientController@destroy')->name('clients.destroy');
         });
         Route::get('/','ClientController@index')->name('clients.index');
+        Route::get('/getajax','ClientController@getAjax')->name('clients.getajax');
         Route::get('/show/{client}','ClientController@show')->name('clients.show');
         Route::group(['middleware' => ['can:البحث عن عملاء']], function () {
             Route::get('/search','ClientController@viewSearch')->name('clients.view.search');
@@ -296,6 +299,16 @@ ROute::group([
         Route::group(['prefix' =>'warehouse'],function(){
             Route::get('/','WarehouseReportController@index')->name('reports.warehouse.index');
             Route::post('/data','WarehouseReportController@indexData')->name('reports.warehouse.index.data');
+        });
+
+        Route::group(['prefix' =>'warehouseout'],function(){
+            Route::get('/','WarehouseOutReportController@index')->name('reports.warehouseout.index');
+            Route::post('/data','WarehouseOutReportController@indexData')->name('reports.warehouseout.index.data');
+        });
+
+        Route::group(['prefix' =>'kitchenrequestout'],function(){
+            Route::get('/','KitchenRequestOutReportController@index')->name('reports.kitchenrequestout.index');
+            Route::post('/data','KitchenRequestOutReportController@indexData')->name('reports.kitchenrequestout.index.data');
         });
 
         Route::group(['prefix' =>'daily'],function(){
