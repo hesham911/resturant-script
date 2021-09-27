@@ -9,7 +9,7 @@ class Client extends BasicUser
 {
    	use SoftDeletes;
 
-
+    protected $fillable = ['blacklist'];
    	public function zones()
     {
         return $this->belongsToMany(Zone::class,'client_zone')->withPivot(['id','address'])->withTimestamps();

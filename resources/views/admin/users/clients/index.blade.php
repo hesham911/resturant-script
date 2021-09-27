@@ -55,8 +55,25 @@
                                     <td>{{$client->id}}</td>
                                     <td>{{$client->user->name}}</td>
                                     <td>{{$client->user->getNumbersPhones($client->user)}}</td>
-                                    <td class="text-right">
-                                        <div class="dropdown">
+                                    <td class="text-right d-flex flex-wrap ">
+                                        @if ($client->blacklist == 0)
+                                            <form action="{{route('clients.blacklist.add', $client->id)}}" method="post">
+                                                @csrf
+                                                @method('PUT')
+                                                <button class="btn btn-danger" type="submit">
+                                                    {{__('users.clients.placeholder.addtoblacklist')}}
+                                                </button>
+                                            </form>
+                                        @else
+                                            <form action="{{route('clients.blacklist.remove', $client->id)}}" method="post">
+                                                @csrf
+                                                @method('PUT')
+                                                <button class="btn btn-success">
+                                                    {{__('users.clients.placeholder.removefromblacklist')}}
+                                                </button>
+                                            </form>
+                                        @endif
+                                        <div class="dropdown px-3">
                                             <a href="#" data-toggle="dropdown"
                                                class="btn btn-floating"
                                                aria-haspopup="true" aria-expanded="false">

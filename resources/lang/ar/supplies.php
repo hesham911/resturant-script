@@ -15,7 +15,7 @@ return [
         ],
         'material_id'             => ' المادة الخام ',
         'quantity'                => ' الكمية  ',
-        'price'                   => '  السعر   ',
+        'price'                   => '   السعر الاجمالي   ',
         'Supplier_name'           => '  المورد   ',
         'expiry_date'             => '  تاريخ الصلاحية   ',
         'user_id'                 => '  المستخدم  ',

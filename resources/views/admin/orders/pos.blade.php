@@ -186,13 +186,24 @@
                                                         @endforeach
                                                     @endif
                                                 </select>
-                                                <select class="btn btn-info select2 col-12" name="client_phone"
+                                                <div class="my-3 ">
+                                                    <select class="btn btn-info select2 clientselect col-12 " name="client_phone"
                                                     id="orderClient" style="37% !important">
-                                                    <option value="">رقم العميل</option>
-                                                    @foreach ($phones as $phone)
+                                                        <option value="">رقم العميل</option>
+                                                        @foreach ($phones as $phone)
                                                             <option  value="{{$phone->id}}">
                                                                 {{$phone->number}} </option>
                                                         @endforeach
+                                                    </select>
+                                                </div>
+                                                
+                                                <select class="btn btn-info select2 col-12" name="delevery_id"
+                                                    id="orderdeleveryMan" style="37% !important">
+                                                    <option value="" disabled selected>طيار الدليفيري </option>
+                                                    @foreach ($deleveryMen as $man)
+                                                            <option  value="{{$man->id}}">
+                                                                {{$man->user->name}} </option>
+                                                     @endforeach
                                                 </select>
                                                 <!-- client zone and phone -->
                                                 <div class="col-12 mt-1" id="clientInfo">
@@ -220,14 +231,14 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form id="client_form" method="post" action="{{route('clients.store')}}" multiple>
+                                        <form id="client_form" method="post" action="{{route('clients.store')}}"  multiple>
                                             {{csrf_field()}}
                                             <div class="form-row">
                                                 <div class="col-3">
                                                     <input type="text" class="form-control" name="name" value="{{old('name')}}" placeholder="{{__('users.clients.placeholder.name')}}">
                                                 </div>
                                                 <div class="col-3">
-                                                    <input type="text" class="form-control" name="number"  placeholder="{{__('users.clients.placeholder.phone')}}">
+                                                    <input type="text" class="form-control" name="number"  placeholder="{{__('users.clients.placeholder.phone')}}" required>
                                                 </div>
                                                 <div class="col-3">
                                                     <select id="inputState" name="zone" class="form-control">
@@ -246,8 +257,8 @@
 
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button onclick="handleSubmit()" class="btn btn-primary">Save changes</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('app.forms.btn.close')}}</button>
+                                        <button id="clientFormSubmit" class="btn btn-primary">{{__('app.forms.btn.FormSubmit')}}</button>
                                     </div>
                                 </div>
                             </div>
@@ -338,6 +349,23 @@
                                                                                    data-commentNotice="{{route('orders.cancel',$order->id)}}">
                                                                                     <i class="fa fa-trash"></i>
                                                                                 </a>
+                                                                                @if ($order->client->count() > 0)
+                                                                                    @if ($order->client->blacklist == 1)
+                                                                                        <form action="{{route('clients.blacklist.remove',$order->client->id)}}" method="post">
+                                                                                            @csrf
+                                                                                            <button class="btn btn-success" title=" حذف">
+                                                                                                <i class="far fa-check-circle"></i>
+                                                                                            </button>
+                                                                                        </form>
+                                                                                    @else
+                                                                                        <form action="{{route('clients.blacklist.add',$order->client->id)}}" method="post">
+                                                                                            @csrf
+                                                                                            <button class="btn btn-danger">
+                                                                                                <i class="fas fa-ban"></i>
+                                                                                            </button>
+                                                                                        </form>  
+                                                                                    @endif
+                                                                                @endif
                                                                             </td>
                                                                         </tr>
                                                                     @endforeach
@@ -410,37 +438,50 @@
         <!-- App scripts -->
         <script src="{{ url('assets/js/app.min.js') }}"></script>
         <!-- selectto -->
-    <script src="{{asset('vendors/select2/js/select2.min.js')}}"></script>
-    <!-- repeater -->
-    <script src="{{asset('vendors/jquery.repeater.min.js')}}"></script>
-    <!-- Datatable -->
-    <script src="{{ url('vendors/dataTable/datatables.min.js') }}"></script>
+        <script src="{{asset('vendors/select2/js/select2.min.js')}}"></script>
+        <!-- repeater -->
+        <script src="{{asset('vendors/jquery.repeater.min.js')}}"></script>
+        <!-- Datatable -->
+        <script src="{{ url('vendors/dataTable/datatables.min.js') }}"></script>
+        {{-- form validation  --}}
+        <script src="{{ url('vendors/form-validation/validation.js') }}"></script>
     <script>
         // modal
         function handleSubmit (data) {
-                var url = '{{route('clients.store.ajax')}}';
-                $.ajax({
-                    type: "POST",
-                    url: url,
-                    data:   $('#client_form').serialize(),
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(data) {
-                        console.log(data.phone);
-                        $(document).ajaxStop(function(){
-                            $('#exampleModal').modal('hide');
-                        });
-                        var datam = {
-                            id: data.phone.id,
-                            text: data.phone.number
-                        };
-                        var newOption = new Option(datam.text, datam.id, false, false);
-                        $('.select2').append(newOption);
-                        $('.select2').val($('.select2 option:last-child').val()).trigger('change');
-                    }
-                });
-            };
+            var url = '{{route('clients.store.ajax')}}';
+            $.ajax({
+                type: "POST",
+                url: url,
+                data:   $('#client_form').serialize(),
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(data) {
+                    console.log(data.phone);
+                    $(document).ajaxStop(function(){
+                        $('#exampleModal').modal('hide');
+                    });
+                    var datam = {
+                        id: data.phone.id,
+                        text: data.phone.number
+                    };
+                    var newOption = new Option(datam.text, datam.id, false, false);
+                    $('.clientselect').append(newOption);
+                    $('.clientselect').val($('.select2 option:last-child').val()).trigger('change');
+                }
+            });
+        };
+
+        
+
+
+        $('#clientFormSubmit').on('click',function(){
+            //code is separated to file
+            clientFormValidation('client_form' , ['input' , 'select']);
+            handleSubmit();
+        });
+
+
             //
         // filter
         $(document).ready(function()

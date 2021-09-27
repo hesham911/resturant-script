@@ -12,7 +12,7 @@ class Order extends Model
 {
     use SoftDeletes;
     protected $fillable= ['client_id','client_phone','client_zone','user_id','category_id','table_id',
-    'type','status','cancel_reason'];
+    'type','status','cancel_reason' , 'delevery_id'];
     // type
     static function type()
     {

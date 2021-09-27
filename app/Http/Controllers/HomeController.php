@@ -33,4 +33,20 @@ class HomeController extends Controller
     {
         return view('admin.welcome');
     }
+
+    public function notificationsMarkAsRead(Request $request)
+    {
+        auth()->user()
+            ->unreadNotifications
+            ->where('id', $request->id)
+            ->first()
+            ->markAsRead();
+
+        return redirect()->back();
+    }
+
+    public function notificationsIndex()
+    {
+        return view('admin.notifications.index');
+    }
 }

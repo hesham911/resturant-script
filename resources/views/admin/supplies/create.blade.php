@@ -67,7 +67,7 @@
                                                 </div>
                                                 <div class="col-md-6 form-group">
                                                     <label for="customer_name">{{__('supplies.expiry_date')}}</label>
-                                                    <input type="date" class="form-control" id="inputPassword" placeholder="{{__('supplies.expiry_date')}}" name="expiry_date" value="{{old('expiry_date')}}">
+                                                    <input type="date" class="form-control" id="inputPassword" placeholder="{{__('supplies.expiry_date')}}" name="expiry_date" value="{{old('expiry_date')}}" required >
                                                 </div>
                                                 <div class="col-md-6 form-group">
                                                     <label for="customer_name"> {{__('supplies.quantity')}} </label>

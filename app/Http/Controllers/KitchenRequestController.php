@@ -242,7 +242,7 @@ class KitchenRequestController extends Controller
 
     private function updateSupply ($status , $amount , $supply){
         $supply->update([
-            'status' =>  true,
+            'status' =>  $status,
             'used_amount' =>  $amount,
         ]);
     }

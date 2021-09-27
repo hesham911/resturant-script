@@ -16,25 +16,44 @@ class MaterialDamageTest extends TestCase
 {
     use RefreshDatabase;
     /**
-     * A basic feature test example.
-     *
      * @test
      */
-    public function checkSuppplyNotStatusFalse()
+    public function checkSuppplyStatusFalse()
     {
-        $supply = factory(Supply::class)->make();
-        // $materialDamaged = factory(MaterialDamaged::class)->make();
-        $response = $this->getAdmin(route('damagedmaterials.store',[
-            'material_id' => $supply->material_id,
-            'user_id' => 1 ,
-            'quantity' => $supply->quantity - 1,
-        ]));
-        $response->assertEquals(false , $supply->status );
+        $supply = factory(Supply::class)->create();
+        $this->SendRequest($supply->quantity - 1 , $supply);
+        $supply = Supply::findOrFail($supply->id);
+        $this->assertEquals(false , $supply->status );
     }
 
+    /**
+     * @test
+     */
+    public function checkSuppplyStatusTrue()
+    {
+        $supply = factory(Supply::class)->create();
+        $this->SendRequest($supply->quantity , $supply );
+        $supply = Supply::findOrFail($supply->id);
+        $this->assertEquals(true , $supply->status );
+    }
+
+
+    private function SendRequest($quantity , $supply){
+        $response = $this->getAdmin(route('damagedmaterials.store',[
+            'group'=>[
+                0=>[
+                    'material_id' => $supply->material_id,
+                    'user_id' => 1 ,
+                    'quantity' => $quantity ,
+                ]
+            ]
+        ]));
+    }
+
+
     private function getAdmin($uri ){
-        $user = User::factory(App\User::class)->make();
-        return $response = $this->actingAs($user)
+        $user = factory(User::class)->create();
+        return  $this->actingAs($user)
         ->get($uri);
     }
 }
