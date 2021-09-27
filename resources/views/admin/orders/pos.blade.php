@@ -349,8 +349,22 @@
                                                                                    data-commentNotice="{{route('orders.cancel',$order->id)}}">
                                                                                     <i class="fa fa-trash"></i>
                                                                                 </a>
-                                                                                @if ($order->client->blacklist == 0)
-                                                                                    
+                                                                                @if ($order->client->count() > 0)
+                                                                                    @if ($order->client->blacklist == 1)
+                                                                                        <form action="{{route('clients.blacklist.remove',$order->client->id)}}" method="post">
+                                                                                            @csrf
+                                                                                            <button class="btn btn-success" title=" حذف">
+                                                                                                <i class="far fa-check-circle"></i>
+                                                                                            </button>
+                                                                                        </form>
+                                                                                    @else
+                                                                                        <form action="{{route('clients.blacklist.add',$order->client->id)}}" method="post">
+                                                                                            @csrf
+                                                                                            <button class="btn btn-danger">
+                                                                                                <i class="fas fa-ban"></i>
+                                                                                            </button>
+                                                                                        </form>  
+                                                                                    @endif
                                                                                 @endif
                                                                             </td>
                                                                         </tr>
