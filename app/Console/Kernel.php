@@ -2,7 +2,6 @@
 
 namespace App\Console;
 
-use App\Listeners\ExpiredMaterialListeners;
 use App\Notifications\ExpiredMaterialNotification;
 use App\Supply;
 use App\User;
