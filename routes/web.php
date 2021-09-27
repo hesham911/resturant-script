@@ -20,6 +20,8 @@ ROute::group([
     'prefix' =>'dashbord',
     'middleware'=>'is_admin'
 ],function (){
+    Route::get('notifications/','HomeController@notificationsIndex')->name('notifications.index');
+    Route::get('mark-read/{id}','HomeController@notificationsMarkAsRead')->name('mark.read');
     Route::get('/', function () {return view('admin.dashboard');})->name('dashboard');
     Route::resource('/zones','ZoneController');
     Route::resource('/roles','RoleController');

@@ -68,62 +68,51 @@
                         </div>
                         <div class="dropdown-scroll">
                             <ul class="list-group list-group-flush">
-                                <li class="px-4 py-2 text-center small text-muted bg-light">إشعارات إنتهاء الصلاحية</li>
                                 {{--start loop notif--}}
                                 @if(auth()->user()->unreadNotifications->count() > 0 )
                                     @foreach(auth()->user()->unreadNotifications as $notification)
-                                        <li class="px-4 py-3 list-group-item">
-                                            <a href="#" class="d-flex align-items-center hide-show-toggler">
-                                                <div class="flex-shrink-0">
-                                                    <figure class="avatar mr-3">
-                                                <span
-                                                        class="avatar-title bg-info-bright text-info rounded-circle">
-                                                    <i class="ti-lock"></i>
-                                                </span>
-                                                    </figure>
-                                                </div>
-                                                <div class="flex-grow-1">
-                                                    <p class="mb-0 line-height-20 d-flex justify-content-between">
-                                                        <span>اسم المنتج</span> <span>{{$notification->data->name}}</span>
-                                                        <i title="Mark as read" data-toggle="tooltip"
-                                                           class="hide-show-toggler-item fa fa-circle-o font-size-11"></i>
-                                                    </p>
-                                                    <span class="text-muted small"><span>تاريخ إنتهاء الصلاحية</span> <span>{{$notification->data->expiry_date}}</span></span>
-                                                </div>
-                                            </a>
-                                        </li>
+                                            <li class="px-4 py-3 list-group-item">
+                                                <a href="{{route('mark.read',['id'=>$notification->id])}}" class="d-flex align-items-center hide-show-toggler">
+                                                    <div class="flex-shrink-0">
+                                                        <figure class="avatar mr-3">
+
+                                                            @if($notification->type == 'App\Notifications\ExpiredMaterialNotification')
+                                                                <span class="avatar-title bg-danger-bright text-danger rounded-circle"><i class="ti-alert"></i></span>
+                                                            @elseif($notification->type == 'App\Notifications\LowQuantityStockNotification')
+                                                                <span class="avatar-title bg-warning-bright text-warning rounded-circle"><i class="ti-alert"></i></span>
+                                                            @endif
+
+                                                        </figure>
+                                                    </div>
+                                                    <div class="flex-grow-1">
+                                                        <p class="mb-0 line-height-20 d-flex justify-content-between">
+                                                            @if($notification->type == 'App\Notifications\ExpiredMaterialNotification')
+                                                                <span>صلاحية خامات</span> <span>{{$notification->data['material']}}</span>
+                                                            @elseif($notification->type == 'App\Notifications\LowQuantityStockNotification')
+                                                                <span>نقص خامات</span> <span>{{$notification->data['material']}}</span>
+                                                            @endif
+
+                                                            <i title="Mark as read" data-toggle="tooltip"
+                                                               class="hide-show-toggler-item fa fa-circle-o font-size-11"></i>
+                                                        </p>
+                                                        @if($notification->type == 'App\Notifications\ExpiredMaterialNotification')
+                                                            <span class="text-muted small"><span>تاريخ إنتهاء الصلاحية</span> <span>{{$notification->data['expiry_date']}}</span></span>
+
+                                                        @elseif($notification->type == 'App\Notifications\LowQuantityStockNotification')
+                                                            <span class="text-muted small"><span>الكمية المتاحة</span> <span>{{$notification->data['quantity']}}</span></span>
+                                                        @endif
+                                                    </div>
+                                                </a>
+                                            </li>
                                     @endforeach
                                 @endif
 
-                                {{-- end loop notif--}}
-                                {{--<li class="px-4 py-2 text-center small text-muted bg-light">إشعار بقاربة علي النفاذ</li>--}}
-                                {{--start loop notif--}}
-                                {{--<li class="px-4 py-3 list-group-item">--}}
-                                    {{--<a href="#" class="d-flex align-items-center hide-show-toggler">--}}
-                                        {{--<div class="flex-shrink-0">--}}
-                                            {{--<figure class="avatar mr-3">--}}
-                                                {{--<span class="avatar-title bg-secondary-bright text-secondary rounded-circle">--}}
-                                                    {{--<i class="ti-file"></i>--}}
-                                                {{--</span>--}}
-                                            {{--</figure>--}}
-                                        {{--</div>--}}
-                                        {{--<div class="flex-grow-1">--}}
-                                            {{--<p class="mb-0 line-height-20 d-flex justify-content-between">--}}
-                                                {{--1 person sent a file--}}
-                                                {{--<i title="Mark as unread" data-toggle="tooltip"--}}
-                                                {{--class="hide-show-toggler-item fa fa-check font-size-11"></i>--}}
-                                            {{--</p>--}}
-                                            {{--<span class="text-muted small">Yesterday</span>--}}
-                                        {{--</div>--}}
-                                    {{--</a>--}}
-                                {{--</li>--}}
-                                {{-- end loop notif--}}
                             </ul>
                         </div>
                         <div class="px-4 py-3 text-right border-top">
                             <ul class="list-inline small">
                                 <li class="list-inline-item mb-0">
-                                    <a href="#">عرض كل التنبيهات</a>
+                                    <a href="{{route('notifications.index')}}">عرض كل التنبيهات</a>
                                 </li>
                             </ul>
                         </div>
